@@ -1,0 +1,33 @@
+{
+  "name": "triple-win-slot",
+  "version": "1.0.0",
+  "description": "Slot game",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generateEventNames": "node nodeScripts/GenerateEventNames.js",
+    "generateAssets": "node nodeScripts/GenerateAssets.js"
+  },
+  "author": "Birdman",
+  "license": "ISC",
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "devDependencies": {
+    "@armathai/lego-logger": "^4.0.0",
+    "@types/howler": "^2.2.12",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "free-tex-packer-core": "^0.3.4",
+    "prettier": "^3.6.2",
+    "stats.js": "^0.17.0",
+    "vite": "^7.0.0"
+  },
+  "dependencies": {
+    "@armathai/lego": "^5.0.9",
+    "@armathai/pixi-grid": "^6.0.1",
+    "animejs": "^3.2.2",
+    "howler": "^2.2.4",
+    "pixi.js": "^7.4.3",
+    "vue": "^3.5.17",
+    "yarn": "^1.22.22"
+  }
+}

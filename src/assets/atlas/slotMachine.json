@@ -1,0 +1,111 @@
+{
+  "frames": {
+    "ice_win_1.png": {
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 294,
+        "h": 289
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 28,
+        "y": 26,
+        "w": 294,
+        "h": 289
+      },
+      "sourceSize": {
+        "w": 329,
+        "h": 355
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ice_win_2.png": {
+      "frame": {
+        "x": 3,
+        "y": 298,
+        "w": 281,
+        "h": 286
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 18,
+        "y": 6,
+        "w": 281,
+        "h": 286
+      },
+      "sourceSize": {
+        "w": 313,
+        "h": 307
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ice_1.png": {
+      "frame": {
+        "x": 303,
+        "y": 3,
+        "w": 266,
+        "h": 262
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 25,
+        "y": 23,
+        "w": 266,
+        "h": 262
+      },
+      "sourceSize": {
+        "w": 298,
+        "h": 322
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ice_2.png": {
+      "frame": {
+        "x": 303,
+        "y": 275,
+        "w": 262,
+        "h": 265
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 17,
+        "y": 7,
+        "w": 262,
+        "h": 265
+      },
+      "sourceSize": {
+        "w": 292,
+        "h": 287
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://github.com/odrick/free-tex-packer-core",
+    "version": "0.3.4",
+    "image": "slotMachine.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 568,
+      "h": 582
+    },
+    "scale": 1
+  }
+}

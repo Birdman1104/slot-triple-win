@@ -1,0 +1,71 @@
+import { lego } from "@armathai/lego";
+import { MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
+import { SlotMachineModelEvents } from "../events/ModelEvents";
+import {
+  initModelsCommand,
+  maxBetButtonClickCommand,
+  minusButtonClickCommand,
+  onSpinButtonClickCommand,
+  plusButtonClickCommand,
+  slotMachineNewElementsDropCompleteCommand,
+  slotMachineOldElementsDropCompleteCommand,
+  slotMachineStateUpdateCommand,
+  spinResultUpdateCommand,
+  winLinesShowCompleteCommand,
+  winningsShowCompleteCommand,
+} from "./GameCommands";
+
+export const unmapCommands = (): void => {
+  eventCommandPairs.forEach((pair) => lego.command.off(pair.event, pair.command));
+};
+
+export const mapCommands = (): void => {
+  eventCommandPairs.forEach((pair) => lego.command.on(pair.event, pair.command));
+};
+
+export const eventCommandPairs: { event: any; command: any }[] = [
+  {
+    event: MainGameEvents.MainViewReady,
+    command: initModelsCommand,
+  },
+  {
+    event: UIEvents.SpinButtonClick,
+    command: onSpinButtonClickCommand,
+  },
+  {
+    event: UIEvents.PlusButtonClick,
+    command: plusButtonClickCommand,
+  },
+  {
+    event: UIEvents.MinusButtonClick,
+    command: minusButtonClickCommand,
+  },
+  {
+    event: UIEvents.MaxBetButtonClick,
+    command: maxBetButtonClickCommand,
+  },
+  {
+    event: SlotMachineViewEvents.OldElementsDropComplete,
+    command: slotMachineOldElementsDropCompleteCommand,
+  },
+  {
+    event: SlotMachineModelEvents.StateUpdate,
+    command: slotMachineStateUpdateCommand,
+  },
+  {
+    event: SlotMachineViewEvents.NewElementsDropComplete,
+    command: slotMachineNewElementsDropCompleteCommand,
+  },
+  {
+    event: SlotMachineViewEvents.WinLinesShowComplete,
+    command: winLinesShowCompleteCommand,
+  },
+  {
+    event: SlotMachineViewEvents.WinningsShowComplete,
+    command: winningsShowCompleteCommand,
+  },
+  {
+    event: SlotMachineModelEvents.SpinResultUpdate,
+    command: spinResultUpdateCommand,
+  },
+];
