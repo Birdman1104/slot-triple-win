@@ -20,7 +20,7 @@ window.addEventListener("load", async (): Promise<void> => {
   window.addEventListener("focus", () => window.game.onFocusChange(true));
   window.addEventListener("blur", () => window.game.onFocusChange(false));
 
-  lego.event.on(MainGameEvents.MainViewReady, () => {
+  lego.event.on(MainGameEvents.GameStart, () => {
     const uiRoot = document.createElement("div");
     document.body.appendChild(uiRoot);
     createApp(UI).mount(uiRoot);

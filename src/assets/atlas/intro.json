@@ -1,0 +1,87 @@
+{
+  "frames": {
+    "intro_1.png": {
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 488,
+        "h": 479
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 25,
+        "y": 54,
+        "w": 488,
+        "h": 479
+      },
+      "sourceSize": {
+        "w": 544,
+        "h": 587
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "intro_2.png": {
+      "frame": {
+        "x": 3,
+        "y": 488,
+        "w": 488,
+        "h": 479
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 30,
+        "y": 53,
+        "w": 488,
+        "h": 479
+      },
+      "sourceSize": {
+        "w": 544,
+        "h": 587
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "intro_3.png": {
+      "frame": {
+        "x": 497,
+        "y": 3,
+        "w": 488,
+        "h": 481
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 30,
+        "y": 51,
+        "w": 488,
+        "h": 481
+      },
+      "sourceSize": {
+        "w": 544,
+        "h": 587
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://github.com/odrick/free-tex-packer-core",
+    "version": "0.3.4",
+    "image": "intro.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 981,
+      "h": 970
+    },
+    "scale": 1
+  }
+}

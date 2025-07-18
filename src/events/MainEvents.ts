@@ -6,6 +6,7 @@ export const WindowEvent = {
 export const MainGameEvents = {
   Resize: "MainGameEventsResize",
   MainViewReady: "MainGameEventsMainViewReady",
+  GameStart: "MainGameEventsGameStart",
 };
 
 export const ReelViewEvents = {

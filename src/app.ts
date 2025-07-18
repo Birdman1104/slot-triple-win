@@ -79,7 +79,7 @@ class App extends Application {
 
   private onLoadComplete(): void {
     this.appResize();
-    this.stage.start();
+    this.stage.showIntro();
     lego.command.execute(mapCommands);
     lego.event.emit(MainGameEvents.MainViewReady);
   }
