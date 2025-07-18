@@ -1,38 +1,72 @@
 <template>
-  <div class="menu-wrapper" v-if="!isMobile">
+  <div class="close-button-wrapper flex-center relative" @click="toggleMenuBar">
+    <div class="btn-background flex-center menu">
+      <div class="close-button flex-center">
+        <Modal
+          v-if="activeModal === 'menu'"
+          :items="menuItems"
+          :width="160"
+          :modal="'menu'"
+          customClass="bar-mobile-menu"
+          @select="handleSelect"
+        />
+        <img
+          v-if="activeModal === 'menu'"
+          src="/src/assets/images/icons/close.svg"
+        />
+        <img
+          v-if="activeModal !== 'menu'"
+          src="/src/assets/images/icons/menuBar.svg"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-wrapper">
+    <div class="flex-center amount-box">
+      <div class="balance-wrapper flex-center">
+        <span class="text">Balance: </span>
+        <span id="balance" class="amount"> $ {{ balance }}</span>
+      </div>
+      <div class="balance-wrapper flex-center">
+        <span class="text">Bet </span
+        ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
+      </div>
+    </div>
     <div class="wrapper">
-      <MenuBackgroundSvg />
+      <MenuBackgroundMobile />
+
       <div class="ui-overlay">
-        <div class="section left-section flex-center">
+        <div class="section right-section flex-center">
           <div
-            class="close-button-wrapper flex-center relative"
-            @click="toggleMenuBar"
+            class="refresh-btn-wrapper flex-center relative"
+            @click="toggleAmountuBar"
           >
             <div class="btn-background flex-center">
-              <div class="close-button flex-center">
+              <div class="refresh-btn flex-center">
                 <Modal
-                  v-if="activeModal === 'menu'"
-                  :items="menuItems"
-                  :width="160"
+                  v-if="activeModal === 'amount'"
+                  :items="amountItems"
                   @select="handleSelect"
+                  :width="50"
+                  customClass="amount-mobile-menu"
                 />
-                <img
-                  v-if="activeModal === 'menu'"
-                  src="/src/assets/images/icons/close.svg"
-                />
-                <img
-                  v-if="activeModal !== 'menu'"
-                  src="/src/assets/images/icons/menuBar.svg"
-                />
+                <img src="../assets/images/icons/refresh.svg" />
               </div>
             </div>
-
-            <div class="line"></div>
           </div>
 
-          <div class="balance-wrapper full-width flex-center">
-            <span class="text">Balance: </span>
-            <span id="balance" class="amount"> $ {{ balance }}</span>
+          <div class="balance-box flex-center">
+            <div class="bet-button-wrapper flex-center">
+              <div class="btn-background flex-center">
+                <button
+                  class="decrease-button bet-button flex-center"
+                  @click="minusButtonClick"
+                >
+                  <img src="../assets/images/icons/arrow.svg" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -46,43 +80,12 @@
         </div>
 
         <div class="section right-section flex-center">
-          <div
-            class="refresh-btn-wrapper flex-center relative"
-            @click="toggleAmountuBar"
-          >
-            <div class="btn-background flex-center">
-              <div class="refresh-btn flex-center">
-                <Modal
-                  v-if="activeModal === 'amount'"
-                  :items="amountItems"
-                  @select="handleSelect"
-                  :width="50"
-                />
-                <img src="../assets/images/icons/refresh.svg" />
-              </div>
-            </div>
-            <div class="line"></div>
-          </div>
-
-          <div class="balance-box flex-center flex-center">
-            <div class="balance-wrapper">
-              <span class="text">Bet </span
-              ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
-            </div>
-
+          <div class="balance-box flex-center">
             <div class="bet-button-wrapper flex-center">
-              <div class="btn-background small flex-center">
+              <div class="btn-background flex-center">
                 <button
                   class="increase-button bet-button flex-center"
                   @click="plusButtonClick"
-                >
-                  <img src="../assets/images/icons/arrow.svg" />
-                </button>
-              </div>
-              <div class="btn-background small flex-center">
-                <button
-                  class="decrease-button bet-button flex-center"
-                  @click="minusButtonClick"
                 >
                   <img src="../assets/images/icons/arrow.svg" />
                 </button>
@@ -91,7 +94,6 @@
           </div>
 
           <div class="bonuse-btn-wrapper flex-center">
-            <div class="line"></div>
             <div class="btn-background flex-center">
               <div class="buy-btn flex-center">
                 <span class="buy-btn-text"> Buy Bonus </span>
@@ -103,9 +105,7 @@
     </div>
   </div>
 
-  <div v-if="isMobile">
-    <UIMobileView />
-  </div>
+  <div></div>
 </template>
 
 <script setup lang="ts">
@@ -113,15 +113,13 @@ import { lego } from "@armathai/lego";
 import { DEFAULT_BET } from "../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { PlayerModelEvents } from "../events/ModelEvents";
-import MenuBackgroundSvg from "../ui/MenuBackgroundSvg.vue";
-import UIMobileView from "../ui/UIMobileView.vue";
+import MenuBackgroundMobile from "../ui/MenuBackgroundMobile.vue";
 import Modal from "../ui/Modal.vue";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { ref } from "vue";
 
 let tempBalance = -1;
 let balance = -1;
 
-const isMobile = ref(window.innerWidth <= 768);
 const activeModal = ref<null | "menu" | "amount">(null);
 
 const menuItems = [
@@ -148,18 +146,6 @@ const spinButtonClick = () => lego.event.emit(UIEvents.SpinButtonClick);
 const plusButtonClick = () => lego.event.emit(UIEvents.PlusButtonClick);
 const minusButtonClick = () => lego.event.emit(UIEvents.MinusButtonClick);
 
-function handleResize() {
-  isMobile.value = window.innerWidth <= 768;
-}
-
-onMounted(() => {
-  window.addEventListener("resize", handleResize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", handleResize);
-});
-
 function toggleMenuBar() {
   activeModal.value = activeModal.value === "menu" ? null : "menu";
 }
@@ -169,7 +155,7 @@ function toggleAmountuBar() {
 }
 
 function handleSelect(item: any) {
-  activeModal.value = null;
+  activeModal.value = null; 
 }
 
 const updateTempBalance = (newBalance: number): void => {
@@ -213,19 +199,11 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   font-style: normal;
 }
 
-.line {
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(
-    to bottom,
-    rgba(192, 177, 165, 0) 0%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(153, 153, 153, 0) 100%
-  );
-}
-
 .balance-box {
   width: 100%;
+}
+
+.close-button-wrapper {
 }
 
 .btn-background {
@@ -234,7 +212,6 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
     inset 0 -4px 6px rgba(0, 0, 0, 0.1),
     0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
-  margin: 5px;
   width: 55px;
   height: 55px;
 }
@@ -245,6 +222,15 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 
 .balance-wrapper {
   flex-direction: column;
+  flex: 1;
+}
+.amount-box {
+  display: flex;
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
 }
 
 .section {
@@ -258,9 +244,15 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   max-width: fit-content;
 }
 
-.left-section {
+.left-section,
+.refresh-btn-wrapper {
+  display: flex;
+  flex-direction: row;
   justify-content: start;
-  padding-left: 3%;
+}
+
+.refresh-btn-wrapper {
+  padding-left: 10px;
 }
 
 .right-section {
@@ -276,11 +268,7 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 
 .menu-wrapper {
   position: absolute;
-  bottom: -2%;
-  width: 65%;
-  display: flex;
-  align-self: center;
-  left: 17.5%;
+  bottom: -3.5%;
 }
 
 .wrapper {
@@ -289,11 +277,10 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   width: 100%;
 }
 
-
 .ui-overlay {
   position: absolute;
-  top: 0;
   left: 0;
+  bottom: 17%;
   width: 100%;
   height: 100%;
   display: flex;
@@ -335,7 +322,6 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 }
 
 .button-box {
-  transform: translateX(-4.3%);
   border-radius: 50%;
   border: 1.3px solid transparent;
   background-image:
@@ -412,12 +398,6 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   padding: 0;
 }
 
-.small {
-  width: 28px;
-  height: 28px;
-  margin: 0;
-}
-
 .medium {
   width: 50px;
   height: 50px;
@@ -431,5 +411,11 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.menu {
+  position: absolute;
+  top: 15px;
+  right: 16px;
 }
 </style>
