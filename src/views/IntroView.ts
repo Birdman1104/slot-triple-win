@@ -1,6 +1,8 @@
+import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
-import { Container, Text } from "pixi.js";
+import { Container, Graphics, Text } from "pixi.js";
 import { getIntroViewGridConfig } from "../configs/gridConfigs/introViewGC";
+import { MainGameEvents } from "../events/MainEvents";
 import { IntroCard } from "./IntroCard";
 
 export class IntroView extends PixiGrid {
@@ -9,6 +11,7 @@ export class IntroView extends PixiGrid {
   private card2: IntroCard | null = null;
   private card3: IntroCard | null = null;
   private clickToContinue: Text | null = null;
+  private overlay: Graphics = new Graphics();
 
   constructor() {
     super();
@@ -51,5 +54,17 @@ export class IntroView extends PixiGrid {
     this.clickToContinue.anchor.set(0.5);
     this.clickToContinue.position.set(this.width / 2, this.height - 50);
     this.setChild("click_to_continue", this.clickToContinue);
+
+    this.overlay = new Graphics();
+    this.overlay.beginFill(0x000000, 0.01);
+    this.overlay.drawRect(0, 0, 10, 10);
+    this.overlay.endFill();
+    this.overlay.alpha = 0;
+    this.overlay.eventMode = "static";
+    this.overlay.on("pointerdown", () => {
+      lego.event.emit(MainGameEvents.GameStart);
+    });
+
+    this.setChild("overlay", this.overlay);
   }
 }

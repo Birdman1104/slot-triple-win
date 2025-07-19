@@ -82,6 +82,14 @@ class App extends Application {
     this.stage.showIntro();
     lego.command.execute(mapCommands);
     lego.event.emit(MainGameEvents.MainViewReady);
+
+    lego.event.on(MainGameEvents.GameStart, this.onGameStart, this);
+  }
+
+  private onGameStart(): void {
+    this.stage.hideIntro();
+    this.stage.showMainGame();
+    lego.event.emit("initModels");
   }
 
   private initStats(): void {

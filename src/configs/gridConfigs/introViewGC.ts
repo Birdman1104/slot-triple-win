@@ -1,3 +1,4 @@
+import { CellScale } from "@armathai/pixi-grid";
 import { lp } from "../../utils/Utils";
 
 export const getIntroViewGridConfig = () => {
@@ -19,6 +20,11 @@ const getIntroViewGridLandscapeConfig = () => {
         name: "click_to_continue",
         bounds: { x: 0, y: 0.8, width: 1, height: 0.15 },
       },
+      {
+        name: "overlay",
+        bounds: { x: 0, y: 0, width: 1, height: 1 },
+        scale: CellScale.fill,
+      },
     ],
   };
 };
@@ -32,7 +38,16 @@ const getIntroViewGridPortraitConfig = () => {
     cells: [
       {
         name: "cards",
-        bounds: { x: 0, y: 0.825, width: 1, height: 0.15 },
+        bounds: { x: 0, y: 0.1, width: 1, height: 0.7 },
+      },
+      {
+        name: "click_to_continue",
+        bounds: { x: 0, y: 0.8, width: 1, height: 0.15 },
+      },
+      {
+        name: "overlay",
+        bounds: { x: 0, y: 0, width: 1, height: 1 },
+        scale: CellScale.fill,
       },
     ],
   };

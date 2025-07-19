@@ -17,6 +17,13 @@ class PixiStage extends Container {
     this.uiView?.rebuild();
   }
 
+  public hideIntro(): void {
+    if (this.intro) {
+      this.removeChild(this.intro);
+      this.intro = null;
+    }
+  }
+
   public showIntro(): void {
     if (this.intro) return;
     this.bgView = new BackgroundView();
@@ -26,7 +33,7 @@ class PixiStage extends Container {
     this.addChild(this.intro);
   }
 
-  public start(): void {
+  public showMainGame(): void {
     this.gameView = new GameView();
     this.addChild(this.gameView);
   }

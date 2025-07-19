@@ -1,5 +1,5 @@
 import { lego } from "@armathai/lego";
-import { MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
+import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import {
   initModelsCommand,
@@ -25,7 +25,7 @@ export const mapCommands = (): void => {
 
 export const eventCommandPairs: { event: any; command: any }[] = [
   {
-    event: MainGameEvents.MainViewReady,
+    event: "initModels",
     command: initModelsCommand,
   },
   {
