@@ -26,6 +26,14 @@ type SpriteConfig = {
   rotation?: number;
 };
 
+interface TextConfig {
+  text: string;
+  x: number;
+  y: number;
+  anchor?: { x: number; y: number };
+  style: Partial<ITextStyle>;
+}
+
 type ServerResponse = {
   id?: number;
   win: number;

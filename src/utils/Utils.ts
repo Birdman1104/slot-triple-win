@@ -1,4 +1,4 @@
-import { DisplayObject, Graphics, Point, Rectangle, Sprite, Texture } from "pixi.js";
+import { DisplayObject, Graphics, Point, Rectangle, Sprite, Text, Texture } from "pixi.js";
 import { SPRITESHEET } from "../assets/assetsNames/spritesheets";
 
 export const parseBase64JsonToObject = (base64: string): any => {
@@ -95,6 +95,15 @@ export const drawPoint = (
   gr.endFill();
   container.addChild(gr);
   return gr;
+};
+
+export const makeText = (config: TextConfig, name?: string): Text => {
+  const { text: content, x = 0, y = 0, style = {}, anchor = { x: 0.5, y: 0.5 } } = config;
+  const text = new Text(content, style);
+  text.position.set(x, y);
+  text.anchor.set(anchor.x, anchor.y);
+  name && (text.name = name);
+  return text;
 };
 
 export const delayRunnable = (delay: number, runnable: Function, context?: any, ...args: any[]) => {

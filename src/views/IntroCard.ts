@@ -1,5 +1,5 @@
 import { Container, Text } from "pixi.js";
-import { makeSprite } from "../utils/Utils";
+import { makeSprite, makeText } from "../utils/Utils";
 
 const atlas = "intro.png";
 const CARDS_CONFIG = [
@@ -37,7 +37,14 @@ export class IntroCard extends Container {
     const bkg = makeSprite({ frame: cardConfig.frame, atlas: cardConfig.atlas });
     this.addChild(bkg);
 
-    const title = new Text(cardConfig.title, { fontSize: 48, fill: "#ffffff" });
+    const title = makeText({
+      text: cardConfig.title,
+      x: 0,
+      y: 40,
+      anchor: { x: 0, y: 0.5 },
+      style: { fontSize: 48, fill: "#ffffff" },
+    });
+
     title.anchor.set(0.5);
     title.position.set(0, 40);
     this.addChild(title);

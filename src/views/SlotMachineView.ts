@@ -26,10 +26,11 @@ export class SlotMachine extends Container {
 
     this.build();
 
-    lego.event.on(SlotMachineModelEvents.StateUpdate, this.onStateUpdate, this);
-    lego.event.on(SlotMachineModelEvents.ReelsUpdate, this.onReelsUpdate, this);
-    lego.event.on(SlotMachineModelEvents.SpinResultUpdate, this.onSpinResultUpdate, this);
-    lego.event.on(ReelModelEvents.ElementsUpdate, this.onReelElementsUpdate, this);
+    lego.event
+      .on(SlotMachineModelEvents.StateUpdate, this.onStateUpdate, this)
+      .on(SlotMachineModelEvents.ReelsUpdate, this.onReelsUpdate, this)
+      .on(SlotMachineModelEvents.SpinResultUpdate, this.onSpinResultUpdate, this)
+      .on(ReelModelEvents.ElementsUpdate, this.onReelElementsUpdate, this);
 
     // const gr = new Graphics();
     // gr.beginFill(0xff0000, 0.5);
