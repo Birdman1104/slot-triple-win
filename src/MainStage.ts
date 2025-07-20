@@ -2,19 +2,16 @@ import { Container } from "pixi.js";
 import { BackgroundView } from "./views/BackgroundView.ts";
 import { GameView } from "./views/GameView.ts";
 import { IntroView } from "./views/IntroView.ts";
-import { UIView } from "./views/UIView.ts";
 
 class PixiStage extends Container {
   private intro: IntroView | null = null;
   private gameView: GameView | null = null;
-  private uiView: UIView | null = null;
   private bgView: BackgroundView | null = null;
 
   public resize(): void {
     this.intro?.rebuild();
     this.bgView?.rebuild();
     this.gameView?.rebuild();
-    this.uiView?.rebuild();
   }
 
   public hideIntro(): void {
