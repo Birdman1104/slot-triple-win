@@ -1,6 +1,6 @@
 import { lego } from "@armathai/lego";
 
-const getUUID = (() => {
+export const getUUID = (() => {
   let i = 0;
   return () => `${++i}`;
 })();

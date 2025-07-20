@@ -35,6 +35,14 @@ export class SlotMachine extends Container {
     return this.reels.find((reel) => reel.uuid === uuid) as Reel;
   }
 
+  public startSpinning(): void {
+    this.reels.forEach((reel) => reel.startSpinning());
+  }
+
+  public stopSpinning(): void {
+    this.reels.forEach((reel) => reel.stopSpinning());
+  }
+
   private build(): void {
     // this.buildReels();
   }
@@ -46,8 +54,10 @@ export class SlotMachine extends Container {
 
     switch (newState) {
       case SlotMachineState.RequestSent:
+        this.startSpinning();
         break;
       case SlotMachineState.ResponseReceived:
+        this.stopSpinning();
         break;
       case SlotMachineState.ShowWinLines:
         break;

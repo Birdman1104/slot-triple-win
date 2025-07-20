@@ -1,6 +1,5 @@
 import { Container, Rectangle, Sprite } from "pixi.js";
 import { HEIGHT, WIDTH } from "../config";
-import { ElementModel } from "../models/ElementModel";
 import { makeSprite } from "../utils/Utils";
 
 export class Element extends Container {
@@ -9,11 +8,11 @@ export class Element extends Container {
   private ice: Sprite | null = null;
   private element: Sprite | null = null;
 
-  constructor(config: ElementModel) {
+  constructor({ uuid, type }: { uuid: string; type: string }) {
     super();
 
-    this._uuid = config.uuid;
-    this._type = config.type;
+    this._uuid = uuid;
+    this._type = type;
 
     this.updateDimensions();
     this.buildElement();
@@ -44,7 +43,6 @@ export class Element extends Container {
     this.ice = makeSprite({ frame: "ice_1.png", atlas: "slot_machine.png" });
     this.ice.anchor.set(0.5);
     this.addChild(this.ice);
-    console.warn(this.type);
 
     this.element && this.element.destroy();
     this.element = makeSprite({ frame: `${this._type}.png`, atlas: "symbols.png" });

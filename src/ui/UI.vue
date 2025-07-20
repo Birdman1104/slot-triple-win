@@ -4,26 +4,12 @@
       <MenuBackgroundSvg />
       <div class="ui-overlay">
         <div class="section left-section flex-center">
-          <div
-            class="close-button-wrapper flex-center relative"
-            @click="toggleMenuBar"
-          >
+          <div class="close-button-wrapper flex-center relative" @click="toggleMenuBar">
             <div class="btn-background flex-center">
               <div class="close-button flex-center">
-                <Modal
-                  v-if="activeModal === 'menu'"
-                  :items="menuItems"
-                  :width="160"
-                  @select="handleSelect"
-                />
-                <img
-                  v-if="activeModal === 'menu'"
-                  src="/src/assets/images/icons/close.svg"
-                />
-                <img
-                  v-if="activeModal !== 'menu'"
-                  src="/src/assets/images/icons/menuBar.svg"
-                />
+                <Modal v-if="activeModal === 'menu'" :items="menuItems" :width="160" @select="handleSelect" />
+                <img v-if="activeModal === 'menu'" src="/src/assets/images/icons/close.svg" />
+                <img v-if="activeModal !== 'menu'" src="/src/assets/images/icons/menuBar.svg" />
               </div>
             </div>
 
@@ -46,18 +32,10 @@
         </div>
 
         <div class="section right-section flex-center">
-          <div
-            class="refresh-btn-wrapper flex-center relative"
-            @click="toggleAmountuBar"
-          >
+          <div class="refresh-btn-wrapper flex-center relative" @click="toggleAmountuBar">
             <div class="btn-background flex-center">
               <div class="refresh-btn flex-center">
-                <Modal
-                  v-if="activeModal === 'amount'"
-                  :items="amountItems"
-                  @select="handleSelect"
-                  :width="50"
-                />
+                <Modal v-if="activeModal === 'amount'" :items="amountItems" @select="handleSelect" :width="50" />
                 <img src="../assets/images/icons/refresh.svg" />
               </div>
             </div>
@@ -66,24 +44,17 @@
 
           <div class="balance-box flex-center flex-center">
             <div class="balance-wrapper">
-              <span class="text">Bet </span
-              ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
+              <span class="text">Bet </span><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
             </div>
 
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background small flex-center">
-                <button
-                  class="increase-button bet-button flex-center"
-                  @click="plusButtonClick"
-                >
+                <button class="increase-button bet-button flex-center" @click="plusButtonClick">
                   <img src="../assets/images/icons/arrow.svg" />
                 </button>
               </div>
               <div class="btn-background small flex-center">
-                <button
-                  class="decrease-button bet-button flex-center"
-                  @click="minusButtonClick"
-                >
+                <button class="decrease-button bet-button flex-center" @click="minusButtonClick">
                   <img src="../assets/images/icons/arrow.svg" />
                 </button>
               </div>
@@ -110,13 +81,13 @@
 
 <script setup lang="ts">
 import { lego } from "@armathai/lego";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { DEFAULT_BET } from "../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { PlayerModelEvents } from "../events/ModelEvents";
 import MenuBackgroundSvg from "../ui/MenuBackgroundSvg.vue";
-import UIMobileView from "../ui/UIMobileView.vue";
 import Modal from "../ui/Modal.vue";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import UIMobileView from "../ui/UIMobileView.vue";
 
 let tempBalance = -1;
 let balance = -1;
@@ -216,12 +187,10 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 .line {
   width: 1px;
   height: 60px;
-  background: linear-gradient(
-    to bottom,
-    rgba(192, 177, 165, 0) 0%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(153, 153, 153, 0) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(192, 177, 165, 0) 0%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(153, 153, 153, 0) 100%);
 }
 
 .balance-box {
@@ -250,6 +219,7 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 .section {
   flex: 1;
 }
+
 .relative {
   position: relative;
 }
@@ -276,7 +246,7 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 
 .menu-wrapper {
   position: absolute;
-  bottom: -2%;
+  bottom: 0;
   width: 65%;
   display: flex;
   align-self: center;
@@ -340,11 +310,9 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   border: 1.3px solid transparent;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(255, 255, 255, 0.25),
-      rgba(153, 153, 153, 0.25)
-    );
+      rgba(153, 153, 153, 0.25));
 
   background-origin: border-box;
   background-clip: content-box, border-box;
@@ -391,11 +359,9 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 .close-button,
 .refresh-btn {
   border-radius: 50%;
-  background: radial-gradient(
-    at left top,
-    rgba(255, 255, 255, 0.55),
-    rgba(168, 147, 121, 0.55)
-  );
+  background: radial-gradient(at left top,
+      rgba(255, 255, 255, 0.55),
+      rgba(168, 147, 121, 0.55));
   border: none;
   box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
 }
