@@ -5,8 +5,8 @@ export const WindowEvent = {
 
 export const MainGameEvents = {
   Resize: "MainGameEventsResize",
-  MainViewReady: "MainGameEventsMainViewReady",
-  GameStart: "MainGameEventsGameStart",
+  ShowIntro: "MainGameEventsShowIntro",
+  ShowGame: "MainGameEventsShowGame",
 };
 
 export const ReelViewEvents = {
@@ -15,8 +15,6 @@ export const ReelViewEvents = {
 };
 
 export const SlotMachineViewEvents = {
-  OldElementsDropComplete: "SlotMachineViewEventsOldElementsDropComplete",
-  NewElementsDropComplete: "SlotMachineViewEventsNewElementsDropComplete",
   WinLinesShowComplete: "SlotMachineViewEventsWinLinesShowComplete",
   WinningsShowComplete: "SlotMachineViewEventsWinningsShowComplete",
 

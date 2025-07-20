@@ -62,8 +62,12 @@ export class IntroView extends PixiGrid {
     this.overlay.alpha = 0;
     this.overlay.eventMode = "static";
     this.overlay.on("pointerdown", () => {
-      lego.event.emit(MainGameEvents.GameStart);
+      lego.event.emit(MainGameEvents.ShowGame);
     });
+
+    setTimeout(() => {
+      lego.event.emit(MainGameEvents.ShowGame);
+    }, 10);
 
     this.setChild("overlay", this.overlay);
   }

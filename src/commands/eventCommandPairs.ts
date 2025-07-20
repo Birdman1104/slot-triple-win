@@ -1,14 +1,13 @@
 import { lego } from "@armathai/lego";
-import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
+import { MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import {
   initModelsCommand,
   maxBetButtonClickCommand,
   minusButtonClickCommand,
+  onShowGameCommand,
   onSpinButtonClickCommand,
   plusButtonClickCommand,
-  slotMachineNewElementsDropCompleteCommand,
-  slotMachineOldElementsDropCompleteCommand,
   slotMachineStateUpdateCommand,
   spinResultUpdateCommand,
   winLinesShowCompleteCommand,
@@ -29,6 +28,10 @@ export const eventCommandPairs: { event: any; command: any }[] = [
     command: initModelsCommand,
   },
   {
+    event: MainGameEvents.ShowGame,
+    command: onShowGameCommand,
+  },
+  {
     event: UIEvents.SpinButtonClick,
     command: onSpinButtonClickCommand,
   },
@@ -45,16 +48,8 @@ export const eventCommandPairs: { event: any; command: any }[] = [
     command: maxBetButtonClickCommand,
   },
   {
-    event: SlotMachineViewEvents.OldElementsDropComplete,
-    command: slotMachineOldElementsDropCompleteCommand,
-  },
-  {
     event: SlotMachineModelEvents.StateUpdate,
     command: slotMachineStateUpdateCommand,
-  },
-  {
-    event: SlotMachineViewEvents.NewElementsDropComplete,
-    command: slotMachineNewElementsDropCompleteCommand,
   },
   {
     event: SlotMachineViewEvents.WinLinesShowComplete,

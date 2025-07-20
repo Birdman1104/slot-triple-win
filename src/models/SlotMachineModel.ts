@@ -6,9 +6,8 @@ import { ReelModel } from "./ReelModel";
 export enum SlotMachineState {
   Unknown,
   Idle,
-  DropOld,
-  WaitingForResult,
-  DropNew,
+  RequestSent,
+  ResponseReceived,
   ShowWinLines,
   ShowWinnings,
 }
@@ -17,7 +16,6 @@ export class SlotMachineModel extends ObservableModel {
   private _config: any = {};
   private _reels: ReelModel[] = [];
   private _state: SlotMachineState = SlotMachineState.Unknown;
-  private canCheck = false;
   private _spinResult: SpinResult = {
     winningInfo: [
       {
@@ -31,7 +29,6 @@ export class SlotMachineModel extends ObservableModel {
     reels: [],
   };
   private tempSpinResult: SpinResult = { reels: [], winningInfo: [], totalWin: 0 };
-  private isResultReady = false;
 
   public constructor() {
     super("SlotMachineModel");
@@ -98,27 +95,20 @@ export class SlotMachineModel extends ObservableModel {
     return this._reels.find((r) => r.uuid === uuid);
   }
 
-  public spin(bet: number | undefined): void {
-    // TODO check for NaN values
-    if (isNaN(bet as number)) return;
-    this.state = SlotMachineState.DropOld;
-    this.isResultReady = false;
-    this.getSpinResult(bet as number);
+  public async spin(bet: number): Promise<void> {
+    this.state = SlotMachineState.RequestSent;
+    this.tempSpinResult = await spin(bet);
+    this.checkForResult();
   }
 
   public checkForResult(): void {
-    if (this.isResultReady && this.state === SlotMachineState.WaitingForResult) {
-      this.isResultReady = false;
+    setTimeout(() => {
       this.setNewElementsToReels(this.tempSpinResult.reels);
       this.setResult(this.tempSpinResult);
-      setTimeout(() => {
-        // TODO FIX THIS SHIT, needs to skip a frame then se\et to new state
-        this.state = SlotMachineState.DropNew;
-      }, 0);
-    } else {
-      this.canCheck = true;
-    }
+      this.state = SlotMachineState.ResponseReceived;
+    }, 2000);
   }
+
   public idle(): void {
     this.state = SlotMachineState.Idle;
   }
@@ -129,12 +119,6 @@ export class SlotMachineModel extends ObservableModel {
 
   private generateReels(config = this._config): ReelModel[] {
     return config.reels.map((reelConfig: any, index: number) => new ReelModel(reelConfig, index));
-  }
-
-  private async getSpinResult(bet: number): Promise<void> {
-    this.tempSpinResult = await spin(bet as number);
-    this.isResultReady = true;
-    this.canCheck && this.checkForResult();
   }
 
   private setNewElementsToReels(result: ReelsResult): void {

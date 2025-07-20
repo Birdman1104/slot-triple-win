@@ -2,7 +2,8 @@
 import { lego } from "@armathai/lego";
 import { createApp } from "vue";
 import App from "./app.ts";
-import { MainGameEvents } from "./events/MainEvents.ts";
+import { GameModelEvents } from "./events/ModelEvents.ts";
+import { GameState } from "./models/GameModel.ts";
 import UI from "./ui/UI.vue";
 
 window.addEventListener("load", async (): Promise<void> => {
@@ -20,9 +21,11 @@ window.addEventListener("load", async (): Promise<void> => {
   window.addEventListener("focus", () => window.game.onFocusChange(true));
   window.addEventListener("blur", () => window.game.onFocusChange(false));
 
-  lego.event.on(MainGameEvents.GameStart, () => {
-    const uiRoot = document.createElement("div");
-    document.body.appendChild(uiRoot);
-    createApp(UI).mount(uiRoot);
+  lego.event.on(GameModelEvents.StateUpdate, (state: GameState) => {
+    if (state === GameState.Game) {
+      const uiRoot = document.createElement("div");
+      document.body.appendChild(uiRoot);
+      createApp(UI).mount(uiRoot);
+    }
   });
 });

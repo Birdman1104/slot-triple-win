@@ -123,7 +123,6 @@ export const getDefaultPlayerInfo = async (): Promise<any> => {
   );
 };
 
-export function getSlotMachineConfig() {
-  const { reels } = getDefaultReelsConfig();
-  return { reels };
-}
+export const getSlotMachineInitialConfig = () => {
+  return { reels: getDefaultReelsConfig().reels };
+};

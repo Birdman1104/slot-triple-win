@@ -1,22 +1,11 @@
-import { getSlotMachineConfig } from "../slotLogic";
+import { getSlotMachineInitialConfig } from "../slotLogic";
 import { ObservableModel } from "./ObservableModel";
 import { SlotMachineModel } from "./SlotMachineModel";
 
 export enum GameState {
   Undefined = "undefined",
-  ReadyToPlay = "readyToPlay",
-  Idle = "idle",
-  Requesting = "requesting",
-  ShowWinSymbols = "showWinSymbols",
-  ShowWinnings = "showWinnings",
-}
-
-export enum WIN_TYPE {
-  NONE = "none",
-  NORMAL = "normal",
-  BIG = "big",
-  HUGE = "huge",
-  MEGA = "mega",
+  Intro = "intro",
+  Game = "game",
 }
 
 export class GameModel extends ObservableModel {
@@ -25,6 +14,7 @@ export class GameModel extends ObservableModel {
 
   constructor() {
     super("GameModel");
+    this.state = GameState.Undefined;
     this.makeObservable();
   }
 
@@ -44,7 +34,17 @@ export class GameModel extends ObservableModel {
     this._slotMachine = value;
   }
 
+  public setState(newState: GameState): void {
+    console.warn(`GameModel: setState: ${newState}`);
+
+    this._state = newState;
+  }
+
   public init(): void {
+    // this.initializeMachineModel();
+  }
+
+  public initSlotMachine(): void {
     this.initializeMachineModel();
   }
 
@@ -60,7 +60,7 @@ export class GameModel extends ObservableModel {
 
   private initializeMachineModel(): void {
     this._slotMachine = new SlotMachineModel();
-    this._slotMachine.init(getSlotMachineConfig());
+    this._slotMachine.init(getSlotMachineInitialConfig());
   }
 
   private destroyMachineModel(): void {

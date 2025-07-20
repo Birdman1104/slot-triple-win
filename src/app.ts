@@ -6,8 +6,10 @@ import { IMAGES } from "./assets/assetsNames/images.ts";
 import { SPRITESHEET } from "./assets/assetsNames/spritesheets.ts";
 import { mapCommands } from "./commands/eventCommandPairs.ts";
 import { ScreenSizeConfig } from "./config.ts";
-import { MainGameEvents, WindowEvent } from "./events/MainEvents.ts";
+import { WindowEvent } from "./events/MainEvents.ts";
+import { GameModelEvents } from "./events/ModelEvents.ts";
 import PixiStage from "./MainStage.ts";
+import { GameState } from "./models/GameModel.ts";
 import { fitDimension } from "./utils/Utils.ts";
 
 class App extends Application {
@@ -22,6 +24,8 @@ class App extends Application {
       resolution: Math.max(window.devicePixelRatio || 1, 2),
       sharedTicker: true,
     });
+
+    lego.event.on(GameModelEvents.StateUpdate, this.onGameStateUpdate, this);
   }
 
   public async init(): Promise<void> {
@@ -79,17 +83,23 @@ class App extends Application {
 
   private onLoadComplete(): void {
     this.appResize();
-    this.stage.showIntro();
     lego.command.execute(mapCommands);
-    lego.event.emit(MainGameEvents.MainViewReady);
-
-    lego.event.on(MainGameEvents.GameStart, this.onGameStart, this);
+    lego.event.emit("initModels");
   }
 
-  private onGameStart(): void {
-    this.stage.hideIntro();
-    this.stage.showMainGame();
-    lego.event.emit("initModels");
+  private onGameStateUpdate(newState: GameState, oldState: GameState): void {
+    switch (newState) {
+      case GameState.Intro:
+        this.stage.showIntro();
+        break;
+      case GameState.Game:
+        this.stage.hideIntro();
+        this.stage.showMainGame();
+        break;
+
+      default:
+        break;
+    }
   }
 
   private initStats(): void {

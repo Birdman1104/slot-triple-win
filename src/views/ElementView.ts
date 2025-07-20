@@ -35,18 +35,6 @@ export class Element extends Container {
     return new Rectangle(0, 0, WIDTH, HEIGHT);
   }
 
-  public startAnimation(isWinningItem: boolean): void {
-    // isWinningItem ? this.clearDim() : this.dim();
-  }
-
-  public dim() {
-    // this.element && (this.element.tint = 0xa0a0a0);
-  }
-
-  public clearDim() {
-    // this.element && (this.element.tint = 0xffffff);
-  }
-
   public endAnimation(): void {
     if (!this.element) return;
     this.element.visible = true;
@@ -56,6 +44,7 @@ export class Element extends Container {
     this.ice = makeSprite({ frame: "ice_1.png", atlas: "slot_machine.png" });
     this.ice.anchor.set(0.5);
     this.addChild(this.ice);
+    console.warn(this.type);
 
     this.element && this.element.destroy();
     this.element = makeSprite({ frame: `${this._type}.png`, atlas: "symbols.png" });

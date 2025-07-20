@@ -1,5 +1,6 @@
 import { lego } from "@armathai/lego";
 import { SlotMachineViewEvents } from "../events/MainEvents";
+import { GameState } from "../models/GameModel";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
 import { getDefaultPlayerInfo } from "../slotLogic";
@@ -12,12 +13,23 @@ export const initModelsCommand = async (): Promise<void> => {
   Head.initSoundModel();
   Head.initPlayerModel();
   Head.playerModel?.setPlayerInfo(playerInfo);
+  Head.gameModel?.setState(GameState.Intro);
+};
+
+export const onShowIntroCommand = (): void => {
+  Head.gameModel?.setState(GameState.Intro);
+};
+
+export const onShowGameCommand = (): void => {
+  Head.gameModel?.setState(GameState.Game);
+  Head.gameModel?.initSlotMachine();
 };
 
 export const onSpinButtonClickCommand = () => {
+  if (Head.playerModel && isNaN(Head.playerModel.bet)) return;
   Head.playerModel?.spin();
   lego.event.emit(SlotMachineViewEvents.UpdateUIBalance);
-  Head.gameModel?.slotMachine?.spin(Head.playerModel?.bet);
+  Head.gameModel?.slotMachine?.spin(Head.playerModel?.bet as number);
 };
 
 export const plusButtonClickCommand = (): void => {
@@ -30,14 +42,6 @@ export const minusButtonClickCommand = (): void => {
 
 export const maxBetButtonClickCommand = (): void => {
   Head.playerModel?.setMaxBet();
-};
-
-export const slotMachineOldElementsDropCompleteCommand = (): void => {
-  Head.gameModel?.slotMachine?.setState(SlotMachineState.WaitingForResult);
-};
-
-export const slotMachineNewElementsDropCompleteCommand = (): void => {
-  Head.gameModel?.slotMachine?.setState(SlotMachineState.ShowWinLines);
 };
 
 export const winLinesShowCompleteCommand = (): void => {
@@ -53,7 +57,5 @@ export const spinResultUpdateCommand = (result: SpinResult): void => {
 };
 
 export const slotMachineStateUpdateCommand = (newState: SlotMachineState, oldState: SlotMachineState): void => {
-  if (newState === SlotMachineState.WaitingForResult) {
-    Head.gameModel?.slotMachine?.checkForResult();
-  }
+  //
 };
