@@ -29,6 +29,10 @@ export class Element extends Container {
     return this.y + this.height / 2;
   }
 
+  get top() {
+    return this.y - this.height / 2;
+  }
+
   public getBounds(): Rectangle {
     return new Rectangle(0, 0, WIDTH, HEIGHT);
   }

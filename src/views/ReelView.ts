@@ -96,12 +96,19 @@ export class Reel extends Container {
     // Create extra elements for the spinning effect
     const symbolTypes = ELEMENT_FRAMES.map((frame) => frame.replace(".png", ""));
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const randomSymbol = symbolTypes[Math.floor(Math.random() * symbolTypes.length)];
       const elementModel = new ElementModel(randomSymbol, `spinning_${this._uuid}_${i}`);
       const element = new Element(elementModel);
 
-      element.position.set(WIDTH / 2, -element.height * (i + 1)); // Start above visible area
+      if (i === 0) {
+        element.y = -element.height / 2; // Position first element at the top
+      } else {
+        const previousEl = this._spinningElements[i - 1];
+        element.y = -1000;
+        element.y = previousEl.top - element.height / 2 + OFFSET_Y;
+      }
+      element.x = element.width / 2;
       this.addChild(element);
       this._spinningElements.push(element);
     }
