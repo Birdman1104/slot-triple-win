@@ -5,7 +5,6 @@ import { makeSprite } from "../utils/Utils";
 export class Element extends Container {
   private _uuid: string;
   private _type: string;
-  private ice: Sprite | null = null;
   private element: Sprite | null = null;
 
   constructor({ uuid, type }: { uuid: string; type: string }) {
@@ -40,10 +39,6 @@ export class Element extends Container {
   }
 
   private buildElement(): void {
-    this.ice = makeSprite({ frame: "ice_1.png", atlas: "slot_machine.png" });
-    this.ice.anchor.set(0.5);
-    this.addChild(this.ice);
-
     this.element && this.element.destroy();
     this.element = makeSprite({ frame: `${this._type}.png`, atlas: "symbols.png" });
     this.element.anchor.set(0.5);

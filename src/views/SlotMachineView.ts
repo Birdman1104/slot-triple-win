@@ -91,8 +91,8 @@ export class SlotMachine extends Container {
     this.addChild(this.reelsContainer);
 
     this.reelsMask = new Graphics();
-    this.reelsMask.beginFill(0xff0000, 0.1);
-    this.reelsMask.drawRect(this.reelsContainer.x, this.reelsContainer.y - 5, 3.12 * WIDTH, 2.9 * HEIGHT);
+    this.reelsMask.beginFill(0xff0000, 0.5);
+    this.reelsMask.drawRect(this.reelsContainer.x, this.reelsContainer.y - 8, 3.16 * WIDTH, 2.85 * HEIGHT);
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 

@@ -3,6 +3,7 @@ import { Container, Rectangle } from "pixi.js";
 import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
 import { ElementModel } from "../models/ElementModel";
 import { ReelModel } from "../models/ReelModel";
+import { makeSprite } from "../utils/Utils";
 import { Element } from "./ElementView";
 
 const ELEMENT_FRAMES = [
@@ -137,7 +138,17 @@ export class Reel extends Container {
   }
 
   private build(elements: ElementModel[]): void {
+    this.buildIce();
     this.buildElements(elements);
+  }
+
+  private buildIce(): void {
+    for (let i = 0; i < 3; i++) {
+      const ice = makeSprite({ frame: "ice_1.png", atlas: "slot_machine.png" });
+      ice.anchor.set(0.5);
+      ice.position.set(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2);
+      this.addChild(ice);
+    }
   }
 
   private buildElements(elements: ElementModel[]): void {
