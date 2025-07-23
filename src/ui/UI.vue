@@ -444,6 +444,7 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 }
 </style>
 <style>
+
 @media screen and (max-width: 1300px) {
   .btn-background {
     width: 45px !important;
@@ -459,7 +460,7 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) and (orientation: landscape) {
   .btn-background {
     width: 35px !important;
     height: 35px !important;
@@ -486,9 +487,12 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   .buy-btn-text {
     font-size: 18px !important;
   }
+  .line {
+    height: 40px !important;
+  }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) and (orientation: landscape) {
   .btn-background {
     width: 25px !important;
     height: 25px !important;
