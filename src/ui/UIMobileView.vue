@@ -155,7 +155,7 @@ function toggleAmountuBar() {
 }
 
 function handleSelect(item: any) {
-  activeModal.value = null; 
+  activeModal.value = null;
 }
 
 const updateTempBalance = (newBalance: number): void => {
@@ -201,9 +201,6 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 
 .balance-box {
   width: 100%;
-}
-
-.close-button-wrapper {
 }
 
 .btn-background {

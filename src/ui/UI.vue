@@ -1,15 +1,32 @@
 <template>
-  <div class="menu-wrapper" v-if="!isMobile">
+  <div
+    class="menu-wrapper"
+    v-if="!isMobile || (isMobile && orientation === 'landscape-primary')"
+  >
     <div class="wrapper">
       <MenuBackgroundSvg />
       <div class="ui-overlay">
         <div class="section left-section flex-center">
-          <div class="close-button-wrapper flex-center relative" @click="toggleMenuBar">
+          <div
+            class="close-button-wrapper flex-center relative"
+            @click="toggleMenuBar"
+          >
             <div class="btn-background flex-center">
               <div class="close-button flex-center">
-                <Modal v-if="activeModal === 'menu'" :items="menuItems" :width="160" @select="handleSelect" />
-                <img v-if="activeModal === 'menu'" src="/src/assets/images/icons/close.svg" />
-                <img v-if="activeModal !== 'menu'" src="/src/assets/images/icons/menuBar.svg" />
+                <Modal
+                  v-if="activeModal === 'menu'"
+                  :items="menuItems"
+                  :width="160"
+                  @select="handleSelect"
+                />
+                <img
+                  v-if="activeModal === 'menu'"
+                  src="/src/assets/images/icons/close.svg"
+                />
+                <img
+                  v-if="activeModal !== 'menu'"
+                  src="/src/assets/images/icons/menuBar.svg"
+                />
               </div>
             </div>
 
@@ -32,10 +49,18 @@
         </div>
 
         <div class="section right-section flex-center">
-          <div class="refresh-btn-wrapper flex-center relative" @click="toggleAmountuBar">
+          <div
+            class="refresh-btn-wrapper flex-center relative"
+            @click="toggleAmountuBar"
+          >
             <div class="btn-background flex-center">
               <div class="refresh-btn flex-center">
-                <Modal v-if="activeModal === 'amount'" :items="amountItems" @select="handleSelect" :width="50" />
+                <Modal
+                  v-if="activeModal === 'amount'"
+                  :items="amountItems"
+                  @select="handleSelect"
+                  :width="50"
+                />
                 <img src="../assets/images/icons/refresh.svg" />
               </div>
             </div>
@@ -43,18 +68,25 @@
           </div>
 
           <div class="balance-box flex-center flex-center">
-            <div class="balance-wrapper">
-              <span class="text">Bet </span><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
+            <div class="balance-wrapper flex-center">
+              <span class="text">Bet </span
+              ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
             </div>
 
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background small flex-center">
-                <button class="increase-button bet-button flex-center" @click="plusButtonClick">
+                <button
+                  class="increase-button bet-button flex-center"
+                  @click="plusButtonClick"
+                >
                   <img src="../assets/images/icons/arrow.svg" />
                 </button>
               </div>
               <div class="btn-background small flex-center">
-                <button class="decrease-button bet-button flex-center" @click="minusButtonClick">
+                <button
+                  class="decrease-button bet-button flex-center"
+                  @click="minusButtonClick"
+                >
                   <img src="../assets/images/icons/arrow.svg" />
                 </button>
               </div>
@@ -74,7 +106,7 @@
     </div>
   </div>
 
-  <div v-if="isMobile">
+  <div v-if="isMobile && orientation === 'portrait-primary'">
     <UIMobileView />
   </div>
 </template>
@@ -93,6 +125,7 @@ let tempBalance = -1;
 let balance = -1;
 
 const isMobile = ref(window.innerWidth <= 768);
+const orientation = ref("");
 const activeModal = ref<null | "menu" | "amount">(null);
 
 const menuItems = [
@@ -125,6 +158,12 @@ function handleResize() {
 
 onMounted(() => {
   window.addEventListener("resize", handleResize);
+  orientation.value = screen.orientation.type;
+
+  screen.orientation.addEventListener("change", () => {
+    orientation.value = screen.orientation.type;
+    console.log(orientation.value, "here");
+  });
 });
 
 onBeforeUnmount(() => {
@@ -187,10 +226,12 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 .line {
   width: 1px;
   height: 60px;
-  background: linear-gradient(to bottom,
-      rgba(192, 177, 165, 0) 0%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(153, 153, 153, 0) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(192, 177, 165, 0) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(153, 153, 153, 0) 100%
+  );
 }
 
 .balance-box {
@@ -259,7 +300,6 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   width: 100%;
 }
 
-
 .ui-overlay {
   position: absolute;
   top: 0;
@@ -310,9 +350,11 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   border: 1.3px solid transparent;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
-    linear-gradient(135deg,
+    linear-gradient(
+      135deg,
       rgba(255, 255, 255, 0.25),
-      rgba(153, 153, 153, 0.25));
+      rgba(153, 153, 153, 0.25)
+    );
 
   background-origin: border-box;
   background-clip: content-box, border-box;
@@ -359,9 +401,11 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
 .close-button,
 .refresh-btn {
   border-radius: 50%;
-  background: radial-gradient(at left top,
-      rgba(255, 255, 255, 0.55),
-      rgba(168, 147, 121, 0.55));
+  background: radial-gradient(
+    at left top,
+    rgba(255, 255, 255, 0.55),
+    rgba(168, 147, 121, 0.55)
+  );
   border: none;
   box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
 }
@@ -397,5 +441,87 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+</style>
+<style>
+@media screen and (max-width: 1300px) {
+  .btn-background {
+    width: 45px !important;
+    height: 45px !important;
+  }
+  .small {
+    width: 23px !important;
+    height: 23px !important;
+  }
+  .spin-button {
+    width: 70px !important;
+    height: 70px !important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .btn-background {
+    width: 35px !important;
+    height: 35px !important;
+  }
+  .small {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .spin-button {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .spin-button img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .close-button img,
+  .refresh-btn img {
+    width: 25px !important;
+    height: 25px !important;
+  }
+  .buy-btn-text {
+    font-size: 18px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .btn-background {
+    width: 25px !important;
+    height: 25px !important;
+  }
+  .small {
+    width: 15px !important;
+    height: 15px !important;
+  }
+  .spin-button {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .spin-button img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .close-button img,
+  .refresh-btn img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .buy-btn-text {
+    font-size: 13px !important;
+  }
+
+  .text {
+    font-size: 20px !important;
+  }
+  .amount {
+    font-size: 18px !important;
+  }
 }
 </style>

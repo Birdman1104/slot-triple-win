@@ -87,6 +87,6 @@
 
 <style scoped>
 .menu-background {
-    width: 100vw;
+  width: 100vw;
 }
 </style>
