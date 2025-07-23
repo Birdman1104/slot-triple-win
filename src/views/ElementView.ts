@@ -3,22 +3,13 @@ import { HEIGHT, WIDTH } from "../config";
 import { makeSprite } from "../utils/Utils";
 
 export class Element extends Container {
-  private _uuid: string;
-  private _type: string;
   private element: Sprite | null = null;
 
-  constructor({ uuid, type }: { uuid: string; type: string }) {
+  constructor(private _type: string) {
     super();
-
-    this._uuid = uuid;
-    this._type = type;
 
     this.updateDimensions();
     this.buildElement();
-  }
-
-  get uuid() {
-    return this._uuid;
   }
 
   get type() {

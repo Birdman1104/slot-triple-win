@@ -36,7 +36,8 @@ export class SlotMachine extends Container {
   }
 
   public startSpinning(): void {
-    this.reels.forEach((reel) => reel.startSpinning());
+    this.reels[0].startSpinning();
+    // this.reels.forEach((reel) => reel.startSpinning());
   }
 
   public stopSpinning(): void {
@@ -96,6 +97,6 @@ export class SlotMachine extends Container {
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 
-    this.reelsContainer.mask = this.reelsMask;
+    // this.reelsContainer.mask = this.reelsMask;
   }
 }

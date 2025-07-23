@@ -22,7 +22,7 @@ export class Reel extends Container {
   private _uuid: String;
   private _elements: Element[] = [];
   private _spinningElements: Element[] = [];
-  private _spinAnimation: anime.AnimeInstance | null = null;
+  private _spinAnimations: anime.AnimeInstance[] = [];
   private _isSpinning: boolean = false;
 
   constructor(model: ReelModel) {
@@ -45,9 +45,9 @@ export class Reel extends Container {
     return new Rectangle(0, 0, WIDTH, 2.9 * HEIGHT);
   }
 
-  public getElementByUUID(uuid: string): Element | undefined {
-    return this._elements.find((el) => el.uuid === uuid);
-  }
+  // public getElementByUUID(uuid: string): Element | undefined {
+  //   return this._elements.find((el) => el.uuid === uuid);
+  // }
 
   public getElementByIndex(index: number): Element {
     return this.elements[index];
@@ -76,9 +76,9 @@ export class Reel extends Container {
 
     this._isSpinning = false;
 
-    if (this._spinAnimation) {
-      this._spinAnimation.pause();
-      this._spinAnimation = null;
+    if (this._spinAnimations) {
+      // this._spinAnimations.pause();
+      // this._spinAnimations = null;
     }
 
     this.cleanupSpinningElements();
@@ -94,19 +94,17 @@ export class Reel extends Container {
 
   private createSpinningElements(): void {
     // Create extra elements for the spinning effect
-    const symbolTypes = ELEMENT_FRAMES.map((frame) => frame.replace(".png", ""));
+    // const symbolTypes = ELEMENT_FRAMES.map((frame) => frame.replace(".png", ""));
 
-    for (let i = 0; i < 10; i++) {
-      const randomSymbol = symbolTypes[Math.floor(Math.random() * symbolTypes.length)];
-      const elementModel = new ElementModel(randomSymbol, `spinning_${this._uuid}_${i}`);
-      const element = new Element(elementModel);
+    for (let i = 0; i < 3; i++) {
+      // const randomSymbol = symbolTypes[Math.floor(Math.random() * symbolTypes.length)];
+      const element = new Element("apple");
 
       if (i === 0) {
         element.y = -element.height / 2; // Position first element at the top
       } else {
         const previousEl = this._spinningElements[i - 1];
-        element.y = -1000;
-        element.y = previousEl.top - element.height / 2 + OFFSET_Y;
+        element.y = previousEl.top - element.height / 2 - OFFSET_Y;
       }
       element.x = element.width / 2;
       this.addChild(element);
@@ -118,21 +116,38 @@ export class Reel extends Container {
     if (!this._isSpinning) return;
 
     const totalHeight = HEIGHT + OFFSET_Y; // Height per element
+    const spinningElements = [...this.elements, ...this._spinningElements];
 
-    this._spinAnimation = anime({
-      targets: [...this.elements, ...this._spinningElements],
-      y: (el: any) => el.y + totalHeight * 5, // Move down
-      duration: 1000,
-      easing: "linear",
-      complete: () => {
-        if (this._isSpinning) {
-          // Reset positions and continue spinning
-          // this._spinningElements.forEach((el, i) => {
-          //   el.position.y = -el.height * (i + 1);
-          // });
-          this.animateSpinning(); // Continue the loop
-        }
-      },
+    spinningElements.forEach((el) => {
+      const target = el.y + totalHeight;
+      this._spinAnimations.push(
+        anime({
+          targets: el,
+          y: target,
+          duration: 400,
+          easing: "linear",
+          update: () => {
+            // if (i === 0) {
+            //   console.log(el.y, target);
+            // }
+          },
+          complete: () => {
+            if (this._isSpinning) {
+              const index = spinningElements.indexOf(el);
+              console.log(spinningElements.map((e) => e.type));
+              spinningElements.splice(index, 1);
+              spinningElements.push(el);
+              console.log(spinningElements.map((e) => e.type));
+              // el.y = spinningElements[0].top - el.height / 2 - OFFSET_Y;
+              // const el = spinningElements.shift();
+              // console.warn(el);
+              // if (!el) return;
+              // spinningElements.push(el);
+              // this.animateSpinning(); // Continue the loop
+            }
+          },
+        })
+      );
     });
   }
 
@@ -160,7 +175,7 @@ export class Reel extends Container {
 
   private buildElements(elements: ElementModel[]): void {
     this._elements = elements.map((config) => {
-      const element = new Element(config);
+      const element = new Element(config.type);
       element.name = config.type;
       element.position.set(element.width / 2, -element.height / 2);
       this.addChild(element);
