@@ -490,6 +490,12 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   .line {
     height: 40px !important;
   }
+    .text {
+    font-size: 20px !important;
+  }
+  .amount {
+    font-size: 18px !important;
+  }
 }
 
 @media screen and (max-width: 768px) and (orientation: landscape) {
@@ -522,7 +528,7 @@ lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
   }
 
   .text {
-    font-size: 20px !important;
+    font-size: 16px !important;
   }
   .amount {
     font-size: 18px !important;
