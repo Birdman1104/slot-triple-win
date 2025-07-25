@@ -1,4 +1,4 @@
-import { Container, Rectangle, Sprite } from "pixi.js";
+import { Container, Rectangle, Sprite, Texture } from "pixi.js";
 import { HEIGHT, WIDTH } from "../config";
 import { makeSprite } from "../utils/Utils";
 
@@ -22,6 +22,13 @@ export class Element extends Container {
 
   get top() {
     return this.y - this.height / 2;
+  }
+
+  public updateSkin(type: string): void {
+    this._type = type;
+    if (this.element) {
+      this.element.texture = Texture.from(`${this._type}.png`);
+    }
   }
 
   public getBounds(): Rectangle {

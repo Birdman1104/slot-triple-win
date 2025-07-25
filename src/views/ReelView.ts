@@ -3,20 +3,10 @@ import { Container, Rectangle } from "pixi.js";
 import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
 import { ElementModel } from "../models/ElementModel";
 import { ReelModel } from "../models/ReelModel";
-import { makeSprite } from "../utils/Utils";
+import { makeSprite, sample } from "../utils/Utils";
 import { Element } from "./ElementView";
 
-const ELEMENT_FRAMES = [
-  "apple.png",
-  "blueberry.png",
-  "cherry.png",
-  "lemon.png",
-  "strawberry.png",
-  "watermelon.png",
-  "vodka.png",
-  "gin.png",
-  "whiskey.png",
-];
+const ELEMENT_FRAMES = ["apple", "blueberry", "cherry", "lemon", "strawberry", "watermelon", "vodka", "gin", "whiskey"];
 
 export class Reel extends Container {
   private _uuid: String;
@@ -70,8 +60,6 @@ export class Reel extends Container {
   }
 
   public stopSpinning(): void {
-    console.warn("start spin");
-
     if (!this._isSpinning) return;
 
     this._isSpinning = false;
@@ -98,7 +86,7 @@ export class Reel extends Container {
 
     for (let i = 0; i < 3; i++) {
       // const randomSymbol = symbolTypes[Math.floor(Math.random() * symbolTypes.length)];
-      const element = new Element("apple");
+      const element = new Element(sample(ELEMENT_FRAMES));
 
       if (i === 0) {
         element.y = -element.height / 2; // Position first element at the top
@@ -116,38 +104,35 @@ export class Reel extends Container {
     if (!this._isSpinning) return;
 
     const totalHeight = HEIGHT + OFFSET_Y; // Height per element
-    const spinningElements = [...this.elements, ...this._spinningElements];
+    const spinningElements = [...this.elements.reverse(), ...this._spinningElements];
 
-    spinningElements.forEach((el) => {
-      const target = el.y + totalHeight;
+    const animateElement = (el: Element, targetY: number): anime.AnimeInstance => {
       this._spinAnimations.push(
         anime({
           targets: el,
-          y: target,
-          duration: 400,
+          y: targetY,
+          duration: 1000,
           easing: "linear",
-          update: () => {
-            // if (i === 0) {
-            //   console.log(el.y, target);
-            // }
-          },
+
           complete: () => {
             if (this._isSpinning) {
               const index = spinningElements.indexOf(el);
-              console.log(spinningElements.map((e) => e.type));
-              spinningElements.splice(index, 1);
-              spinningElements.push(el);
-              console.log(spinningElements.map((e) => e.type));
-              // el.y = spinningElements[0].top - el.height / 2 - OFFSET_Y;
-              // const el = spinningElements.shift();
-              // console.warn(el);
-              // if (!el) return;
-              // spinningElements.push(el);
-              // this.animateSpinning(); // Continue the loop
+              if (el.y > this.height && index === 0) {
+                spinningElements.splice(index, 1);
+                el.y = spinningElements[spinningElements.length - 1].top - el.height / 2 - OFFSET_Y;
+                spinningElements.push(el);
+                el.updateSkin(sample(ELEMENT_FRAMES));
+              }
+              animateElement(el, el.y + totalHeight);
             }
           },
         })
       );
+    };
+
+    spinningElements.forEach((el) => {
+      const target = el.y + totalHeight;
+      animateElement(el, target);
     });
   }
 
