@@ -59,3 +59,7 @@ export const spinResultUpdateCommand = (result: SpinResult): void => {
 export const slotMachineStateUpdateCommand = (newState: SlotMachineState, oldState: SlotMachineState): void => {
   //
 };
+
+export const onStopCompleteCommand = (): void => {
+  Head.gameModel?.slotMachine?.setState(SlotMachineState.Idle);
+};

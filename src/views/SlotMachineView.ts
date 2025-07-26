@@ -1,6 +1,7 @@
 import { lego } from "@armathai/lego";
 import { Container, Graphics, Rectangle } from "pixi.js";
 import { HEIGHT, OFFSET_X, WIDTH } from "../config";
+import { SlotMachineViewEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import type { ReelModel } from "../models/ReelModel";
 import { SlotMachineModel, SlotMachineState } from "../models/SlotMachineModel";
@@ -36,19 +37,18 @@ export class SlotMachine extends Container {
   }
 
   public startSpinning(): void {
-    this.reels[0].startSpinning();
-    // this.reels.forEach((reel) => reel.startSpinning());
+    this.reels.forEach((reel) => reel.startSpinning());
   }
 
   public stopSpinning(): void {
-    this.reels.forEach((reel) => reel.stopSpinning());
+    this.result.reels.forEach((reelResult, index) => {
+      this.reels[index].setResultElements(reelResult);
+    });
   }
 
   private build(): void {
-    // this.buildReels();
+    //
   }
-
-  private buildReels(): void {}
 
   private onStateUpdate(newState: SlotMachineState): void {
     console.warn(`SlotMachine: onStateUpdate: ${SlotMachineState[newState]}`);
@@ -72,6 +72,7 @@ export class SlotMachine extends Container {
 
   private onSpinResultUpdate(result: SpinResult): void {
     this.result = result;
+    console.warn("SlotMachine: onSpinResultUpdate", this.result);
   }
 
   private onReelsUpdate(newReels: ReelModel[]): void {
@@ -82,7 +83,12 @@ export class SlotMachine extends Container {
 
     this.reelsContainer = new Container();
     this.reels = newReels.map((model, i) => {
-      const reel = new Reel(model);
+      const reel = new Reel(model, i);
+      reel.on("reelStopped", (index) => {
+        if (index === 2) {
+          lego.event.emit(SlotMachineViewEvents.StopComplete);
+        }
+      });
       reel.position.set(this.reelsContainer.width + (i !== 0 ? OFFSET_X : 0), 0);
       this.reelsContainer.addChild(reel);
       return reel;

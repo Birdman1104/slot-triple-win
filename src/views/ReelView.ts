@@ -3,7 +3,7 @@ import { Container, Rectangle } from "pixi.js";
 import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
 import { ElementModel } from "../models/ElementModel";
 import { ReelModel } from "../models/ReelModel";
-import { makeSprite, sample } from "../utils/Utils";
+import { last, makeSprite, sample } from "../utils/Utils";
 import { Element } from "./ElementView";
 
 const ELEMENT_FRAMES = ["apple", "blueberry", "cherry", "lemon", "strawberry", "watermelon", "vodka", "gin", "whiskey"];
@@ -11,11 +11,17 @@ const ELEMENT_FRAMES = ["apple", "blueberry", "cherry", "lemon", "strawberry", "
 export class Reel extends Container {
   private _uuid: String;
   private _elements: Element[] = [];
+  private _dummyElements: Element[] = [];
   private _spinningElements: Element[] = [];
   private _spinAnimations: anime.AnimeInstance[] = [];
   private _isSpinning: boolean = false;
 
-  constructor(model: ReelModel) {
+  private _resultIsReady: boolean = false;
+
+  constructor(
+    model: ReelModel,
+    private _index: number
+  ) {
     super();
     const { elements, uuid } = model;
     this._uuid = uuid;
@@ -35,9 +41,18 @@ export class Reel extends Container {
     return new Rectangle(0, 0, WIDTH, 2.9 * HEIGHT);
   }
 
-  // public getElementByUUID(uuid: string): Element | undefined {
-  //   return this._elements.find((el) => el.uuid === uuid);
-  // }
+  public setResultElements(resultElements: string[]): void {
+    this._resultIsReady = true;
+    const newElements = resultElements.map((config) => new Element(config));
+    this.addChild(...newElements);
+    newElements.forEach((el) => {
+      el.y = last(this._spinningElements).top - el.height / 2 - OFFSET_Y;
+      el.x = el.width / 2;
+      this._spinningElements.push(el);
+
+      this.animateElement(el, el.y + HEIGHT + OFFSET_Y);
+    });
+  }
 
   public getElementByIndex(index: number): Element {
     return this.elements[index];
@@ -52,27 +67,13 @@ export class Reel extends Container {
 
     this._isSpinning = true;
 
-    // Hide original elements during spinning
-    // this._elements.forEach((el) => (el.alpha = 0));
-
     this.createSpinningElements();
     this.animateSpinning();
   }
 
   public stopSpinning(): void {
     if (!this._isSpinning) return;
-
     this._isSpinning = false;
-
-    if (this._spinAnimations) {
-      // this._spinAnimations.pause();
-      // this._spinAnimations = null;
-    }
-
-    this.cleanupSpinningElements();
-
-    // Show original elements again
-    this._elements.forEach((el) => (el.alpha = 1));
   }
 
   public destroy(): void {
@@ -81,67 +82,74 @@ export class Reel extends Container {
   }
 
   private createSpinningElements(): void {
-    // Create extra elements for the spinning effect
-    // const symbolTypes = ELEMENT_FRAMES.map((frame) => frame.replace(".png", ""));
-
     for (let i = 0; i < 3; i++) {
-      // const randomSymbol = symbolTypes[Math.floor(Math.random() * symbolTypes.length)];
       const element = new Element(sample(ELEMENT_FRAMES));
-
+      if (this._index === 0) {
+        console.warn(i, this._spinningElements);
+      }
       if (i === 0) {
-        element.y = -element.height / 2; // Position first element at the top
+        element.y = -element.height / 2;
       } else {
-        const previousEl = this._spinningElements[i - 1];
+        const previousEl = this._dummyElements[i - 1] ?? last(this._elements);
         element.y = previousEl.top - element.height / 2 - OFFSET_Y;
       }
       element.x = element.width / 2;
       this.addChild(element);
-      this._spinningElements.push(element);
+      this._dummyElements.push(element);
     }
   }
 
   private animateSpinning(): void {
     if (!this._isSpinning) return;
 
-    const totalHeight = HEIGHT + OFFSET_Y; // Height per element
-    const spinningElements = [...this.elements.reverse(), ...this._spinningElements];
+    const totalHeight = HEIGHT + OFFSET_Y;
+    this._spinningElements = [...this.elements.reverse(), ...this._dummyElements];
 
-    const animateElement = (el: Element, targetY: number): anime.AnimeInstance => {
-      this._spinAnimations.push(
-        anime({
-          targets: el,
-          y: targetY,
-          duration: 1000,
-          easing: "linear",
-
-          complete: () => {
-            if (this._isSpinning) {
-              const index = spinningElements.indexOf(el);
-              if (el.y > this.height && index === 0) {
-                spinningElements.splice(index, 1);
-                el.y = spinningElements[spinningElements.length - 1].top - el.height / 2 - OFFSET_Y;
-                spinningElements.push(el);
-                el.updateSkin(sample(ELEMENT_FRAMES));
-              }
-              animateElement(el, el.y + totalHeight);
-            }
-          },
-        })
-      );
-    };
-
-    spinningElements.forEach((el) => {
-      const target = el.y + totalHeight;
-      animateElement(el, target);
+    this._spinningElements.forEach((el) => {
+      this.animateElement(el, el.y + totalHeight);
     });
   }
 
-  private cleanupSpinningElements(): void {
-    this._spinningElements.forEach((el) => {
-      this.removeChild(el);
-      el.destroy();
-    });
-    this._spinningElements = [];
+  private animateElement(el: Element, targetY: number): anime.AnimeInstance {
+    const totalHeight = HEIGHT + OFFSET_Y;
+
+    this._spinAnimations.push(
+      anime({
+        targets: el,
+        y: targetY,
+        duration: 700,
+        easing: "linear",
+
+        complete: () => {
+          if (this._isSpinning) {
+            const index = this._spinningElements.indexOf(el);
+            if (el.y > this.height && index === 0 && !this._resultIsReady) {
+              this._spinningElements.splice(index, 1);
+              el.y = last(this._spinningElements).top - el.height / 2 - OFFSET_Y;
+              this._spinningElements.push(el);
+              el.updateSkin(sample(ELEMENT_FRAMES));
+            }
+
+            if (this._resultIsReady && el.y > this.height) {
+              this._spinningElements.splice(this._spinningElements.indexOf(el), 1);
+              el.destroy();
+            } else {
+              this.animateElement(el, el.y + totalHeight);
+            }
+
+            if (this._resultIsReady && this._spinningElements.length === 3) {
+              this._spinningElements.forEach((el) => anime.remove(el));
+              this._elements = [...this._spinningElements.reverse()];
+              this.emit("reelStopped", this._index);
+              this._isSpinning = false;
+              this._dummyElements.forEach((el) => el.destroy());
+              this._dummyElements = [];
+              this._spinningElements = [];
+            }
+          }
+        },
+      })
+    );
   }
 
   private build(elements: ElementModel[]): void {

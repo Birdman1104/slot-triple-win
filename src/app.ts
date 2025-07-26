@@ -37,7 +37,7 @@ class App extends Application {
     // @ts-ignore
     if (process.env.NODE_ENV !== "production") {
       this.initStats();
-      this.initLego();
+      // this.initLego();
     }
     await this.loadAssets();
     this.onLoadComplete();

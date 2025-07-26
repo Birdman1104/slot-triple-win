@@ -4,8 +4,7 @@ import { ObservableModel } from "./ObservableModel";
 export enum ReelState {
   Idle,
   Spinning,
-  DropOld,
-  DropNew,
+  Stop,
 }
 
 export class ReelModel extends ObservableModel {

@@ -7,6 +7,7 @@ import {
   minusButtonClickCommand,
   onShowGameCommand,
   onSpinButtonClickCommand,
+  onStopCompleteCommand,
   plusButtonClickCommand,
   slotMachineStateUpdateCommand,
   spinResultUpdateCommand,
@@ -62,5 +63,9 @@ export const eventCommandPairs: { event: any; command: any }[] = [
   {
     event: SlotMachineModelEvents.SpinResultUpdate,
     command: spinResultUpdateCommand,
+  },
+  {
+    event: SlotMachineViewEvents.StopComplete,
+    command: onStopCompleteCommand,
   },
 ];

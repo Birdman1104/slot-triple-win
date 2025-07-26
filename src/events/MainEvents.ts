@@ -9,14 +9,10 @@ export const MainGameEvents = {
   ShowGame: "MainGameEventsShowGame",
 };
 
-export const ReelViewEvents = {
-  OldElementsDropComplete: "ReelViewEventsOldElementsDropComplete",
-  NewElementsDropComplete: "ReelViewEventsNewElementsDropComplete",
-};
-
 export const SlotMachineViewEvents = {
   WinLinesShowComplete: "SlotMachineViewEventsWinLinesShowComplete",
   WinningsShowComplete: "SlotMachineViewEventsWinningsShowComplete",
+  StopComplete: "SlotMachineViewEventsStopComplete",
 
   UpdateUIBalance: "SlotMachineViewEventsUpdateUIBalance",
 };
