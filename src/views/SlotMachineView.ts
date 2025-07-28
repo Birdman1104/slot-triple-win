@@ -37,7 +37,9 @@ export class SlotMachine extends Container {
   }
 
   public startSpinning(): void {
-    this.reels.forEach((reel) => reel.startSpinning());
+    this.reels.forEach((reel, i) => {
+      reel.startSpinning();
+    });
   }
 
   public stopSpinning(): void {
@@ -72,7 +74,6 @@ export class SlotMachine extends Container {
 
   private onSpinResultUpdate(result: SpinResult): void {
     this.result = result;
-    console.warn("SlotMachine: onSpinResultUpdate", this.result);
   }
 
   private onReelsUpdate(newReels: ReelModel[]): void {
@@ -103,6 +104,6 @@ export class SlotMachine extends Container {
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 
-    // this.reelsContainer.mask = this.reelsMask;
+    this.reelsContainer.mask = this.reelsMask;
   }
 }

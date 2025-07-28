@@ -8,11 +8,11 @@ import { Element } from "./ElementView";
 
 const ELEMENT_FRAMES = ["apple", "blueberry", "cherry", "lemon", "strawberry", "watermelon", "vodka", "gin", "whiskey"];
 
+const TOTAL_HEIGHT = HEIGHT + OFFSET_Y;
+
 export class Reel extends Container {
   private _uuid: String;
   private _elements: Element[] = [];
-  private _dummyElements: Element[] = [];
-  private _spinningElements: Element[] = [];
   private _spinAnimations: anime.AnimeInstance[] = [];
   private _isSpinning: boolean = false;
 
@@ -43,14 +43,24 @@ export class Reel extends Container {
 
   public setResultElements(resultElements: string[]): void {
     this._resultIsReady = true;
-    const newElements = resultElements.map((config) => new Element(config));
-    this.addChild(...newElements);
-    newElements.forEach((el) => {
-      el.y = last(this._spinningElements).top - el.height / 2 - OFFSET_Y;
-      el.x = el.width / 2;
-      this._spinningElements.push(el);
+    const elements = [...this._elements];
+    elements.sort((a, b) => b.y - a.y);
 
-      this.animateElement(el, el.y + HEIGHT + OFFSET_Y);
+    const newElements = resultElements.map((config) => {
+      const el = new Element(config);
+
+      el.name = config;
+      el.position.set(el.width / 2, -el.height / 2);
+      this._elements.push(el);
+      this.addChild(el);
+      return el;
+    });
+
+    newElements.forEach((el) => {
+      const elements = [...this._elements];
+      elements.sort((a, b) => b.y - a.y);
+      el.y = last(elements).top - el.height / 2 - OFFSET_Y;
+      this.animateElement(el, el.y + TOTAL_HEIGHT);
     });
   }
 
@@ -83,68 +93,63 @@ export class Reel extends Container {
 
   private createSpinningElements(): void {
     for (let i = 0; i < 3; i++) {
-      const element = new Element(sample(ELEMENT_FRAMES));
-      if (this._index === 0) {
-        console.warn(i, this._spinningElements);
-      }
-      if (i === 0) {
-        element.y = -element.height / 2;
-      } else {
-        const previousEl = this._dummyElements[i - 1] ?? last(this._elements);
-        element.y = previousEl.top - element.height / 2 - OFFSET_Y;
-      }
+      const type = sample(ELEMENT_FRAMES);
+      const element = new Element(type);
+      element.name = type;
+      const elements = [...this._elements];
+
+      elements.sort((a, b) => b.y - a.y);
+
+      element.y = last(elements).top - element.height / 2 - OFFSET_Y;
       element.x = element.width / 2;
       this.addChild(element);
-      this._dummyElements.push(element);
+      this._elements.push(element);
     }
   }
 
   private animateSpinning(): void {
     if (!this._isSpinning) return;
 
-    const totalHeight = HEIGHT + OFFSET_Y;
-    this._spinningElements = [...this.elements.reverse(), ...this._dummyElements];
-
-    this._spinningElements.forEach((el) => {
-      this.animateElement(el, el.y + totalHeight);
+    this.elements.forEach((el) => {
+      this.animateElement(el, el.y + TOTAL_HEIGHT);
     });
   }
 
   private animateElement(el: Element, targetY: number): anime.AnimeInstance {
-    const totalHeight = HEIGHT + OFFSET_Y;
-
     this._spinAnimations.push(
       anime({
         targets: el,
         y: targetY,
-        duration: 700,
+        duration: 100,
         easing: "linear",
 
         complete: () => {
           if (this._isSpinning) {
-            const index = this._spinningElements.indexOf(el);
+            const index = this._elements.indexOf(el);
             if (el.y > this.height && index === 0 && !this._resultIsReady) {
-              this._spinningElements.splice(index, 1);
-              el.y = last(this._spinningElements).top - el.height / 2 - OFFSET_Y;
-              this._spinningElements.push(el);
-              el.updateSkin(sample(ELEMENT_FRAMES));
+              this._elements.splice(index, 1);
+              el.y = last(this._elements).top - el.height / 2 - OFFSET_Y;
+              this._elements.push(el);
+
+              const newType = sample(ELEMENT_FRAMES);
+              el.name = newType;
+              el.updateSkin(newType);
             }
 
             if (this._resultIsReady && el.y > this.height) {
-              this._spinningElements.splice(this._spinningElements.indexOf(el), 1);
+              this._elements.splice(this._elements.indexOf(el), 1);
               el.destroy();
             } else {
-              this.animateElement(el, el.y + totalHeight);
+              this.animateElement(el, el.y + TOTAL_HEIGHT);
             }
 
-            if (this._resultIsReady && this._spinningElements.length === 3) {
-              this._spinningElements.forEach((el) => anime.remove(el));
-              this._elements = [...this._spinningElements.reverse()];
+            if (this._resultIsReady && this._elements.length === 3) {
+              this._elements.forEach((el) => anime.remove(el));
+
               this.emit("reelStopped", this._index);
+              this._resultIsReady = false;
               this._isSpinning = false;
-              this._dummyElements.forEach((el) => el.destroy());
-              this._dummyElements = [];
-              this._spinningElements = [];
+              this.updateElementsPositions();
             }
           }
         },
