@@ -1,11 +1,14 @@
 import { lego } from "@armathai/lego";
+import anime from "animejs";
 import { Container, Graphics, Rectangle } from "pixi.js";
 import { HEIGHT, OFFSET_X, WIDTH } from "../config";
 import { SlotMachineViewEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import type { ReelModel } from "../models/ReelModel";
 import { SlotMachineModel, SlotMachineState } from "../models/SlotMachineModel";
+import type { Element } from "./ElementView";
 import { Reel } from "./ReelView";
+import { SlotForeground } from "./SlotForeground";
 
 export class SlotMachine extends Container {
   private reels: Reel[] = [];
@@ -16,6 +19,7 @@ export class SlotMachine extends Container {
     winningInfo: [],
     totalWin: -1,
   };
+  private foreground: SlotForeground = new SlotForeground();
 
   constructor(private config: SlotMachineModel) {
     super();
@@ -48,8 +52,15 @@ export class SlotMachine extends Container {
     });
   }
 
-  private build(): void {
-    //
+  private build(): void {}
+
+  private buildForeground(): void {
+    this.foreground.hideEverything();
+
+    this.foreground.on("winBoardShowComplete", () => {
+      lego.event.emit(SlotMachineViewEvents.WinningsShowComplete);
+    });
+    this.addChild(this.foreground);
   }
 
   private onStateUpdate(newState: SlotMachineState): void {
@@ -63,13 +74,37 @@ export class SlotMachine extends Container {
         this.stopSpinning();
         break;
       case SlotMachineState.ShowWinLines:
+        this.reelsContainer.mask = null;
+        this.showWinLines();
         break;
       case SlotMachineState.ShowWinnings:
+        this.showWinnings();
+
         break;
       case SlotMachineState.Idle:
         break;
       default:
     }
+  }
+
+  private showWinLines(): void {
+    if (this.result.winningInfo.length === 0) {
+      lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
+    }
+
+    const linesData: { line: WinningLine; winningItemType: string }[] = this.result.winningInfo.map((r) => {
+      return { line: r.line, winningItemType: r.id };
+    });
+
+    this.animateLines(linesData);
+  }
+
+  private showWinnings(): void {
+    if (this.result.totalWin === 0) {
+      lego.event.emit(SlotMachineViewEvents.WinningsShowComplete);
+      return;
+    }
+    this.foreground.showWin(this.result.totalWin);
   }
 
   private onSpinResultUpdate(result: SpinResult): void {
@@ -99,11 +134,69 @@ export class SlotMachine extends Container {
     this.addChild(this.reelsContainer);
 
     this.reelsMask = new Graphics();
-    this.reelsMask.beginFill(0xff0000, 0.5);
+    this.reelsMask.beginFill(0xff0000, 0.0001);
     this.reelsMask.drawRect(this.reelsContainer.x, this.reelsContainer.y - 8, 3.16 * WIDTH, 2.85 * HEIGHT);
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 
     this.reelsContainer.mask = this.reelsMask;
+    this.buildForeground();
+  }
+
+  private animateLines(lines: { line: WinningLine; winningItemType: string }[]): void {
+    const getElements = (line: any) => line.map((pos: any, i: number) => this.reels[i].getElementByIndex(pos));
+    const animationConfig: { elements: Element[]; winningItemType: string }[] = lines.map(
+      ({ line, winningItemType }) => {
+        return { elements: getElements(line), winningItemType };
+      }
+    );
+    if (animationConfig.length === 0) return;
+    const animations: any[] = [];
+    const playNextAnimation = (index: number, animations: any[]): void => {
+      clearDim();
+      if (!animations[index]) {
+        lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
+        return;
+      }
+      setDim();
+      animations[index].play();
+      animations[index].complete = () => playNextAnimation(index + 1, animations);
+    };
+
+    const clearDim = (): void => {
+      this.reels.forEach((r) => {
+        r.elements.forEach((e) => e.clearDim());
+      });
+    };
+
+    const setDim = (): void => {
+      this.reels.forEach((r) => {
+        r.elements.forEach((e: Element) => e.dim());
+      });
+    };
+
+    animationConfig.forEach(({ elements, winningItemType }, i) => {
+      const timeline = anime.timeline({
+        duration: 800,
+        easing: "easeInBack",
+        direction: "alternate",
+        autoplay: false,
+      });
+      elements.forEach((e) => {
+        timeline.add(
+          {
+            targets: e.scale,
+            x: 1.35,
+            y: 1.35,
+            begin: () => e.startAnimation(winningItemType === e.type),
+            complete: () => e.endAnimation(),
+          },
+          0
+        );
+      });
+      animations.push(timeline);
+    });
+
+    playNextAnimation(0, animations);
   }
 }

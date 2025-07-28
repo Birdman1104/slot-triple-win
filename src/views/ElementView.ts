@@ -24,6 +24,18 @@ export class Element extends Container {
     return this.y - this.height / 2;
   }
 
+  public startAnimation(isWinningItem: boolean): void {
+    // isWinningItem ? this.clearDim() : this.dim();
+  }
+
+  public dim() {
+    // this.element && (this.element.tint = 0xa0a0a0);
+  }
+
+  public clearDim() {
+    // this.element && (this.element.tint = 0xffffff);
+  }
+
   public updateSkin(type: string): void {
     this._type = type;
     if (this.element) {

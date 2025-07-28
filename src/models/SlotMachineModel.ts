@@ -106,7 +106,7 @@ export class SlotMachineModel extends ObservableModel {
       this.setNewElementsToReels(this.tempSpinResult.reels);
       this.setResult(this.tempSpinResult);
       this.state = SlotMachineState.ResponseReceived;
-    }, 4000);
+    }, 2000);
   }
 
   public idle(): void {

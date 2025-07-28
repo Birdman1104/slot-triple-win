@@ -61,5 +61,5 @@ export const slotMachineStateUpdateCommand = (newState: SlotMachineState, oldSta
 };
 
 export const onStopCompleteCommand = (): void => {
-  Head.gameModel?.slotMachine?.setState(SlotMachineState.Idle);
+  Head.gameModel?.slotMachine?.setState(SlotMachineState.ShowWinLines);
 };
