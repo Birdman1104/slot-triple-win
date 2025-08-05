@@ -4,6 +4,11 @@ import { makeSprite } from "../utils/Utils";
 
 export class SlotForeground extends Container {
   private iceCrack: Sprite = new Sprite();
+  private win = new Text("", {
+    fontFamily: "Arial",
+    fontSize: 128,
+    fill: "#ffffff",
+  });
 
   constructor() {
     super();
@@ -11,35 +16,51 @@ export class SlotForeground extends Container {
   }
 
   public showWin(winAmount: number): void {
-    const win = new Text(`${winAmount}`, {
-      fontFamily: "Arial",
-      fontSize: 128,
-      fill: "#ffffff",
-    });
-    win.anchor.set(0.5);
+    this.win.text = `${winAmount}`;
+    this.win.alpha = 0;
+    this.win.scale.set(0.2);
 
-    win.position.set(420, 370);
-    this.addChild(win);
-
-    anime({
-      targets: this.iceCrack,
-      alpha: 1,
-      duration: 300,
+    const timeline = anime.timeline({
       easing: "easeInOutQuad",
+      complete: () => {
+        this.emit("winBoardShowComplete");
+      },
     });
 
-    setTimeout(() => {
-      anime({
-        targets: [this.iceCrack, win],
+    timeline.add({
+      targets: [this.iceCrack, this.win],
+      alpha: 1,
+      duration: 800,
+    });
+
+    timeline.add(
+      {
+        targets: this.win.scale,
+        x: 1,
+        y: 1,
+        duration: 800,
+      },
+      0
+    );
+
+    timeline.add(
+      {
+        targets: this.win.scale,
+        x: 0.2,
+        y: 0.2,
+        duration: 800,
+      },
+      3000
+    );
+
+    timeline.add(
+      {
+        targets: [this.iceCrack, this.win],
         alpha: 0,
-        duration: 300,
-        easing: "easeInOutQuad",
-        complete: () => {
-          win.destroy();
-          this.emit("winBoardShowComplete");
-        },
-      });
-    }, 2000);
+        duration: 800,
+      },
+      3000
+    );
   }
 
   private build(): void {
@@ -47,6 +68,10 @@ export class SlotForeground extends Container {
     this.iceCrack.anchor.set(0.5);
     this.iceCrack.position.set(420, 370);
     this.addChild(this.iceCrack);
+
+    this.win.anchor.set(0.5);
+    this.win.position.set(420, 370);
+    this.addChild(this.win);
   }
 
   public hideEverything(): void {

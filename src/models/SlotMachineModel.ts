@@ -73,6 +73,7 @@ export class SlotMachineModel extends ObservableModel {
   public init(config: any): void {
     this._config = config;
     this._reels = this.generateReels();
+    this.state = SlotMachineState.Idle;
   }
 
   public setState(state: SlotMachineState): void {

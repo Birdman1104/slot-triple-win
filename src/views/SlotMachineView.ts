@@ -79,9 +79,9 @@ export class SlotMachine extends Container {
         break;
       case SlotMachineState.ShowWinnings:
         this.showWinnings();
-
         break;
       case SlotMachineState.Idle:
+        this.reelsContainer.mask = this.reelsMask;
         break;
       default:
     }
