@@ -120,7 +120,7 @@ export class Reel extends Container {
       anime({
         targets: el,
         y: targetY,
-        duration: 100,
+        duration: 300,
         easing: "linear",
 
         complete: () => {
@@ -184,14 +184,16 @@ export class Reel extends Container {
   }
 
   private updateElementsPositions(): void {
-    for (let i = 0; i < this._elements.length; i += 1) {
-      const element = this._elements[i];
+    const arr = [...this._elements];
+    const elements = arr.reverse();
+    for (let i = 0; i < elements.length; i += 1) {
+      const element = elements[i];
 
       if (i === 0) {
         element.y = element.height / 2;
         element.x = element.width / 2;
       } else {
-        const previousEl = this._elements[i - 1];
+        const previousEl = elements[i - 1];
         element.y = previousEl.bottom + element.height / 2 + OFFSET_Y;
         element.x = element.width / 2;
       }
