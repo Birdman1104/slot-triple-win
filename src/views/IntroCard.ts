@@ -1,4 +1,5 @@
-import { Container, Text } from "pixi.js";
+import { Container } from "pixi.js";
+import { introCardDescriptionTextConfig, introCardTitleTextConfig } from "../configs/textConfig";
 import { makeSprite, makeText } from "../utils/Utils";
 
 const atlas = "intro.png";
@@ -37,23 +38,13 @@ export class IntroCard extends Container {
     const bkg = makeSprite({ frame: cardConfig.frame, atlas: cardConfig.atlas });
     this.addChild(bkg);
 
-    const title = makeText({
-      text: cardConfig.title,
-      x: 0,
-      y: 40,
-      anchor: { x: 0, y: 0.5 },
-      style: { fontSize: 48, fill: "#ffffff" },
-    });
+    const title = makeText(introCardTitleTextConfig(cardConfig.title));
 
     title.anchor.set(0.5);
     title.position.set(0, 40);
     this.addChild(title);
-    const description = new Text(cardConfig.description, {
-      fontSize: 16,
-      fill: "#ffffff",
-      wordWrap: true,
-      wordWrapWidth: bkg.width * 0.7,
-    });
+    const description = makeText(introCardDescriptionTextConfig(cardConfig.description, title.y + 70, bkg.width * 0.7));
+
     description.anchor.set(0.5);
     description.position.set(10, title.y + 70);
 
