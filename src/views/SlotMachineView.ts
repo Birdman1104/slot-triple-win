@@ -33,7 +33,7 @@ export class SlotMachine extends Container {
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(0, -10, 3.12 * WIDTH, 2.9 * HEIGHT);
+    return new Rectangle(0, -10, 2.85 * WIDTH, 2.9 * HEIGHT);
   }
 
   public getReelByUUID(uuid: string): Reel {
@@ -125,7 +125,7 @@ export class SlotMachine extends Container {
           lego.event.emit(SlotMachineViewEvents.StopComplete);
         }
       });
-      reel.position.set(this.reelsContainer.width + (i !== 0 ? OFFSET_X : 0), 0);
+      reel.position.set(reel.width * i + (i == 0 ? 0 : OFFSET_X), 0);
       this.reelsContainer.addChild(reel);
       return reel;
     });
