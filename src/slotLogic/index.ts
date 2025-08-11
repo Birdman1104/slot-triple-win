@@ -75,9 +75,9 @@ const checkWinnings = (reelData: ReelsResult): WinningItemsCount[] => {
 export const spin = async (bet: number): Promise<SpinResult> => {
   // const reels = getReelsData();
   const reels = [
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY],
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY],
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY],
+    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.GIN, SYMBOL_TYPE.WHISKEY],
+    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.LEMON, SYMBOL_TYPE.VODKA],
+    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.CHERRY],
   ];
   const winningLines = checkWinnings(reels);
 
