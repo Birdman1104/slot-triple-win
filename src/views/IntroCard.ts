@@ -1,4 +1,5 @@
 import { Container } from "pixi.js";
+import { introCardConfig } from "../configs/spritesConfig";
 import { introCardDescriptionTextConfig, introCardTitleTextConfig } from "../configs/textConfig";
 import { makeSprite, makeText } from "../utils/Utils";
 
@@ -35,7 +36,7 @@ export class IntroCard extends Container {
 
   private build(): void {
     const cardConfig = CARDS_CONFIG[this.cardIndex - 1];
-    const bkg = makeSprite({ frame: cardConfig.frame, atlas: cardConfig.atlas });
+    const bkg = makeSprite(introCardConfig(cardConfig.frame, cardConfig.atlas));
     this.addChild(bkg);
 
     const title = makeText(introCardTitleTextConfig(cardConfig.title));

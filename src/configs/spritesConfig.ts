@@ -23,3 +23,23 @@ export const redIconConfig = (): SpriteConfig => ({
   scaleX: lp(1, 0.6),
   scaleY: lp(1, 0.6),
 });
+
+export const iceCrackConfig = (): SpriteConfig => ({
+  frame: "crack.png",
+  x: 384,
+  y: 370,
+  anchor: { x: 0.5, y: 0.5 },
+});
+
+export const iceCubeConfig = (x: number, y: number): SpriteConfig => ({
+  frame: "ice_1.png",
+  atlas: "slot_machine.png",
+  x,
+  y,
+  anchor: { x: 0.5, y: 0.5 },
+});
+
+export const introCardConfig = (frame: string, atlas: string): SpriteConfig => ({
+  frame,
+  atlas,
+});

@@ -1,6 +1,7 @@
 import anime from "animejs";
 import { Container, Rectangle } from "pixi.js";
 import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
+import { iceCubeConfig } from "../configs/spritesConfig";
 import { ElementModel } from "../models/ElementModel";
 import { ReelModel } from "../models/ReelModel";
 import { last, makeSprite, sample } from "../utils/Utils";
@@ -164,9 +165,7 @@ export class Reel extends Container {
 
   private buildIce(): void {
     for (let i = 0; i < 3; i++) {
-      const ice = makeSprite({ frame: "ice_1.png", atlas: "slot_machine.png" });
-      ice.anchor.set(0.5);
-      ice.position.set(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2);
+      const ice = makeSprite(iceCubeConfig(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2));
       this.addChild(ice);
     }
   }

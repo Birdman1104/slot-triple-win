@@ -64,9 +64,7 @@ export class SlotForeground extends Container {
   }
 
   private build(): void {
-    this.iceCrack = makeSprite({ frame: "crack.png" });
-    this.iceCrack.anchor.set(0.5);
-    this.iceCrack.position.set(420, 370);
+    this.iceCrack = makeSprite(iceCrackConfig());
     this.addChild(this.iceCrack);
 
     this.win.anchor.set(0.5);
