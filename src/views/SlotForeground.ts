@@ -1,14 +1,12 @@
 import anime from "animejs";
-import { Container, Sprite, Text } from "pixi.js";
-import { makeSprite } from "../utils/Utils";
+import { Container, Sprite } from "pixi.js";
+import { iceCrackConfig } from "../configs/spritesConfig";
+import { winTextConfig } from "../configs/textConfig";
+import { makeSprite, makeText } from "../utils/Utils";
 
 export class SlotForeground extends Container {
   private iceCrack: Sprite = new Sprite();
-  private win = new Text("", {
-    fontFamily: "Arial",
-    fontSize: 128,
-    fill: "#ffffff",
-  });
+  private win = makeText(winTextConfig());
 
   constructor() {
     super();
@@ -65,11 +63,7 @@ export class SlotForeground extends Container {
 
   private build(): void {
     this.iceCrack = makeSprite(iceCrackConfig());
-    this.addChild(this.iceCrack);
-
-    this.win.anchor.set(0.5);
-    this.win.position.set(420, 370);
-    this.addChild(this.win);
+    this.addChild(this.iceCrack, this.win);
   }
 
   public hideEverything(): void {

@@ -39,3 +39,15 @@ export const errorTextTextConfig = (): TextConfig => ({
     wordWrapWidth: lp(600, 230),
   },
 });
+
+export const winTextConfig = (): TextConfig => ({
+  text: "",
+  x: 384,
+  y: 370,
+  anchor: { x: 0.5, y: 0.5 },
+  style: {
+    fontFamily: "Arial",
+    fontSize: 128,
+    fill: "#ffffff",
+  },
+});
