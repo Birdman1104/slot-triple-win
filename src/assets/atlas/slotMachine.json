@@ -24,14 +24,38 @@
         "y": 0.5
       }
     },
-    "ice_win_2.png": {
+    "reel_shadow.png": {
       "frame": {
         "x": 3,
         "y": 298,
+        "w": 287,
+        "h": 81
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 2,
+        "w": 287,
+        "h": 81
+      },
+      "sourceSize": {
+        "w": 291,
+        "h": 85
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ice_win_2.png": {
+      "frame": {
+        "x": 303,
+        "y": 3,
         "w": 281,
         "h": 286
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 18,
@@ -50,12 +74,12 @@
     },
     "ice_1.png": {
       "frame": {
-        "x": 303,
-        "y": 3,
+        "x": 3,
+        "y": 385,
         "w": 266,
         "h": 262
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 25,
@@ -74,12 +98,12 @@
     },
     "ice_2.png": {
       "frame": {
-        "x": 303,
-        "y": 275,
+        "x": 275,
+        "y": 385,
         "w": 262,
         "h": 265
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 17,
@@ -103,8 +127,8 @@
     "image": "slotMachine.png",
     "format": "RGBA8888",
     "size": {
-      "w": 568,
-      "h": 582
+      "w": 587,
+      "h": 650
     },
     "scale": 1
   }

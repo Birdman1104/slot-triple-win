@@ -1,10 +1,16 @@
 import { lp } from "../utils/Utils";
 
-export const getBkgSpriteConfig = (): SpriteConfig => ({
+export const gameBkgSpriteConfig = (): SpriteConfig => ({
   frame: "bkg.jpg",
 });
 
-export const getDockSpriteConfig = (): SpriteConfig => ({
+export const reelShadowConfig = (x: number): SpriteConfig => ({
+  frame: "reel_shadow.png",
+  x,
+  y: 750,
+});
+
+export const dockSpriteConfig = (): SpriteConfig => ({
   frame: "dock.png",
   x: 372,
   y: 648,

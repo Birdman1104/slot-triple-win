@@ -1,6 +1,6 @@
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { getBackgroundGridConfig } from "../configs/gridConfigs/BackgroundViewGC";
-import { getBkgSpriteConfig } from "../configs/spritesConfig";
+import { gameBkgSpriteConfig } from "../configs/spritesConfig";
 import { makeSprite } from "../utils/Utils";
 
 export class BackgroundView extends PixiGrid {
@@ -18,7 +18,7 @@ export class BackgroundView extends PixiGrid {
   }
 
   private build(): void {
-    const bkg = makeSprite(getBkgSpriteConfig());
+    const bkg = makeSprite(gameBkgSpriteConfig());
     this.setChild("bkg", bkg);
   }
 }
