@@ -4,6 +4,15 @@ export const getBkgSpriteConfig = (): SpriteConfig => ({
   frame: "bkg.jpg",
 });
 
+export const getDockSpriteConfig = (): SpriteConfig => ({
+  frame: "dock.png",
+  x: 372,
+  y: 648,
+  scaleX: 1.5,
+  scaleY: 1.5,
+  anchor: { x: 0.5, y: 0 },
+});
+
 export const errorPopupBkgConfig = (): SpriteConfig => ({
   atlas: "ui.png",
   frame: lp("error_l.png", "error_p.png"),
