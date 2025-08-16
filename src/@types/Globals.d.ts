@@ -28,8 +28,8 @@ type SpriteConfig = {
 
 interface TextConfig {
   text: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   anchor?: { x: number; y: number };
   style: Partial<ITextStyle>;
 }

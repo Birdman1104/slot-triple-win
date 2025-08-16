@@ -1,11 +1,19 @@
 import { lp } from "../utils/Utils";
 
+export const clickToContinueTextConfig = (x: number, y: number): TextConfig => ({
+  text: "Click to continue",
+  x,
+  y,
+  anchor: { x: 0.5, y: 0.5 },
+  style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
+});
+
 export const introCardTitleTextConfig = (title: string): TextConfig => ({
   text: title,
   x: 0,
   y: 40,
   anchor: { x: 0, y: 0.5 },
-  style: { fontSize: 48, fill: "#ffffff" },
+  style: { fontSize: 84, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
 });
 
 export const introCardDescriptionTextConfig = (description: string, y: number, wordWrapWidth: number): TextConfig => ({
@@ -13,7 +21,14 @@ export const introCardDescriptionTextConfig = (description: string, y: number, w
   x: 10,
   y,
   anchor: { x: 0.5, y: 0 },
-  style: { fontSize: 16, fill: "#ffffff", wordWrap: true, wordWrapWidth },
+  style: {
+    fontSize: 34,
+    fill: "#ffffff",
+    wordWrap: true,
+    wordWrapWidth,
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
 });
 
 export const errorTitleTextConfig = (): TextConfig => ({
@@ -24,6 +39,8 @@ export const errorTitleTextConfig = (): TextConfig => ({
     fontSize: lp(26, 20),
     fill: 0xffffff,
     align: "center",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
   },
 });
 
@@ -37,6 +54,8 @@ export const errorTextTextConfig = (): TextConfig => ({
     align: "center",
     wordWrap: true,
     wordWrapWidth: lp(600, 230),
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
   },
 });
 
@@ -46,8 +65,9 @@ export const winTextConfig = (): TextConfig => ({
   y: 370,
   anchor: { x: 0.5, y: 0.5 },
   style: {
-    fontFamily: "Arial",
     fontSize: 128,
     fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
   },
 });

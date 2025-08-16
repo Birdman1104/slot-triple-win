@@ -2,7 +2,9 @@ import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { Container, Graphics, Text } from "pixi.js";
 import { getIntroViewGridConfig } from "../configs/gridConfigs/introViewGC";
+import { clickToContinueTextConfig } from "../configs/textConfig";
 import { MainGameEvents } from "../events/MainEvents";
+import { makeText } from "../utils/Utils";
 import { IntroCard } from "./IntroCard";
 
 export class IntroView extends PixiGrid {
@@ -45,14 +47,10 @@ export class IntroView extends PixiGrid {
     this.card3.position.set(this.card2.width * 2.2, 0);
 
     this.cardsWrapper.addChild(this.card1, this.card2, this.card3);
-
-    // Position the cards in the grid
     this.setChild("cards", this.cardsWrapper);
 
-    // Add click to continue text
-    this.clickToContinue = new Text("Click to continue", { fontSize: 24, fill: "#ffffff" });
-    this.clickToContinue.anchor.set(0.5);
-    this.clickToContinue.position.set(this.width / 2, this.height - 50);
+    this.clickToContinue = makeText(clickToContinueTextConfig(this.width / 2, this.height - 50));
+
     this.setChild("click_to_continue", this.clickToContinue);
 
     this.overlay = new Graphics();
@@ -65,9 +63,9 @@ export class IntroView extends PixiGrid {
       lego.event.emit(MainGameEvents.ShowGame);
     });
 
-    setTimeout(() => {
-      lego.event.emit(MainGameEvents.ShowGame);
-    }, 10);
+    // setTimeout(() => {
+    //   lego.event.emit(MainGameEvents.ShowGame);
+    // }, 10);
 
     this.setChild("overlay", this.overlay);
   }
