@@ -1,4 +1,4 @@
-import { SYMBOL_TYPE, SYMBOLS_MULTIPLIERS } from "../configs/SymbolsConfig";
+import { DEFAULT_BET, SYMBOL_TYPE, SYMBOLS_MULTIPLIERS } from "../configs/SymbolsConfig";
 
 const REELS_AMOUNT = 3;
 const ROWS_AMOUNT = 3;
@@ -121,7 +121,7 @@ export const getDefaultPlayerInfo = async (): Promise<any> => {
     setTimeout(() => {
       resolve({
         balance: 10000,
-        bet: 10,
+        bet: DEFAULT_BET,
         id: Math.random() * 1000,
       });
     }, 100)
