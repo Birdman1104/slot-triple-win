@@ -4,7 +4,7 @@
       <MenuBackgroundSvg />
       <div class="ui-overlay">
         <div class="section left-section flex-center">
-          <div class="close-button-wrapper flex-center relative" @click="toggleMenuBar">
+          <div class="close-button-wrapper flex-center relative" @pointerdown="toggleMenuBar">
             <div class="btn-background flex-center">
               <div class="close-button flex-center">
                 <Modal v-if="activeModal === 'menu'" :items="menuItems" :width="160" @select="handleSelect" />
@@ -24,7 +24,7 @@
 
         <div class="section middle-section flex-center">
           <div class="button-box">
-            <button class="spin-button flex-center" @click="spinButtonClick">
+            <button class="spin-button flex-center" @pointerdown="spinButtonClick">
               <img src="../assets/icons/spin.svg" />
               <div class="dot"></div>
             </button>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="section right-section flex-center">
-          <div class="refresh-btn-wrapper flex-center relative" @click="toggleAmountuBar">
+          <div class="refresh-btn-wrapper flex-center relative" @pointerdown="toggleAmountBar">
             <div class="btn-background flex-center">
               <div class="refresh-btn flex-center">
                 <Modal v-if="activeModal === 'amount'" :items="amountItems" @select="handleSelect" :width="50" />
@@ -49,12 +49,12 @@
 
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background small flex-center">
-                <button class="increase-button bet-button flex-center" @click="plusButtonClick">
+                <button class="increase-button bet-button flex-center" @pointerdown="plusButtonClick">
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
               <div class="btn-background small flex-center">
-                <button class="decrease-button bet-button flex-center" @click="minusButtonClick">
+                <button class="decrease-button bet-button flex-center" @pointerdown="minusButtonClick">
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
@@ -84,13 +84,16 @@ import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { DEFAULT_BET } from "../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
-import { PlayerModelEvents } from "../events/ModelEvents";
+import { PlayerModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
+import Head from "../models/Head";
+import { SlotMachineState } from "../models/SlotMachineModel";
 import MenuBackgroundSvg from "../ui/MenuBackgroundSvg.vue";
 import Modal from "../ui/Modal.vue";
 import UIMobileView from "../ui/UIMobileView.vue";
 
 let tempBalance = -1;
-let balance = -1;
+let balance = Head.playerModel?.balance ?? 0;
+let slotState = SlotMachineState.Unknown
 
 const isMobile = ref(window.innerWidth <= 768);
 const orientation = ref("");
@@ -142,7 +145,7 @@ function toggleMenuBar() {
   activeModal.value = activeModal.value === "menu" ? null : "menu";
 }
 
-function toggleAmountuBar() {
+function toggleAmountBar() {
   activeModal.value = activeModal.value === "amount" ? null : "amount";
 }
 
@@ -151,6 +154,8 @@ function handleSelect(item: any) {
 }
 
 const updateTempBalance = (newBalance: number): void => {
+  console.warn('BALANCE UPDATE', newBalance);
+
   if (tempBalance === -1) {
     tempBalance = newBalance;
     const betElement = document.getElementById("balance");
@@ -158,7 +163,17 @@ const updateTempBalance = (newBalance: number): void => {
     if (betElement) {
       betElement.textContent = `$ ${tempBalance}`;
     }
-  } else {
+    return
+  }
+
+  if (slotState === SlotMachineState.Idle) {
+    tempBalance = newBalance;
+    const betElement = document.getElementById("balance");
+
+    if (betElement) {
+      betElement.textContent = `$ ${tempBalance}`;
+    }
+  } else if (slotState === SlotMachineState.RequestSent) {
     tempBalance = newBalance;
   }
 };
@@ -178,9 +193,15 @@ const betUpdate = (bet: number) => {
   }
 };
 
+
+const onSlotStateUpdate = (state: SlotMachineState): void => {
+  slotState = state
+};
+
 lego.event.on(PlayerModelEvents.BetUpdate, betUpdate);
 lego.event.on(PlayerModelEvents.BalanceUpdate, updateTempBalance);
 lego.event.on(SlotMachineViewEvents.WinningsShowComplete, updateBalance);
+lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 </script>
 
 <style scoped>
