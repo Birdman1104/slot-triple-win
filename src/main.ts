@@ -12,7 +12,6 @@ window.addEventListener("load", async (): Promise<void> => {
   }
 
   window.addEventListener("resize", () => window.game.appResize());
-  window.addEventListener("orientationchange", () => window.game.appResize());
   window.addEventListener("focus", () => window.game.onFocusChange(true));
   window.addEventListener("blur", () => window.game.onFocusChange(false));
 });

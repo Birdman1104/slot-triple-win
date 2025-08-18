@@ -8,9 +8,17 @@ export const clickToContinueTextConfig = (x: number, y: number): TextConfig => (
   style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
 });
 
+export const clickToProceedTextConfig = (x: number, y: number): TextConfig => ({
+  text: "Click to proceed",
+  x,
+  y,
+  anchor: { x: 0.5, y: 0.5 },
+  style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
+});
+
 export const introCardTitleTextConfig = (title: string): TextConfig => ({
   text: title,
-  x: 0,
+  x: -180,
   y: 40,
   anchor: { x: 0, y: 0.5 },
   style: { fontSize: 84, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
@@ -65,7 +73,7 @@ export const winTextConfig = (): TextConfig => ({
   y: 370,
   anchor: { x: 0.5, y: 0.5 },
   style: {
-    fontSize: 128,
+    fontSize: 200,
     fill: "#ffffff",
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,

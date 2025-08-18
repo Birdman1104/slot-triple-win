@@ -13,12 +13,8 @@ const getIntroViewGridLandscapeConfig = () => {
     bounds,
     cells: [
       {
-        name: "cards",
-        bounds: { x: 0, y: 0.15, width: 1, height: 0.6 },
-      },
-      {
-        name: "click_to_continue",
-        bounds: { x: 0, y: 0.8, width: 1, height: 0.15 },
+        name: "view",
+        bounds: { x: 0, y: 0.15, width: 1, height: 0.8 },
       },
       {
         name: "overlay",
@@ -37,12 +33,8 @@ const getIntroViewGridPortraitConfig = () => {
     bounds,
     cells: [
       {
-        name: "cards",
-        bounds: { x: 0, y: 0.1, width: 1, height: 0.7 },
-      },
-      {
-        name: "click_to_continue",
-        bounds: { x: 0, y: 0.8, width: 1, height: 0.15 },
+        name: "view",
+        bounds: { x: 0, y: 0.1, width: 1, height: 0.85 },
       },
       {
         name: "overlay",

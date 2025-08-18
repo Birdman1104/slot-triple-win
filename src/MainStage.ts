@@ -2,10 +2,10 @@ import { Container } from "pixi.js";
 import { BackgroundView } from "./views/BackgroundView.ts";
 import { ForegroundView } from "./views/ForegroundView.ts";
 import { GameView } from "./views/GameView.ts";
-import { IntroView } from "./views/IntroView.ts";
+import { IntroViewWrapper } from "./views/IntroView.ts";
 
 class PixiStage extends Container {
-  private intro: IntroView | null = null;
+  private intro: IntroViewWrapper | null = null;
   private gameView: GameView | null = null;
   private bgView: BackgroundView | null = null;
   private foregroundView: ForegroundView | null = null;
@@ -29,7 +29,7 @@ class PixiStage extends Container {
     this.bgView = new BackgroundView();
     this.addChild(this.bgView);
 
-    this.intro = new IntroView();
+    this.intro = new IntroViewWrapper();
     this.addChild(this.intro);
   }
 

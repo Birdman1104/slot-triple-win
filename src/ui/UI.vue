@@ -1,36 +1,19 @@
 <template>
-  <div
-    class="menu-wrapper"
-    v-if="!isMobile || (isMobile && orientation === 'landscape-primary')"
-  >
+  <div class="menu-wrapper" v-if="!isMobile || (isMobile && orientation === 'landscape-primary')">
     <div class="wrapper">
       <MenuBackgroundSvg />
       <div class="ui-overlay">
         <div class="section left-section flex-center">
-          <div
-            class="close-button-wrapper flex-center relative"
-            @pointerdown="toggleMenuBar"
-          >
+          <div class="close-button-wrapper flex-center relative" @pointerdown="toggleMenuBar">
             <div class="btn-background flex-center">
               <div class="close-button flex-center">
                 <Transition name="fade-scale">
-                  <Modal
-                    v-if="activeModal === 'menu'"
-                    :items="menuItems"
-                    :width="160"
-                    :selectedItem="selectedItem"
-                    @select="handleSelect"
-                  />
+                  <Modal v-if="activeModal === 'menu'" :items="menuItems" :width="160" :selectedItem="selectedItem"
+                    @select="handleSelect" />
                 </Transition>
 
-                <img
-                  v-if="activeModal === 'menu'"
-                  src="/src/assets/icons/close.svg"
-                />
-                <img
-                  v-if="activeModal !== 'menu'"
-                  src="/src/assets/icons/menuBar.svg"
-                />
+                <img v-if="activeModal === 'menu'" src="/src/assets/icons/close.svg" />
+                <img v-if="activeModal !== 'menu'" src="/src/assets/icons/menuBar.svg" />
               </div>
             </div>
 
@@ -45,10 +28,7 @@
 
         <div class="section middle-section flex-center">
           <div class="button-box">
-            <button
-              class="spin-button flex-center"
-              @pointerdown="spinButtonClick"
-            >
+            <button class="spin-button flex-center" @pointerdown="spinButtonClick">
               <img v-if="spinCountValue" src="../assets/icons/stop.svg" />
               <img v-if="!spinCountValue" src="../assets/icons/spin.svg" />
               <div v-if="!spinCountValue" class="dot"></div>
@@ -57,19 +37,12 @@
         </div>
 
         <div class="section right-section flex-center">
-          <div
-            class="refresh-btn-wrapper flex-center relative"
-            @pointerdown="toggleAmountBar"
-          >
+          <div class="refresh-btn-wrapper flex-center relative" @pointerdown="toggleAmountBar">
             <div class="btn-background flex-center">
               <div class="refresh-btn flex-center">
                 <Transition name="fade-scale">
-                  <Modal
-                    v-if="activeModal === 'spinCount'"
-                    :items="spinCountItems"
-                    @select="handleSelect"
-                    :width="50"
-                  />
+                  <Modal v-if="activeModal === 'spinCount'" :items="spinCountItems" @select="handleSelect"
+                    :width="50" />
                 </Transition>
                 <div v-if="spinCountValue" class="amount">
                   {{ spinCountValue }}
@@ -83,24 +56,17 @@
 
           <div class="balance-box flex-center flex-center">
             <div class="balance-wrapper flex-center">
-              <span class="text">Bet </span
-              ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
+              <span class="text">Bet </span><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
             </div>
 
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background small flex-center">
-                <button
-                  class="increase-button bet-button flex-center"
-                  @pointerdown="plusButtonClick"
-                >
+                <button class="increase-button bet-button flex-center" @pointerdown="plusButtonClick">
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
               <div class="btn-background small flex-center">
-                <button
-                  class="decrease-button bet-button flex-center"
-                  @pointerdown="minusButtonClick"
-                >
+                <button class="decrease-button bet-button flex-center" @pointerdown="minusButtonClick">
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
@@ -290,12 +256,10 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   width: 1px;
   height: 60px;
   margin: 14px;
-  background: linear-gradient(
-    to bottom,
-    rgba(192, 177, 165, 0) 0%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(153, 153, 153, 0) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(192, 177, 165, 0) 0%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(153, 153, 153, 0) 100%);
 }
 
 .balance-box {
@@ -416,11 +380,9 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   border: 1.3px solid transparent;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(255, 255, 255, 0.25),
-      rgba(153, 153, 153, 0.25)
-    );
+      rgba(153, 153, 153, 0.25));
 
   background-origin: border-box;
   background-clip: content-box, border-box;
@@ -466,11 +428,9 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 .close-button,
 .refresh-btn {
   border-radius: 50%;
-  background: radial-gradient(
-    at left top,
-    rgba(255, 255, 255, 0.55),
-    rgba(168, 147, 121, 0.55)
-  );
+  background: radial-gradient(at left top,
+      rgba(255, 255, 255, 0.55),
+      rgba(168, 147, 121, 0.55));
   border: none;
   box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
 }
@@ -531,6 +491,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
     font-size: 50px !important;
     line-height: 70%;
   }
+
   .small {
     width: 30px !important;
     height: 30px !important;
