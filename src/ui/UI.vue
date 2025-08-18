@@ -1,15 +1,35 @@
 <template>
-  <div class="menu-wrapper" v-if="!isMobile || (isMobile && orientation === 'landscape-primary')">
+  <div
+    class="menu-wrapper"
+    v-if="!isMobile || (isMobile && orientation === 'landscape-primary')"
+  >
     <div class="wrapper">
       <MenuBackgroundSvg />
       <div class="ui-overlay">
         <div class="section left-section flex-center">
-          <div class="close-button-wrapper flex-center relative" @pointerdown="toggleMenuBar">
+          <div
+            class="close-button-wrapper flex-center relative"
+            @pointerdown="toggleMenuBar"
+          >
             <div class="btn-background flex-center">
               <div class="close-button flex-center">
-                <Modal v-if="activeModal === 'menu'" :items="menuItems" :width="160" @select="handleSelect" />
-                <img v-if="activeModal === 'menu'" src="/src/assets/icons/close.svg" />
-                <img v-if="activeModal !== 'menu'" src="/src/assets/icons/menuBar.svg" />
+                <Transition name="fade-scale">
+                  <Modal
+                    v-if="activeModal === 'menu'"
+                    :items="menuItems"
+                    :width="160"
+                    @select="handleSelect"
+                  />
+                </Transition>
+
+                <img
+                  v-if="activeModal === 'menu'"
+                  src="/src/assets/icons/close.svg"
+                />
+                <img
+                  v-if="activeModal !== 'menu'"
+                  src="/src/assets/icons/menuBar.svg"
+                />
               </div>
             </div>
 
@@ -24,7 +44,10 @@
 
         <div class="section middle-section flex-center">
           <div class="button-box">
-            <button class="spin-button flex-center" @pointerdown="spinButtonClick">
+            <button
+              class="spin-button flex-center"
+              @pointerdown="spinButtonClick"
+            >
               <img src="../assets/icons/spin.svg" />
               <div class="dot"></div>
             </button>
@@ -32,10 +55,21 @@
         </div>
 
         <div class="section right-section flex-center">
-          <div class="refresh-btn-wrapper flex-center relative" @pointerdown="toggleAmountBar">
+          <div
+            class="refresh-btn-wrapper flex-center relative"
+            @pointerdown="toggleAmountBar"
+          >
             <div class="btn-background flex-center">
               <div class="refresh-btn flex-center">
-                <Modal v-if="activeModal === 'amount'" :items="amountItems" @select="handleSelect" :width="50" />
+                <Transition name="fade-scale">
+                  <Modal
+                    v-if="activeModal === 'amount'"
+                    :items="amountItems"
+                    @select="handleSelect"
+                    :width="50"
+                  />
+                </Transition>
+
                 <img src="../assets/icons/refresh.svg" />
               </div>
             </div>
@@ -44,17 +78,24 @@
 
           <div class="balance-box flex-center flex-center">
             <div class="balance-wrapper flex-center">
-              <span class="text">Bet </span><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
+              <span class="text">Bet </span
+              ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
             </div>
 
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background small flex-center">
-                <button class="increase-button bet-button flex-center" @pointerdown="plusButtonClick">
+                <button
+                  class="increase-button bet-button flex-center"
+                  @pointerdown="plusButtonClick"
+                >
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
               <div class="btn-background small flex-center">
-                <button class="decrease-button bet-button flex-center" @pointerdown="minusButtonClick">
+                <button
+                  class="decrease-button bet-button flex-center"
+                  @pointerdown="minusButtonClick"
+                >
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
@@ -84,7 +125,10 @@ import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { DEFAULT_BET } from "../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
-import { PlayerModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
+import {
+  PlayerModelEvents,
+  SlotMachineModelEvents,
+} from "../events/ModelEvents";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
 import MenuBackgroundSvg from "../ui/MenuBackgroundSvg.vue";
@@ -93,7 +137,7 @@ import UIMobileView from "../ui/UIMobileView.vue";
 
 let tempBalance = -1;
 let balance = Head.playerModel?.balance ?? 0;
-let slotState = SlotMachineState.Unknown
+let slotState = SlotMachineState.Unknown;
 
 const isMobile = ref(window.innerWidth <= 768);
 const orientation = ref("");
@@ -154,7 +198,7 @@ function handleSelect(item: any) {
 }
 
 const updateTempBalance = (newBalance: number): void => {
-  console.warn('BALANCE UPDATE', newBalance);
+  console.warn("BALANCE UPDATE", newBalance);
 
   if (tempBalance === -1) {
     tempBalance = newBalance;
@@ -163,7 +207,7 @@ const updateTempBalance = (newBalance: number): void => {
     if (betElement) {
       betElement.textContent = `$ ${tempBalance}`;
     }
-    return
+    return;
   }
 
   if (slotState === SlotMachineState.Idle) {
@@ -193,9 +237,8 @@ const betUpdate = (bet: number) => {
   }
 };
 
-
 const onSlotStateUpdate = (state: SlotMachineState): void => {
-  slotState = state
+  slotState = state;
 };
 
 lego.event.on(PlayerModelEvents.BetUpdate, betUpdate);
@@ -212,13 +255,31 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   font-style: normal;
 }
 
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: all 0.35s ease;
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  transform: scale(0);
+}
+
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+  transform: scale(1);
+}
+
 .line {
   width: 1px;
   height: 60px;
-  background: linear-gradient(to bottom,
-      rgba(192, 177, 165, 0) 0%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(153, 153, 153, 0) 100%);
+  margin: 14px;
+  background: linear-gradient(
+    to bottom,
+    rgba(192, 177, 165, 0) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(153, 153, 153, 0) 100%
+  );
 }
 
 .balance-box {
@@ -270,6 +331,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   font-size: 25px;
   color: rgba(255, 255, 255, 0.7);
   font-family: "Jomhuria";
+  line-height: 70%;
 }
 
 .menu-wrapper {
@@ -325,10 +387,11 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 
 .buy-btn-text {
   color: rgba(0, 113, 30, 1);
-  font-size: 22px;
+  font-size: 30px;
   text-align: center;
   word-wrap: break-word;
   font-family: "Jomhuria";
+  line-height: 70%;
 }
 
 .button-box {
@@ -337,13 +400,14 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   border: 1.3px solid transparent;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
-    linear-gradient(135deg,
+    linear-gradient(
+      135deg,
       rgba(255, 255, 255, 0.25),
-      rgba(153, 153, 153, 0.25));
+      rgba(153, 153, 153, 0.25)
+    );
 
   background-origin: border-box;
   background-clip: content-box, border-box;
-
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
   left: 50%;
 }
@@ -386,15 +450,18 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 .close-button,
 .refresh-btn {
   border-radius: 50%;
-  background: radial-gradient(at left top,
-      rgba(255, 255, 255, 0.55),
-      rgba(168, 147, 121, 0.55));
+  background: radial-gradient(
+    at left top,
+    rgba(255, 255, 255, 0.55),
+    rgba(168, 147, 121, 0.55)
+  );
   border: none;
   box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
 }
 
 .bet-button-wrapper {
   flex-direction: column;
+  gap: 5px;
   margin-left: 10px;
 }
 
@@ -426,8 +493,42 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   justify-content: center;
 }
 </style>
+
 <style>
-@media screen and (max-width: 1300px) {
+@media screen and (min-width: 1920px) {
+  .btn-background {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .spin-button {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .text {
+    font-size: 40px !important;
+    line-height: 70%;
+  }
+
+  .amount {
+    font-size: 50px !important;
+    line-height: 70%;
+  }
+  .small {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+@media screen and (max-width: 1800px) {
+  .spin-button {
+    width: 90px !important;
+    height: 90px !important;
+  }
+}
+
+@media screen and (max-width: 1500px) {
   .btn-background {
     width: 45px !important;
     height: 45px !important;
@@ -441,6 +542,10 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   .spin-button {
     width: 70px !important;
     height: 70px !important;
+  }
+
+  .buy-btn-text {
+    font-size: 20px !important;
   }
 }
 
@@ -477,6 +582,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 
   .line {
     height: 40px !important;
+    margin: 14px;
   }
 
   .text {

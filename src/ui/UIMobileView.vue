@@ -1,11 +1,25 @@
 <template>
-  <div class="close-button-wrapper flex-center relative" @pointerdown="toggleMenuBar">
+  <div
+    class="close-button-wrapper flex-center relative"
+    @pointerdown="toggleMenuBar"
+  >
     <div class="btn-background flex-center menu">
       <div class="close-button flex-center">
-        <Modal v-if="activeModal === 'menu'" :items="menuItems" :width="160" :modal="'menu'"
-          customClass="bar-mobile-menu" @select="handleSelect" />
+        <Transition name="fade-scale">
+          <Modal
+            v-if="activeModal === 'menu'"
+            :items="menuItems"
+            :width="160"
+            :modal="'menu'"
+            customClass="bar-mobile-menu"
+            @select="handleSelect"
+          />
+        </Transition>
         <img v-if="activeModal === 'menu'" src="/src/assets/icons/close.svg" />
-        <img v-if="activeModal !== 'menu'" src="/src/assets/icons/menuBar.svg" />
+        <img
+          v-if="activeModal !== 'menu'"
+          src="/src/assets/icons/menuBar.svg"
+        />
       </div>
     </div>
   </div>
@@ -17,7 +31,8 @@
         <span id="balance" class="amount"> $ {{ balance }}</span>
       </div>
       <div class="balance-wrapper flex-center">
-        <span class="text">Bet </span><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
+        <span class="text">Bet </span
+        ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
       </div>
     </div>
     <div class="wrapper">
@@ -25,11 +40,21 @@
 
       <div class="ui-overlay">
         <div class="section right-section flex-center">
-          <div class="refresh-btn-wrapper flex-center relative" @pointerdown="toggleAmountBar">
+          <div
+            class="refresh-btn-wrapper flex-center relative"
+            @pointerdown="toggleAmountBar"
+          >
             <div class="btn-background flex-center">
               <div class="refresh-btn flex-center">
-                <Modal v-if="activeModal === 'amount'" :items="amountItems" @select="handleSelect" :width="50"
-                  customClass="amount-mobile-menu" />
+                <Transition name="fade-scale">
+                  <Modal
+                    v-if="activeModal === 'amount'"
+                    :items="amountItems"
+                    @select="handleSelect"
+                    :width="50"
+                    customClass="amount-mobile-menu"
+                  />
+                </Transition>
                 <img src="../assets/icons/refresh.svg" />
               </div>
             </div>
@@ -38,7 +63,10 @@
           <div class="balance-box flex-center">
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background flex-center">
-                <button class="decrease-button bet-button flex-center" @pointerdown="minusButtonClick">
+                <button
+                  class="decrease-button bet-button flex-center"
+                  @pointerdown="minusButtonClick"
+                >
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
@@ -48,7 +76,10 @@
 
         <div class="section middle-section flex-center">
           <div class="button-box">
-            <button class="spin-button flex-center" @pointerdown="spinButtonClick">
+            <button
+              class="spin-button flex-center"
+              @pointerdown="spinButtonClick"
+            >
               <img src="../assets/icons/spin.svg" />
               <div class="dot"></div>
             </button>
@@ -59,7 +90,10 @@
           <div class="balance-box flex-center">
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background flex-center">
-                <button class="increase-button bet-button flex-center" @pointerdown="plusButtonClick">
+                <button
+                  class="increase-button bet-button flex-center"
+                  @pointerdown="plusButtonClick"
+                >
                   <img src="../assets/icons/arrow.svg" />
                 </button>
               </div>
@@ -86,7 +120,10 @@ import { lego } from "@armathai/lego";
 import { ref } from "vue";
 import { DEFAULT_BET } from "../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
-import { PlayerModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
+import {
+  PlayerModelEvents,
+  SlotMachineModelEvents,
+} from "../events/ModelEvents";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
 import Modal from "../ui/Modal.vue";
@@ -94,7 +131,7 @@ import MenuBackgroundMobile from "./MenuBackgroundMobile.vue";
 
 let tempBalance = -1;
 let balance = Head.playerModel?.balance ?? 0;
-let slotState = SlotMachineState.Unknown
+let slotState = SlotMachineState.Unknown;
 
 const activeModal = ref<null | "menu" | "amount">(null);
 
@@ -142,7 +179,7 @@ const updateTempBalance = (newBalance: number): void => {
     if (betElement) {
       betElement.textContent = `$ ${tempBalance}`;
     }
-    return
+    return;
   }
 
   if (slotState === SlotMachineState.Idle) {
@@ -173,7 +210,7 @@ const betUpdate = (bet: number) => {
 };
 
 const onSlotStateUpdate = (state: SlotMachineState): void => {
-  slotState = state
+  slotState = state;
 };
 
 lego.event.on(PlayerModelEvents.BetUpdate, betUpdate);
@@ -189,8 +226,27 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   font-style: normal;
 }
 
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: all 0.35s ease;
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  transform: scale(0);
+}
+
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+  transform: scale(1);
+}
+
 .balance-box {
   width: 100%;
+}
+
+span {
+  display: block;
 }
 
 .btn-background {
@@ -253,6 +309,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   font-size: 25px;
   color: rgba(255, 255, 255, 0.7);
   font-family: "Jomhuria";
+  line-height: 30%;
 }
 
 .menu-wrapper {
@@ -315,9 +372,11 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   border: 1.3px solid transparent;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
-    linear-gradient(135deg,
+    linear-gradient(
+      135deg,
       rgba(255, 255, 255, 0.25),
-      rgba(153, 153, 153, 0.25));
+      rgba(153, 153, 153, 0.25)
+    );
 
   background-origin: border-box;
   background-clip: content-box, border-box;
@@ -356,7 +415,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 
 .amount {
   color: rgba(255, 255, 255, 1);
-  font-size: 30px;
+  font-size: 35px;
   font-family: "Jomhuria";
 }
 
@@ -364,9 +423,11 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 .close-button,
 .refresh-btn {
   border-radius: 50%;
-  background: radial-gradient(at left top,
-      rgba(255, 255, 255, 0.55),
-      rgba(168, 147, 121, 0.55));
+  background: radial-gradient(
+    at left top,
+    rgba(255, 255, 255, 0.55),
+    rgba(168, 147, 121, 0.55)
+  );
   border: none;
   box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
 }

@@ -1,11 +1,28 @@
 <template>
   <div class="modal-overlay" @click.self="close">
-    <div class="modal-content" :class="['modal-content', props.customClass]" :style="{ width: props.width + 'px' }">
-      <img @click="close" class="close-btn" v-if="isMobile && props.modal === 'menu'"
-        src="/src/assets/icons/close.svg" />
+    <div
+      class="modal-content"
+      :class="['modal-content', props.customClass]"
+      :style="{ width: props.width + 'px' }"
+    >
+      <img
+        @click="close"
+        class="close-btn"
+        v-if="isMobile && props.modal === 'menu'"
+        src="/src/assets/icons/close.svg"
+      />
       <ul>
-        <li v-for="item in items" :key="item.id" @click="selectItem(item)" class="modal-item">
-          <button class="icon" v-if="item.icon" :class="{ selected: selectedItemId === item.id }">
+        <li
+          v-for="item in items"
+          :key="item.id"
+          @click="selectItem(item)"
+          class="modal-item"
+        >
+          <button
+            class="icon"
+            v-if="item.icon"
+            :class="{ selected: selectedItemId === item.id }"
+          >
             <img :src="item.icon" />
           </button>
           <span>{{ item.text }}</span>
@@ -79,6 +96,11 @@ onBeforeUnmount(() => {
   z-index: 1000;
 }
 
+span {
+  display: block;
+  height: 25px;
+}
+
 .close-btn {
   position: absolute;
   right: 10px;
@@ -97,20 +119,17 @@ li {
 
 .modal-content {
   bottom: 100%;
-  left: 0;
   position: absolute;
+  left: 0;
   background: white;
   padding: 1.5rem;
   border-radius: 10px;
-
   height: 230px;
   border-radius: 52px;
   backdrop-filter: blur(25px);
   background-color: rgba(255, 255, 255, 0.25);
-  /* same as fill-opacity: 0.25 */
   border: 1.5px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
-  /* ensures blur stays within bounds */
 }
 
 .modal-item {
@@ -131,9 +150,11 @@ li {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 40%,
-      rgba(255, 255, 255, 0.26),
-      rgba(168, 147, 121, 0.26));
+  background: radial-gradient(
+    circle at 35% 40%,
+    rgba(255, 255, 255, 0.26),
+    rgba(168, 147, 121, 0.26)
+  );
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border: 1px;
   border-image: linear-gradient(0deg, white, #999) 1;
@@ -148,9 +169,11 @@ li {
 }
 
 .icon.selected {
-  background: radial-gradient(circle at center,
-      rgba(0, 255, 0, 0.4),
-      rgba(0, 128, 0, 0.6));
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 0, 0.4),
+    rgba(0, 128, 0, 0.6)
+  );
   border: 2px solid rgba(0, 128, 0, 0.5);
   background: green !important;
 }
@@ -167,5 +190,13 @@ li {
   bottom: 110%;
   left: 10px;
   border-bottom-left-radius: 10px;
+}
+</style>
+
+<style>
+@media screen and (min-width: 1500px) {
+  .modal-content {
+    bottom: 120% !important;
+  }
 }
 </style>
