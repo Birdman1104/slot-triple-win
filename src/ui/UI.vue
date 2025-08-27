@@ -18,6 +18,7 @@
                     v-if="activeModal === 'menu'"
                     :items="menuItems"
                     :width="160"
+                    :selectedItem="selectedItem"
                     @select="handleSelect"
                   />
                 </Transition>
@@ -48,8 +49,9 @@
               class="spin-button flex-center"
               @pointerdown="spinButtonClick"
             >
-              <img src="../assets/icons/spin.svg" />
-              <div class="dot"></div>
+              <img v-if="spinCountValue" src="../assets/icons/stop.svg" />
+              <img v-if="!spinCountValue" src="../assets/icons/spin.svg" />
+              <div v-if="!spinCountValue" class="dot"></div>
             </button>
           </div>
         </div>
@@ -63,14 +65,17 @@
               <div class="refresh-btn flex-center">
                 <Transition name="fade-scale">
                   <Modal
-                    v-if="activeModal === 'amount'"
-                    :items="amountItems"
+                    v-if="activeModal === 'spinCount'"
+                    :items="spinCountItems"
                     @select="handleSelect"
                     :width="50"
                   />
                 </Transition>
+                <div v-if="spinCountValue" class="amount">
+                  {{ spinCountValue }}
+                </div>
 
-                <img src="../assets/icons/refresh.svg" />
+                <img v-if="!spinCountValue" src="../assets/icons/refresh.svg" />
               </div>
             </div>
             <div class="line"></div>
@@ -141,7 +146,9 @@ let slotState = SlotMachineState.Unknown;
 
 const isMobile = ref(window.innerWidth <= 768);
 const orientation = ref("");
-const activeModal = ref<null | "menu" | "amount">(null);
+const selectedItem = ref("");
+const spinCountValue = ref("");
+const activeModal = ref<null | "menu" | "spinCount">(null);
 
 const menuItems = [
   { id: "sound", text: "Sound", icon: "/src/assets/icons/sound.svg" },
@@ -155,7 +162,7 @@ const menuItems = [
   },
 ];
 
-const amountItems = [
+const spinCountItems = [
   { id: "200", text: "200" },
   { id: "100", text: "100" },
   { id: "50", text: "50" },
@@ -174,6 +181,7 @@ function handleResize() {
 onMounted(() => {
   window.addEventListener("resize", handleResize);
   orientation.value = screen.orientation.type;
+  spinCountValue.value = localStorage.getItem("spinCount") ?? "";
 
   screen.orientation.addEventListener("change", () => {
     orientation.value = screen.orientation.type;
@@ -186,14 +194,22 @@ onBeforeUnmount(() => {
 });
 
 function toggleMenuBar() {
-  activeModal.value = activeModal.value === "menu" ? null : "menu";
+  selectedItem.value = localStorage.getItem("menu") ?? "";
+  activeModal.value = "menu";
 }
 
 function toggleAmountBar() {
-  activeModal.value = activeModal.value === "amount" ? null : "amount";
+  activeModal.value = "spinCount";
 }
 
 function handleSelect(item: any) {
+  if (activeModal.value === "spinCount") {
+    localStorage.setItem("spinCount", item.text);
+  } else {
+    localStorage.setItem("menu", item.id);
+    selectedItem.value = item.id;
+  }
+
   activeModal.value = null;
 }
 

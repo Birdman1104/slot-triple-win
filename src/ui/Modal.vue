@@ -1,12 +1,11 @@
 <template>
-  <div class="modal-overlay" @click.self="close">
+  <div class="modal-overlay" @click.stop>
     <div
       class="modal-content"
       :class="['modal-content', props.customClass]"
       :style="{ width: props.width + 'px' }"
     >
       <img
-        @click="close"
         class="close-btn"
         v-if="isMobile && props.modal === 'menu'"
         src="/src/assets/icons/close.svg"
@@ -18,13 +17,15 @@
           @click="selectItem(item)"
           class="modal-item"
         >
-          <button
+          <div
             class="icon"
             v-if="item.icon"
-            :class="{ selected: selectedItemId === item.id }"
+            :class="{
+              selected: selectedItemId === item.id || selectedItem === item.id,
+            }"
           >
             <img :src="item.icon" />
-          </button>
+          </div>
           <span>{{ item.text }}</span>
         </li>
       </ul>
@@ -45,6 +46,10 @@ const props = defineProps({
   width: {
     type: Number,
     default: 160,
+  },
+  selectedItem: {
+    type: String,
+    default: "",
   },
   customClass: {
     type: String,
@@ -121,12 +126,10 @@ li {
   bottom: 100%;
   position: absolute;
   left: 0;
-  background: white;
   padding: 1.5rem;
-  border-radius: 10px;
   height: 230px;
   border-radius: 52px;
-  backdrop-filter: blur(25px);
+  backdrop-filter: blur(18px);
   background-color: rgba(255, 255, 255, 0.25);
   border: 1.5px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
@@ -157,9 +160,6 @@ li {
   );
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border: 1px;
-  border-image: linear-gradient(0deg, white, #999) 1;
-  background-origin: border-box;
-  background-clip: content-box, border-box;
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
@@ -169,13 +169,13 @@ li {
 }
 
 .icon.selected {
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 255, 0, 0.4),
-    rgba(0, 128, 0, 0.6)
-  );
-  border: 2px solid rgba(0, 128, 0, 0.5);
-  background: green !important;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background:
+    linear-gradient(to right, #00be32, #00711e) border-box,
+    radial-gradient(circle, rgba(0, 113, 30, 1), rgba(0, 142, 38, 1))
+      padding-box;
+  background-clip: content-box, border-box;
 }
 
 :deep(.modal-content.bar-mobile-menu) {
