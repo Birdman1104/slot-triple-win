@@ -1,15 +1,7 @@
 <template>
   <div class="modal-overlay" @click.stop>
-    <div
-      class="modal-content"
-      :class="['modal-content', props.customClass]"
-      :style="{ width: props.width + 'px' }"
-    >
-      <img
-        class="close-btn"
-        v-if="isMobile && props.modal === 'menu'"
-        src="/src/assets/icons/close.svg"
-      />
+    <div class="modal-content" :class="['modal-content', props.customClass]" :style="{ width: props.width + 'px' }">
+      <img class="close-btn" v-if="isMobile && props.modal === 'menu'" src="/src/assets/icons/close.svg" />
       <ul>
         <li
           v-for="item in items"
@@ -154,11 +146,9 @@ li {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 40%,
-    rgba(255, 255, 255, 0.26),
-    rgba(168, 147, 121, 0.26)
-  );
+  background: radial-gradient(circle at 35% 40%,
+      rgba(255, 255, 255, 0.26),
+      rgba(168, 147, 121, 0.26));
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border: 1px;
   backdrop-filter: blur(10px);
@@ -174,8 +164,7 @@ li {
   border-radius: 50%;
   background:
     linear-gradient(to right, #00be32, #00711e) border-box,
-    radial-gradient(circle, rgba(0, 113, 30, 1), rgba(0, 142, 38, 1))
-      padding-box;
+    radial-gradient(circle, rgba(0, 113, 30, 1), rgba(0, 142, 38, 1)) padding-box;
   background-clip: content-box, border-box;
 }
 

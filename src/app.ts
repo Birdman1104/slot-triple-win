@@ -87,7 +87,7 @@ class App extends Application {
     lego.event.emit("initModels");
   }
 
-  private onGameStateUpdate(newState: GameState, oldState: GameState): void {
+  private onGameStateUpdate(newState: GameState): void {
     switch (newState) {
       case GameState.Intro:
         this.stage.showIntro();

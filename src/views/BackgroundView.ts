@@ -1,5 +1,5 @@
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
-import { getBackgroundGridConfig } from "../configs/gridConfigs/BackgroundViewGC";
+import { getBackgroundGridConfig } from "../configs/gridConfigs/backgroundViewGC";
 import { gameBkgSpriteConfig } from "../configs/spritesConfig";
 import { makeSprite } from "../utils/Utils";
 

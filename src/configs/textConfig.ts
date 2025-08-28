@@ -8,9 +8,17 @@ export const clickToContinueTextConfig = (x: number, y: number): TextConfig => (
   style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
 });
 
+export const clickToProceedTextConfig = (x: number, y: number): TextConfig => ({
+  text: "Click to proceed",
+  x,
+  y,
+  anchor: { x: 0.5, y: 0.5 },
+  style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
+});
+
 export const introCardTitleTextConfig = (title: string): TextConfig => ({
   text: title,
-  x: 0,
+  x: -180,
   y: 40,
   anchor: { x: 0, y: 0.5 },
   style: { fontSize: 84, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
@@ -36,7 +44,7 @@ export const errorTitleTextConfig = (): TextConfig => ({
   x: 0,
   y: lp(-25, -25),
   style: {
-    fontSize: lp(26, 20),
+    fontSize: lp(42, 28),
     fill: 0xffffff,
     align: "center",
     fontFamily: "JomhuriaRegular",
@@ -49,7 +57,7 @@ export const errorTextTextConfig = (): TextConfig => ({
   x: 0,
   y: lp(40, 33),
   style: {
-    fontSize: lp(20, 14),
+    fontSize: lp(36, 22),
     fill: 0xffffff,
     align: "center",
     wordWrap: true,
@@ -65,7 +73,7 @@ export const winTextConfig = (): TextConfig => ({
   y: 370,
   anchor: { x: 0.5, y: 0.5 },
   style: {
-    fontSize: 128,
+    fontSize: 200,
     fill: "#ffffff",
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,

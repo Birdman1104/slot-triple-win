@@ -40,15 +40,9 @@ export class IntroCard extends Container {
     this.addChild(bkg);
 
     const title = makeText(introCardTitleTextConfig(cardConfig.title));
-
-    title.anchor.set(0.5);
-    title.position.set(0, 40);
     this.addChild(title);
-    const description = makeText(introCardDescriptionTextConfig(cardConfig.description, title.y + 70, bkg.width * 0.7));
 
-    description.anchor.set(0.5);
-    description.position.set(10, title.y + 70);
-
+    const description = makeText(introCardDescriptionTextConfig(cardConfig.description, title.y + 40, bkg.width * 0.7));
     this.addChild(description);
   }
 }
