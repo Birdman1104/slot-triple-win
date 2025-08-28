@@ -44,7 +44,7 @@ export const errorTitleTextConfig = (): TextConfig => ({
   x: 0,
   y: lp(-25, -25),
   style: {
-    fontSize: lp(26, 20),
+    fontSize: lp(42, 28),
     fill: 0xffffff,
     align: "center",
     fontFamily: "JomhuriaRegular",
@@ -57,7 +57,7 @@ export const errorTextTextConfig = (): TextConfig => ({
   x: 0,
   y: lp(40, 33),
   style: {
-    fontSize: lp(20, 14),
+    fontSize: lp(36, 22),
     fill: 0xffffff,
     align: "center",
     wordWrap: true,
