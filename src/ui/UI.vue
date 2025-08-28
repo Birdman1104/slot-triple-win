@@ -7,22 +7,12 @@
       <MenuBackgroundSvg />
       <div class="ui-overlay">
         <div class="section left-section flex-center">
-          <div
-            class="close-button-wrapper flex-center relative"
-            @pointerdown="toggleMenuBar"
-          >
-            <div class="btn-background flex-center">
+          <div class="close-button-wrapper flex-center">
+            <div
+              class="btn-background flex-center"
+              @pointerdown="toggleMenuBar"
+            >
               <div class="close-button flex-center">
-                <Transition name="fade-scale">
-                  <Modal
-                    v-if="activeModal === 'menu'"
-                    :items="menuItems"
-                    :width="160"
-                    :selectedItem="selectedItem"
-                    @select="handleSelect"
-                  />
-                </Transition>
-
                 <img
                   v-if="activeModal === 'menu'"
                   src="/src/assets/icons/close.svg"
@@ -34,12 +24,29 @@
               </div>
             </div>
 
+            <Transition name="fade-scale">
+              <Modal
+                v-if="activeModal === 'menu' && toggleMenu"
+                :items="menuItems"
+                :width="160"
+                :selectedItem="selectedItem"
+                @select="handleSelect"
+              />
+            </Transition>
             <div class="line"></div>
           </div>
 
           <div class="balance-wrapper full-width flex-center">
             <span class="text">Balance: </span>
-            <span id="balance" class="amount"> $ {{ balance }}</span>
+            <span id="balance" class="amount">
+              $
+              {{
+                balance.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
+              }}</span
+            >
           </div>
         </div>
 
@@ -50,27 +57,21 @@
               @pointerdown="spinButtonClick"
             >
               <img v-if="spinCountValue" src="../assets/icons/stop.svg" />
-              <img v-if="!spinCountValue" src="../assets/icons/spin.svg" />
-              <div v-if="!spinCountValue" class="dot"></div>
+              <div v-if="!spinCountValue" class="flex-center">
+                <img src="../assets/icons/spin.svg" />
+                <div class="dot"></div>
+              </div>
             </button>
           </div>
         </div>
 
         <div class="section right-section flex-center">
-          <div
-            class="refresh-btn-wrapper flex-center relative"
-            @pointerdown="toggleAmountBar"
-          >
-            <div class="btn-background flex-center">
+          <div class="refresh-btn-wrapper flex-center relative">
+            <div
+              class="btn-background flex-center"
+              @pointerdown="toggleAmountBar"
+            >
               <div class="refresh-btn flex-center">
-                <Transition name="fade-scale">
-                  <Modal
-                    v-if="activeModal === 'spinCount'"
-                    :items="spinCountItems"
-                    @select="handleSelect"
-                    :width="50"
-                  />
-                </Transition>
                 <div v-if="spinCountValue" class="amount">
                   {{ spinCountValue }}
                 </div>
@@ -78,13 +79,30 @@
                 <img v-if="!spinCountValue" src="../assets/icons/refresh.svg" />
               </div>
             </div>
+            <Transition name="fade-scale">
+              <Modal
+                v-if="activeModal === 'spinCount' && toggleSpinMenu"
+                :items="spinCountItems"
+                @select="handleSelect"
+                :width="50"
+                :selectedItem="spinCountValue"
+              />
+            </Transition>
             <div class="line"></div>
           </div>
 
           <div class="balance-box flex-center flex-center">
             <div class="balance-wrapper flex-center">
               <span class="text">Bet </span
-              ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
+              ><span id="bet" class="amount"
+                >$
+                {{
+                  DEFAULT_BET.toLocaleString("de-DE", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })
+                }}
+              </span>
             </div>
 
             <div class="bet-button-wrapper flex-center">
@@ -146,6 +164,8 @@ let slotState = SlotMachineState.Unknown;
 
 const isMobile = ref(window.innerWidth <= 768);
 const orientation = ref("");
+const toggleMenu = ref(false);
+const toggleSpinMenu = ref(false);
 const selectedItem = ref("");
 const spinCountValue = ref("");
 const activeModal = ref<null | "menu" | "spinCount">(null);
@@ -185,7 +205,6 @@ onMounted(() => {
 
   screen.orientation.addEventListener("change", () => {
     orientation.value = screen.orientation.type;
-    console.log(orientation.value, "here");
   });
 });
 
@@ -195,22 +214,26 @@ onBeforeUnmount(() => {
 
 function toggleMenuBar() {
   selectedItem.value = localStorage.getItem("menu") ?? "";
-  activeModal.value = "menu";
+  activeModal.value = activeModal.value === "menu" ? null : "menu";
+  toggleMenu.value = !toggleMenu.value;
 }
 
 function toggleAmountBar() {
-  activeModal.value = "spinCount";
+  activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
+  toggleSpinMenu.value = !toggleSpinMenu.value;
 }
 
 function handleSelect(item: any) {
+  event.preventDefault();
   if (activeModal.value === "spinCount") {
     localStorage.setItem("spinCount", item.text);
+    spinCountValue.value = item.text;
+    toggleAmountBar();
   } else {
     localStorage.setItem("menu", item.id);
     selectedItem.value = item.id;
+    toggleMenuBar();
   }
-
-  activeModal.value = null;
 }
 
 const updateTempBalance = (newBalance: number): void => {
@@ -347,7 +370,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   font-size: 25px;
   color: rgba(255, 255, 255, 0.7);
   font-family: "Jomhuria";
-  line-height: 70%;
+  line-height: 15px;
 }
 
 .menu-wrapper {
@@ -460,6 +483,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
   color: rgba(255, 255, 255, 1);
   font-size: 30px;
   font-family: "Jomhuria";
+  line-height: 15px;
 }
 
 .bet-button,
@@ -489,8 +513,8 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 }
 
 .small {
-  width: 28px;
-  height: 28px;
+  width: 25px;
+  height: 25px;
   margin: 0;
 }
 
@@ -524,12 +548,12 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 
   .text {
     font-size: 40px !important;
-    line-height: 70%;
+    /* line-height: 15px; */
   }
 
   .amount {
     font-size: 50px !important;
-    line-height: 70%;
+    line-height: 15px;
   }
   .small {
     width: 30px !important;

@@ -6,17 +6,17 @@
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <foreignObject x="0.10714" y="0.317141" width="1385.79" height="213.786"
-      ><div
+    <foreignObject x="0.10714" y="0.317141" width="1385.79" height="213.786">
+      <div
         xmlns="http://www.w3.org/1999/xhtml"
         style="
-          backdrop-filter: blur(5px);
+          backdrop-filter: blur(10px);
           clip-path: url(#bgblur_0_77_4844_clip_path);
           height: 100%;
           width: 100%;
         "
-      ></div
-    ></foreignObject>
+      ></div>
+    </foreignObject>
     <g filter="url(#filter0_d_77_4844)" data-figma-bg-blur-radius="19.7357">
       <mask id="path-1-inside-1_77_4844" fill="white">
         <path
@@ -46,6 +46,12 @@
         filterUnits="userSpaceOnUse"
         color-interpolation-filters="sRGB"
       >
+        <feDropShadow
+          dx="0"
+          dy="10"
+          stdDeviation="16"
+          flood-color="rgba(0, 0, 0, 0.5)"
+        />
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
@@ -84,8 +90,7 @@
   </svg>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 .menu-background {

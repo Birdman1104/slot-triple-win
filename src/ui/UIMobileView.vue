@@ -1,20 +1,7 @@
 <template>
-  <div
-    class="close-button-wrapper flex-center relative"
-    @pointerdown="toggleMenuBar"
-  >
-    <div class="btn-background flex-center menu">
+  <div class="close-button-wrapper flex-center relative">
+    <div class="btn-background flex-center menu" @pointerdown="toggleMenuBar">
       <div class="close-button flex-center">
-        <Transition name="fade-scale">
-          <Modal
-            v-if="activeModal === 'menu'"
-            :items="menuItems"
-            :width="160"
-            :modal="'menu'"
-            customClass="bar-mobile-menu"
-            @select="handleSelect"
-          />
-        </Transition>
         <img v-if="activeModal === 'menu'" src="/src/assets/icons/close.svg" />
         <img
           v-if="activeModal !== 'menu'"
@@ -22,13 +9,32 @@
         />
       </div>
     </div>
+    <Transition name="fade-scale">
+      <Modal
+        v-if="activeModal === 'menu'"
+        :items="menuItems"
+        :width="160"
+        :modal="'menu'"
+        customClass="bar-mobile-menu"
+        @select="handleSelect"
+        :selectedItem="selectedItem"
+      />
+    </Transition>
   </div>
 
   <div class="menu-wrapper">
     <div class="flex-center amount-box">
       <div class="balance-wrapper flex-center">
         <span class="text">Balance: </span>
-        <span id="balance" class="amount"> $ {{ balance }}</span>
+        <span id="balance" class="amount">
+          $
+          {{
+            balance.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          }}</span
+        >
       </div>
       <div class="balance-wrapper flex-center">
         <span class="text">Bet </span
@@ -40,24 +46,29 @@
 
       <div class="ui-overlay">
         <div class="section right-section flex-center">
-          <div
-            class="refresh-btn-wrapper flex-center relative"
-            @pointerdown="toggleAmountBar"
-          >
-            <div class="btn-background flex-center">
+          <div class="refresh-btn-wrapper flex-center relative">
+            <div
+              class="btn-background flex-center"
+              @pointerdown="toggleAmountBar"
+            >
               <div class="refresh-btn flex-center">
-                <Transition name="fade-scale">
-                  <Modal
-                    v-if="activeModal === 'amount'"
-                    :items="amountItems"
-                    @select="handleSelect"
-                    :width="50"
-                    customClass="amount-mobile-menu"
-                  />
-                </Transition>
-                <img src="../assets/icons/refresh.svg" />
+                <div v-if="spinCountValue" class="amount">
+                  {{ spinCountValue }}
+                </div>
+
+                <img v-if="!spinCountValue" src="../assets/icons/refresh.svg" />
               </div>
             </div>
+            <Transition name="fade-scale">
+              <Modal
+                v-if="activeModal === 'spinCount' && toggleSpinMenu"
+                :items="amountItems"
+                @select="handleSelect"
+                :width="50"
+                :selectedItem="spinCountValue"
+                customClass="amount-mobile-menu"
+              />
+            </Transition>
           </div>
 
           <div class="balance-box flex-center">
@@ -80,8 +91,11 @@
               class="spin-button flex-center"
               @pointerdown="spinButtonClick"
             >
-              <img src="../assets/icons/spin.svg" />
-              <div class="dot"></div>
+              <img v-if="spinCountValue" src="../assets/icons/stop.svg" />
+              <div v-if="!spinCountValue" class="flex-center">
+                <img src="../assets/icons/spin.svg" />
+                <div class="dot"></div>
+              </div>
             </button>
           </div>
         </div>
@@ -117,7 +131,7 @@
 
 <script setup lang="ts">
 import { lego } from "@armathai/lego";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { DEFAULT_BET } from "../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import {
@@ -133,7 +147,11 @@ let tempBalance = -1;
 let balance = Head.playerModel?.balance ?? 0;
 let slotState = SlotMachineState.Unknown;
 
-const activeModal = ref<null | "menu" | "amount">(null);
+const activeModal = ref<null | "menu" | "spinCount">(null);
+const toggleSpinMenu = ref(false);
+const toggleMenu = ref(false);
+const selectedItem = ref("");
+const spinCountValue = ref("");
 
 const menuItems = [
   { id: "sound", text: "Sound", icon: "/src/assets/icons/sound.svg" },
@@ -159,16 +177,31 @@ const spinButtonClick = () => lego.event.emit(UIEvents.SpinButtonClick);
 const plusButtonClick = () => lego.event.emit(UIEvents.PlusButtonClick);
 const minusButtonClick = () => lego.event.emit(UIEvents.MinusButtonClick);
 
+onMounted(() => {
+  spinCountValue.value = localStorage.getItem("spinCount") ?? "";
+});
+
 function toggleMenuBar() {
+  selectedItem.value = localStorage.getItem("menu") ?? "";
   activeModal.value = activeModal.value === "menu" ? null : "menu";
+  toggleMenu.value = !toggleMenu.value;
 }
 
 function toggleAmountBar() {
-  activeModal.value = activeModal.value === "amount" ? null : "amount";
+  activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
+  toggleSpinMenu.value = !toggleSpinMenu.value;
 }
 
 function handleSelect(item: any) {
-  activeModal.value = null;
+  if (activeModal.value === "spinCount") {
+    localStorage.setItem("spinCount", item.text);
+    spinCountValue.value = item.text;
+    toggleAmountBar();
+  } else {
+    localStorage.setItem("menu", item.id);
+    selectedItem.value = item.id;
+    toggleMenuBar();
+  }
 }
 
 const updateTempBalance = (newBalance: number): void => {

@@ -14,7 +14,7 @@
         <li
           v-for="item in items"
           :key="item.id"
-          @click="selectItem(item)"
+          @click.stop="selectItem(item)"
           class="modal-item"
         >
           <div
@@ -64,6 +64,7 @@ const props = defineProps({
 const emits = defineEmits(["close", "select"]);
 
 function selectItem(item) {
+  
   selectedItemId.value = item.id;
   emits("select", item);
 }
