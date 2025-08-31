@@ -5,30 +5,16 @@
       <div class="ui-overlay">
         <div class="section left-section flex-center">
           <div class="close-button-wrapper flex-center">
-            <div
-              class="btn-background flex-center"
-              @pointerdown="toggleMenuBar"
-            >
+            <div class="btn-background flex-center" @pointerdown="toggleMenuBar">
               <div class="close-button flex-center">
-                <img
-                  v-if="activeModal === 'menu'"
-                  src="/src/assets/icons/close.svg"
-                />
-                <img
-                  v-if="activeModal !== 'menu'"
-                  src="/src/assets/icons/menuBar.svg"
-                />
+                <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+                <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
               </div>
             </div>
 
             <Transition name="fade-scale">
-              <Modal
-                v-if="activeModal === 'menu' && toggleMenu"
-                :items="menuItems"
-                :width="160"
-                :selectedItem="selectedItem"
-                @select="handleSelect"
-              />
+              <Modal v-if="activeModal === 'menu' && toggleMenu" :items="menuItems" :width="160"
+                :selectedItem="selectedItem" @select="handleSelect" />
             </Transition>
             <div class="line"></div>
           </div>
@@ -42,17 +28,16 @@
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })
-              }}</span
-            >
+              }}</span>
           </div>
         </div>
 
         <div class="section middle-section flex-center">
           <div class="button-box">
             <button class="spin-button flex-center" @pointerdown="spinButtonClick">
-              <img v-if="spinCountValue" src="../assets/icons/stop.svg" />
+              <img v-if="spinCountValue" src="/icons/stop.svg" />
               <div v-if="!spinCountValue" class="flex-center">
-                <img src="../assets/icons/spin.svg" />
+                <img src="/icons/spin.svg" />
                 <div class="dot"></div>
               </div>
             </button>
@@ -61,35 +46,25 @@
 
         <div class="section right-section flex-center">
           <div class="refresh-btn-wrapper flex-center relative">
-            <div
-              class="btn-background flex-center"
-              @pointerdown="toggleAmountBar"
-            >
+            <div class="btn-background flex-center" @pointerdown="toggleAmountBar">
               <div class="refresh-btn flex-center">
                 <div v-if="spinCountValue" class="amount">
                   {{ spinCountValue }}
                 </div>
 
-                <img v-if="!spinCountValue" src="../assets/icons/refresh.svg" />
+                <img v-if="!spinCountValue" src="/icons/refresh.svg" />
               </div>
             </div>
             <Transition name="fade-scale">
-              <Modal
-                v-if="activeModal === 'spinCount' && toggleSpinMenu"
-                :items="spinCountItems"
-                @select="handleSelect"
-                :width="50"
-                :selectedItem="spinCountValue"
-              />
+              <Modal v-if="activeModal === 'spinCount' && toggleSpinMenu" :items="spinCountItems" @select="handleSelect"
+                :width="50" :selectedItem="spinCountValue" />
             </Transition>
             <div class="line"></div>
           </div>
 
           <div class="balance-box flex-center flex-center">
             <div class="balance-wrapper flex-center">
-              <span class="text">Bet </span
-              ><span id="bet" class="amount"
-                >$
+              <span class="text">Bet </span><span id="bet" class="amount">$
                 {{
                   DEFAULT_BET.toLocaleString("de-DE", {
                     minimumFractionDigits: 2,
@@ -102,12 +77,12 @@
             <div class="bet-button-wrapper flex-center">
               <div class="btn-background small flex-center">
                 <button class="increase-button bet-button flex-center" @pointerdown="plusButtonClick">
-                  <img src="../assets/icons/arrow.svg" />
+                  <img src="/icons/arrow.svg" />
                 </button>
               </div>
               <div class="btn-background small flex-center">
                 <button class="decrease-button bet-button flex-center" @pointerdown="minusButtonClick">
-                  <img src="../assets/icons/arrow.svg" />
+                  <img src="/icons/arrow.svg" />
                 </button>
               </div>
             </div>
@@ -142,9 +117,9 @@ import {
 } from "../events/ModelEvents";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
-import MenuBackgroundSvg from "../ui/MenuBackgroundSvg.vue";
-import Modal from "../ui/Modal.vue";
-import UIMobileView from "../ui/UIMobileView.vue";
+import MenuBackgroundSvg from "./MenuBackgroundSvg.vue";
+import Modal from "./Modal.vue";
+import UIMobileView from "./UIMobileView.vue";
 
 let tempBalance = -1;
 let balance = Head.playerModel?.balance ?? 0;
@@ -159,14 +134,14 @@ const spinCountValue = ref("");
 const activeModal = ref<null | "menu" | "spinCount">(null);
 
 const menuItems = [
-  { id: "sound", text: "Sound", icon: "/src/assets/icons/sound.svg" },
-  { id: "music", text: "Music", icon: "/src/assets/icons/music.svg" },
-  { id: "info", text: "Info", icon: "/src/assets/icons/info.svg" },
-  { id: "turbo", text: "Turbo", icon: "/src/assets/icons/turbo.svg" },
+  { id: "sound", text: "Sound", icon: "/icons/sound.svg" },
+  { id: "music", text: "Music", icon: "/icons/music.svg" },
+  { id: "info", text: "Info", icon: "/icons/info.svg" },
+  { id: "turbo", text: "Turbo", icon: "/icons/turbo.svg" },
   {
     id: "history",
     text: "History",
-    icon: "/src/assets/icons/history.svg",
+    icon: "/icons/history.svg",
   },
 ];
 
@@ -277,7 +252,7 @@ lego.event.on(SlotMachineModelEvents.StateUpdate, onSlotStateUpdate);
 <style scoped>
 @font-face {
   font-family: "Jomhuria";
-  src: url("../assets/fonts/Jomhuria-Regular.ttf") format("truetype");
+  src: url("/fonts/Jomhuria-Regular.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
 }

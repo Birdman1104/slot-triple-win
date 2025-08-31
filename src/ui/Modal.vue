@@ -1,21 +1,12 @@
 <template>
   <div class="modal-overlay" @click.stop>
     <div class="modal-content" :class="['modal-content', props.customClass]" :style="{ width: props.width + 'px' }">
-      <img class="close-btn" v-if="isMobile && props.modal === 'menu'" src="/src/assets/icons/close.svg" />
+      <img class="close-btn" v-if="isMobile && props.modal === 'menu'" src="/icons/close.svg" />
       <ul>
-        <li
-          v-for="item in items"
-          :key="item.id"
-          @click.stop="selectItem(item)"
-          class="modal-item"
-        >
-          <div
-            class="icon"
-            v-if="item.icon"
-            :class="{
-              selected: selectedItemId === item.id || selectedItem === item.id,
-            }"
-          >
+        <li v-for="item in items" :key="item.id" @click.stop="selectItem(item)" class="modal-item">
+          <div class="icon" v-if="item.icon" :class="{
+            selected: selectedItemId === item.id || selectedItem === item.id,
+          }">
             <img :src="item.icon" />
           </div>
           <span>{{ item.text }}</span>
@@ -56,7 +47,7 @@ const props = defineProps({
 const emits = defineEmits(["close", "select"]);
 
 function selectItem(item) {
-  
+
   selectedItemId.value = item.id;
   emits("select", item);
 }
