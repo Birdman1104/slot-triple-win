@@ -1,12 +1,13 @@
 import vue from "@vitejs/plugin-vue";
+import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [vue()],
-  base: "/slot-triple-win/",
+  base: process.env.NODE_ENV === "production" ? "/slot-triple-win/" : "",
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./sr/assets/icons", import.meta.url)),
+      "@": fileURLToPath(new URL("./src/assets/icons", import.meta.url)),
     },
   },
   build: {
