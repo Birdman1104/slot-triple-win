@@ -72,7 +72,7 @@ onBeforeUnmount(() => {
 <style scoped>
 @font-face {
   font-family: "Jomhuria";
-  src: url("../assets/fonts/Jomhuria-Regular.ttf") format("truetype");
+  src: url("/fonts/Jomhuria-Regular.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
 }
