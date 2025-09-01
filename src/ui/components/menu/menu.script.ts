@@ -2,14 +2,11 @@ import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { DEFAULT_BET } from "../../../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../../../events/MainEvents";
-import {
-  PlayerModelEvents,
-  SlotMachineModelEvents,
-} from "../../../events/ModelEvents";
+import { PlayerModelEvents, SlotMachineModelEvents } from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
-import MenuBackgroundSvg from "../../MenuBackgroundSvg.vue";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
+import MenuBackgroundSvg from "../../MenuBackgroundSvg.vue";
 import Modal from "../../Modal.vue";
 export default {
   components: {
@@ -33,14 +30,14 @@ export default {
     const activeModal = ref<null | "menu" | "spinCount">(null);
 
     const menuItems = [
-      { id: "sound", text: "Sound", icon: "/icons/sound.svg" },
-      { id: "music", text: "Music", icon: "/icons/music.svg" },
-      { id: "info", text: "Info", icon: "/icons/info.svg" },
-      { id: "turbo", text: "Turbo", icon: "/icons/turbo.svg" },
+      { id: "sound", text: "Sound", icon: "/slot-triple-win/icons/sound.svg" },
+      { id: "music", text: "Music", icon: "/slot-triple-win/icons/music.svg" },
+      { id: "info", text: "Info", icon: "/slot-triple-win/icons/info.svg" },
+      { id: "turbo", text: "Turbo", icon: "/slot-triple-win/icons/turbo.svg" },
       {
         id: "history",
         text: "History",
-        icon: "/icons/history.svg",
+        icon: "/slot-triple-win/icons/history.svg",
       },
     ];
 
@@ -86,8 +83,7 @@ export default {
 
     function toggleAmountBar() {
       toggleMenu.value = false;
-      activeModal.value =
-        activeModal.value === "spinCount" ? null : "spinCount";
+      activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 
