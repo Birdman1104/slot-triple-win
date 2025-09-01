@@ -7,7 +7,7 @@ import { SlotMachineViewEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import type { ReelModel } from "../models/ReelModel";
 import { SlotMachineModel, SlotMachineState } from "../models/SlotMachineModel";
-import { makeSprite } from "../utils/Utils";
+import { delayRunnable, makeSprite } from "../utils/Utils";
 import type { Element } from "./ElementView";
 import { Reel } from "./ReelView";
 import { SlotForeground } from "./SlotForeground";
@@ -45,7 +45,9 @@ export class SlotMachine extends Container {
 
   public startSpinning(): void {
     this.reels.forEach((reel, i) => {
-      reel.startSpinning();
+      delayRunnable(i * 0.05, () => {
+        reel.startSpinning();
+      });
     });
   }
 
