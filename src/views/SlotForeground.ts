@@ -1,12 +1,14 @@
 import anime from "animejs";
-import { Container, Sprite } from "pixi.js";
-import { iceCrackConfig } from "../configs/spritesConfig";
+import { Container, Sprite, Texture } from "pixi.js";
+import { iceCrackConfig, winTypeConfig } from "../configs/spritesConfig";
 import { winTextConfig } from "../configs/textConfig";
+import Head from "../models/Head";
 import { makeSprite, makeText } from "../utils/Utils";
 
 export class SlotForeground extends Container {
   private iceCrack: Sprite = new Sprite();
-  private win = makeText(winTextConfig());
+  private winType: Sprite = new Sprite();
+  private winAmount = makeText(winTextConfig());
 
   constructor() {
     super();
@@ -14,9 +16,13 @@ export class SlotForeground extends Container {
   }
 
   public showWin(winAmount: number): void {
-    this.win.text = `${winAmount}`;
-    this.win.alpha = 0;
-    this.win.scale.set(0.2);
+    this.winAmount.text = `$${winAmount}`;
+    this.winAmount.alpha = 0;
+    this.winAmount.scale.set(4);
+    this.updateTextStyle(winAmount);
+
+    this.winType.alpha = 0;
+    this.winType.scale.set(4);
 
     const timeline = anime.timeline({
       easing: "easeInOutQuad",
@@ -32,36 +38,37 @@ export class SlotForeground extends Container {
     });
 
     timeline.add({
-      targets: this.win,
+      targets: [this.winAmount, this.winType],
       alpha: 1,
-      duration: 800,
+      duration: 200,
     });
 
     timeline.add(
       {
-        targets: this.win.scale,
+        targets: [this.winAmount.scale, this.winType.scale],
         x: 1,
         y: 1,
-        duration: 800,
+        ease: "easeOutBounce",
+        duration: 200,
       },
       0
     );
 
     timeline.add(
       {
-        targets: this.win.scale,
+        targets: [this.winAmount.scale, this.winType.scale],
         x: 0.2,
         y: 0.2,
-        duration: 800,
+        duration: 400,
       },
       3000
     );
 
     timeline.add(
       {
-        targets: [this.iceCrack, this.win],
+        targets: [this.iceCrack, this.winAmount, this.winType],
         alpha: 0,
-        duration: 800,
+        duration: 400,
       },
       3000
     );
@@ -69,10 +76,28 @@ export class SlotForeground extends Container {
 
   private build(): void {
     this.iceCrack = makeSprite(iceCrackConfig());
-    this.addChild(this.iceCrack, this.win);
+    this.addChild(this.iceCrack, this.winAmount);
+
+    this.winType = makeSprite(winTypeConfig());
+    this.addChild(this.winType);
   }
 
   public hideEverything(): void {
-    [this.iceCrack].forEach((child) => (child.alpha = 0));
+    this.iceCrack.alpha = 0;
+    this.winType.alpha = 0;
+    this.winAmount.alpha = 0;
+  }
+
+  private updateTextStyle(winAmount: number): void {
+    const bet = Head.playerModel?.bet || 10;
+    if (winAmount / bet > 10) {
+      // BIG WIN
+      this.winAmount.style.stroke = "#00a9aa";
+      this.winType.texture = Texture.from("big_win.png");
+    } else {
+      // WIN
+      this.winAmount.style.stroke = "#00a718";
+      this.winType.texture = Texture.from("win.png");
+    }
   }
 }

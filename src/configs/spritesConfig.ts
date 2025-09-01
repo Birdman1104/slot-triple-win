@@ -46,6 +46,13 @@ export const iceCrackConfig = (): SpriteConfig => ({
   anchor: { x: 0.5, y: 0.5 },
 });
 
+export const winTypeConfig = (): SpriteConfig => ({
+  frame: "big_win.png",
+  x: 384,
+  y: 300,
+  anchor: { x: 0.5, y: 0.5 },
+});
+
 export const iceCubeConfig = (x: number, y: number): SpriteConfig => ({
   frame: "ice_1.png",
   atlas: "slot_machine.png",

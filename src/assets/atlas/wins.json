@@ -1,0 +1,63 @@
+{
+  "frames": {
+    "big_win.png": {
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 561,
+        "h": 187
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 561,
+        "h": 187
+      },
+      "sourceSize": {
+        "w": 561,
+        "h": 187
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "win.png": {
+      "frame": {
+        "x": 3,
+        "y": 196,
+        "w": 295,
+        "h": 151
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 295,
+        "h": 151
+      },
+      "sourceSize": {
+        "w": 295,
+        "h": 151
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://github.com/odrick/free-tex-packer-core",
+    "version": "0.3.4",
+    "image": "wins.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 567,
+      "h": 350
+    },
+    "scale": 1
+  }
+}

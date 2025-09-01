@@ -5,7 +5,7 @@ import { Container, Graphics, Rectangle, Text } from "pixi.js";
 import { getIntroViewGridConfig } from "../configs/gridConfigs/introViewGC";
 import { clickToContinueTextConfig, clickToProceedTextConfig } from "../configs/textConfig";
 import { MainGameEvents } from "../events/MainEvents";
-import { getGameBounds, lp, makeText } from "../utils/Utils";
+import { delayRunnable, getGameBounds, lp, makeText } from "../utils/Utils";
 import { IntroCard } from "./IntroCard";
 
 class IntroLandscape extends Container {
@@ -154,6 +154,8 @@ export class IntroViewWrapper extends PixiGrid {
     this.overlay.on("pointerdown", () => {
       this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
     });
+
+    delayRunnable(0.01, () => lego.event.emit(MainGameEvents.ShowGame));
 
     this.setChild("overlay", this.overlay);
   }

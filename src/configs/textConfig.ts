@@ -70,11 +70,13 @@ export const errorTextTextConfig = (): TextConfig => ({
 export const winTextConfig = (): TextConfig => ({
   text: "",
   x: 384,
-  y: 370,
+  y: 500,
   anchor: { x: 0.5, y: 0.5 },
   style: {
     fontSize: 200,
     fill: "#ffffff",
+    stroke: "#00a9aa",
+    strokeThickness: 12,
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,
   },
