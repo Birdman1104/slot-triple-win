@@ -4,7 +4,7 @@ import { createApp } from "vue";
 import { getGameViewGridConfig } from "../configs/gridConfigs/gameViewGC";
 import { GameModelEvents } from "../events/ModelEvents";
 import type { SlotMachineModel } from "../models/SlotMachineModel";
-import UI from "../ui/UI.vue";
+import UI from "../ui/components/menu/UI.vue";
 import { delayRunnable } from "../utils/Utils";
 import { SlotMachine } from "./SlotMachineView";
 
@@ -14,7 +14,11 @@ export class GameView extends PixiGrid {
   constructor() {
     super();
 
-    lego.event.on(GameModelEvents.SlotMachineUpdate, this.onSlotMachineUpdate, this);
+    lego.event.on(
+      GameModelEvents.SlotMachineUpdate,
+      this.onSlotMachineUpdate,
+      this
+    );
     this.build();
   }
 

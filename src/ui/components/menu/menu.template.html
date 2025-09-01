@@ -1,0 +1,249 @@
+<div
+  class="menu-wrapper"
+  v-if="!isMobile || (isMobile && orientation === 'landscape-primary')"
+>
+  <div class="wrapper">
+    <MenuBackgroundSvg />
+    <div class="ui-overlay">
+      <div class="section left-section flex-center">
+        <div class="close-button-wrapper flex-center">
+          <div class="btn-background flex-center" @pointerdown="toggleMenuBar">
+            <div class="close-button flex-center">
+              <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+              <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
+            </div>
+          </div>
+
+          <Transition name="fade-scale">
+            <Modal
+              v-if="activeModal === 'menu' && toggleMenu"
+              :items="menuItems"
+              :width="160"
+              :selectedItem="selectedItem"
+              @select="handleSelect"
+            />
+          </Transition>
+          <div class="line"></div>
+        </div>
+
+        <div class="balance-wrapper full-width flex-center">
+          <span class="text">Balance: </span>
+          <span id="balance" class="amount">
+            $ {{ balance?.toLocaleString("en-US", { minimumFractionDigits: 2,
+            maximumFractionDigits: 2, }) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="section middle-section flex-center">
+        <div class="button-box">
+          <button
+            class="spin-button flex-center"
+            @pointerdown="spinButtonClick"
+          >
+            <img v-if="showStopButton" src="/icons/stop.svg" />
+            <div v-if="!showStopButton" class="flex-center">
+              <img src="/icons/spin.svg" />
+              <div class="dot"></div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="section right-section flex-center">
+        <div class="refresh-btn-wrapper flex-center relative">
+          <div
+            class="btn-background flex-center"
+            @pointerdown="toggleAmountBar"
+          >
+            <div class="refresh-btn flex-center">
+              <div v-if="spinCountValue" class="amount">
+                {{ spinCountValue }}
+              </div>
+
+              <img
+                v-if="!spinCountValue"
+                src="/icons/refresh.svg"
+              />
+            </div>
+          </div>
+          <Transition name="fade-scale">
+            <Modal
+              v-if="activeModal === 'spinCount' && toggleSpinMenu"
+              :items="spinCountItems"
+              @select="handleSelect"
+              :width="50"
+              :selectedItem="spinCountValue"
+            />
+          </Transition>
+          <div class="line"></div>
+        </div>
+
+        <div class="balance-box flex-center flex-center">
+          <div class="balance-wrapper flex-center">
+            <span class="text">Bet </span
+            ><span id="bet" class="amount"
+              >$ {{ DEFAULT_BET?.toLocaleString("de-DE", {
+              minimumFractionDigits: 2, maximumFractionDigits: 2, }) }}
+            </span>
+          </div>
+
+          <div class="bet-button-wrapper flex-center">
+            <div class="btn-background small flex-center">
+              <button
+                class="increase-button bet-button flex-center"
+                @pointerdown="plusButtonClick"
+              >
+                <img src="/icons/arrow.svg" />
+              </button>
+            </div>
+            <div class="btn-background small flex-center">
+              <button
+                class="decrease-button bet-button flex-center"
+                @pointerdown="minusButtonClick"
+              >
+                <img src="/icons/arrow.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bonuse-btn-wrapper flex-center">
+          <div class="line"></div>
+          <div class="btn-background flex-center">
+            <div class="buy-btn flex-center">
+              <span class="buy-btn-text"> Buy Bonus </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div v-if="isMobile && orientation === 'portrait-primary'">
+  <div
+    class="button-background flex-center menu-mb"
+    @pointerdown="toggleMenuBar"
+  >
+    <div class="close-button-mb flex-center">
+      <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+      <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
+    </div>
+  </div>
+  <div class="close-btn-wrapper">
+    <Transition name="fade-scale">
+      <Modal
+        v-if="activeModal === 'menu'"
+        :items="menuItems"
+        :width="160"
+        :modal="'menu'"
+        customClass="bar-mobile-menu"
+        @select="handleSelect"
+        @close="toggleMenuBar"
+        :selectedItem="selectedItem"
+      />
+    </Transition>
+  </div>
+
+  <div class="menu-wrapper-mb">
+    <div class="flex-center amount-box-mb">
+      <div class="balance-wrapper-mb flex-center">
+        <span class="text-mb">Balance: </span>
+        <span id="balance" class="amount-mb">
+          $ {{ balance.toLocaleString("en-US", { minimumFractionDigits: 2,
+          maximumFractionDigits: 2, }) }}</span
+        >
+      </div>
+      <div class="balance-wrapper-mb flex-center">
+        <span class="text-mb">Bet </span
+        ><span id="bet" class="amount-mb">$ {{ DEFAULT_BET }} </span>
+      </div>
+    </div>
+    <div class="wrapper-mb">
+      <MenuBackgroundMobile />
+
+      <div class="ui-overlay-mb">
+        <div class="section-mb right-section-mb flex-center">
+          <div class="refresh-btn-wrapper-mb flex-center relative">
+            <div
+              class="button-background flex-center"
+              @pointerdown="toggleAmountBar"
+            >
+              <div class="refresh-btn-mb flex-center">
+                <div v-if="spinCountValue" class="amount-mb">
+                  {{ spinCountValue }}
+                </div>
+
+                <img
+                  v-if="!spinCountValue"
+                  src="/icons/refresh.svg"
+                />
+              </div>
+            </div>
+            <Transition name="fade-scale">
+              <Modal
+                v-if="activeModal === 'spinCount' && toggleSpinMenu"
+                :items="spinCountItems"
+                @select="handleSelect"
+                :width="50"
+                :selectedItem="spinCountValue"
+                customClass="amount-mobile-menu"
+              />
+            </Transition>
+          </div>
+
+          <div class="balance-box-mb flex-center">
+            <div class="bet-button-wrapper-mb flex-center">
+              <div class="button-background flex-center">
+                <button
+                  class="decrease-button-mb bet-button-mb flex-center"
+                  @pointerdown="minusButtonClick"
+                >
+                  <img src="/icons/arrow.svg" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-mb middle-section-mb flex-center">
+          <div class="button-box-mb">
+            <button
+              class="spin-button-mb flex-center"
+              @pointerdown="spinButtonClick"
+            >
+              <img v-if="showStopButton" src="/icons/stop.svg" />
+              <div v-if="!showStopButton" class="flex-center">
+                <img src="/icons/spin.svg" />
+                <div class="dot-mb"></div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="section-mb right-section-mb flex-center">
+          <div class="balance-box-mb flex-center">
+            <div class="bet-button-wrapper-mb flex-center">
+              <div class="button-background flex-center">
+                <button
+                  class="increase-button-mb bet-button-mb flex-center"
+                  @pointerdown="plusButtonClick"
+                >
+                  <img src="/icons/arrow.svg" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="bonuse-btn-wrapper-mb flex-center">
+            <div class="button-background flex-center">
+              <div class="buy-btn-mb flex-center">
+                <span class="buy-btn-text-mb"> Buy Bonus </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
