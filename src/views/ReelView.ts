@@ -82,9 +82,26 @@ export class Reel extends Container {
     if (this._isSpinning) return;
 
     this._isSpinning = true;
+    let complete = false;
 
-    this.createSpinningElements();
-    this.animateSpinning();
+    this.elements.forEach((el) => {
+      const timeline = anime.timeline({
+        duration: 200,
+        easing: "easeInOutQuad",
+        complete: () => {
+          if (!complete) {
+            complete = true;
+            this.createSpinningElements();
+            this.animateSpinning();
+          }
+        },
+      });
+
+      timeline.add({
+        targets: el,
+        y: "-=50",
+      });
+    });
   }
 
   public stopSpinning(): void {
