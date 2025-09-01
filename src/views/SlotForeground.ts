@@ -26,7 +26,13 @@ export class SlotForeground extends Container {
     });
 
     timeline.add({
-      targets: [this.iceCrack, this.win],
+      targets: this.iceCrack,
+      alpha: 1,
+      duration: 10,
+    });
+
+    timeline.add({
+      targets: this.win,
       alpha: 1,
       duration: 800,
     });

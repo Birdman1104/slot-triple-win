@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [vue()],
+  base: process.env.NODE_ENV === "production" ? "/slot-triple-win/" : "",
 
   build: {
     target: "esnext",
