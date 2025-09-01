@@ -12,10 +12,19 @@
         @pointerdown="handleClose"
       />
       <ul>
-        <li v-for="item in items" :key="item.id" @click.stop="selectItem(item)" class="modal-item">
-          <div class="icon" v-if="item.icon" :class="{
-            selected: selectedItemId === item.id || selectedItem === item.id,
-          }">
+        <li
+          v-for="item in items"
+          :key="item.id"
+          @click.stop="selectItem(item)"
+          class="modal-item"
+        >
+          <div
+            class="icon"
+            v-if="item.icon"
+            :class="{
+              selected: selectedItemId === item.id || selectedItem === item.id,
+            }"
+          >
             <img :src="item.icon" />
           </div>
           <span>{{ item.text }}</span>

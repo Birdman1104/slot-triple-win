@@ -52,6 +52,7 @@
 
 .balance-wrapper {
   flex-direction: column;
+  min-width: 60px;
 }
 
 .section {

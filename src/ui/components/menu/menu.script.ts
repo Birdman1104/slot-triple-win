@@ -26,6 +26,8 @@ export default {
     const orientation = ref("");
     const toggleMenu = ref(false);
     const toggleSpinMenu = ref(false);
+    const showStopButton = ref(false);
+
     const selectedItem = ref("");
     const spinCountValue = ref("");
     const activeModal = ref<null | "menu" | "spinCount">(null);
@@ -34,7 +36,7 @@ export default {
       { id: "sound", text: "Sound", icon: "/icons/sound.svg" },
       { id: "music", text: "Music", icon: "/icons/music.svg" },
       { id: "info", text: "Info", icon: "/icons/info.svg" },
-      { id: "turbo", text: "Turbo", icon: "/turbo.svg" },
+      { id: "turbo", text: "Turbo", icon: "/icons/turbo.svg" },
       {
         id: "history",
         text: "History",
@@ -50,7 +52,10 @@ export default {
       { id: "10", text: "10" },
     ];
 
-    const spinButtonClick = () => lego.event.emit(UIEvents.SpinButtonClick);
+    const spinButtonClick = () => {
+      lego.event.emit(UIEvents.SpinButtonClick);
+      showStopButton.value = true;
+    };
     const plusButtonClick = () => lego.event.emit(UIEvents.PlusButtonClick);
     const minusButtonClick = () => lego.event.emit(UIEvents.MinusButtonClick);
 
@@ -128,6 +133,7 @@ export default {
       if (betElement) {
         betElement.textContent = ` $ ${tempBalance} `;
       }
+      showStopButton.value = false;
     };
 
     const betUpdate = (bet: number) => {
@@ -158,6 +164,7 @@ export default {
       activeModal,
       menuItems,
       spinCountItems,
+      showStopButton,
       spinButtonClick,
       plusButtonClick,
       minusButtonClick,

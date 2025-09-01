@@ -7,19 +7,10 @@
     <div class="ui-overlay">
       <div class="section left-section flex-center">
         <div class="close-button-wrapper flex-center">
-          <div
-            class="btn-background flex-center"
-            @pointerdown="toggleMenuBar"
-          >
+          <div class="btn-background flex-center" @pointerdown="toggleMenuBar">
             <div class="close-button flex-center">
-              <img
-                v-if="activeModal === 'menu'"
-                src="/src/assets/icons/close.svg"
-              />
-              <img
-                v-if="activeModal !== 'menu'"
-                src="/src/assets/icons/menuBar.svg"
-              />
+              <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+              <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
             </div>
           </div>
 
@@ -50,9 +41,9 @@
             class="spin-button flex-center"
             @pointerdown="spinButtonClick"
           >
-            <img v-if="spinCountValue" src="../../../assets/icons/stop.svg" />
-            <div v-if="!spinCountValue" class="flex-center">
-              <img src="../../../assets/icons/spin.svg" />
+            <img v-if="showStopButton" src="/icons/stop.svg" />
+            <div v-if="!showStopButton" class="flex-center">
+              <img src="/icons/spin.svg" />
               <div class="dot"></div>
             </div>
           </button>
@@ -103,7 +94,7 @@
                 class="increase-button bet-button flex-center"
                 @pointerdown="plusButtonClick"
               >
-                <img src="../../../assets/icons/arrow.svg" />
+                <img src="/icons/arrow.svg" />
               </button>
             </div>
             <div class="btn-background small flex-center">
@@ -111,7 +102,7 @@
                 class="decrease-button bet-button flex-center"
                 @pointerdown="minusButtonClick"
               >
-                <img src="../../../assets/icons/arrow.svg" />
+                <img src="/icons/arrow.svg" />
               </button>
             </div>
           </div>
@@ -136,8 +127,8 @@
     @pointerdown="toggleMenuBar"
   >
     <div class="close-button-mb flex-center">
-      <img v-if="activeModal === 'menu'" src="/src/assets/icons/close.svg" />
-      <img v-if="activeModal !== 'menu'" src="/src/assets/icons/menuBar.svg" />
+      <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+      <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
     </div>
   </div>
   <div class="close-btn-wrapper">
@@ -186,7 +177,7 @@
 
                 <img
                   v-if="!spinCountValue"
-                  src="../../../assets/icons/refresh.svg"
+                  src="/icons/refresh.svg"
                 />
               </div>
             </div>
@@ -209,7 +200,7 @@
                   class="decrease-button-mb bet-button-mb flex-center"
                   @pointerdown="minusButtonClick"
                 >
-                  <img src="../../../assets/icons/arrow.svg" />
+                  <img src="/icons/arrow.svg" />
                 </button>
               </div>
             </div>
@@ -222,9 +213,9 @@
               class="spin-button-mb flex-center"
               @pointerdown="spinButtonClick"
             >
-              <img v-if="spinCountValue" src="../../../assets/icons/stop.svg" />
-              <div v-if="!spinCountValue" class="flex-center">
-                <img src="../../../assets/icons/spin.svg" />
+              <img v-if="showStopButton" src="/icons/stop.svg" />
+              <div v-if="!showStopButton" class="flex-center">
+                <img src="/icons/spin.svg" />
                 <div class="dot-mb"></div>
               </div>
             </button>
@@ -239,7 +230,7 @@
                   class="increase-button-mb bet-button-mb flex-center"
                   @pointerdown="plusButtonClick"
                 >
-                  <img src="../../../assets/icons/arrow.svg" />
+                  <img src="/icons/arrow.svg" />
                 </button>
               </div>
             </div>
