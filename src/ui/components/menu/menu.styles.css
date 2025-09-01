@@ -50,6 +50,12 @@
   width: 100%;
 }
 
+.modaaal {
+  width: 10px;
+  height: 10px;
+  background: red;
+}
+
 .balance-wrapper {
   flex-direction: column;
   min-width: 60px;
