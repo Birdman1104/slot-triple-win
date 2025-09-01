@@ -156,12 +156,15 @@ export class SlotMachine extends Container {
 
   private animateLines(lines: { line: WinningLine; winningItemType: string }[]): void {
     const getElements = (line: any) => line.map((pos: any, i: number) => this.reels[i].getElementByIndex(pos));
-    const animationConfig: { elements: Element[]; winningItemType: string }[] = lines.map(
+    const getIce = (line: any) => line.map((pos: any, i: number) => this.reels[i].getIceByIndex(pos));
+    const animationConfig: { elements: Element[]; ice: Sprite[]; winningItemType: string }[] = lines.map(
       ({ line, winningItemType }) => {
-        return { elements: getElements(line), winningItemType };
+        return { elements: getElements(line), ice: getIce(line), winningItemType };
       }
     );
+
     if (animationConfig.length === 0) return;
+
     const animations: any[] = [];
     const playNextAnimation = (index: number, animations: any[]): void => {
       clearDim();
@@ -186,7 +189,7 @@ export class SlotMachine extends Container {
       });
     };
 
-    animationConfig.forEach(({ elements, winningItemType }, i) => {
+    animationConfig.forEach(({ elements, ice, winningItemType }, i) => {
       const timeline = anime.timeline({
         duration: 800,
         easing: "easeInBack",
@@ -201,6 +204,16 @@ export class SlotMachine extends Container {
             y: 1.35,
             begin: () => e.startAnimation(winningItemType === e.type),
             complete: () => e.endAnimation(),
+          },
+          0
+        );
+      });
+      ice.forEach((e) => {
+        timeline.add(
+          {
+            targets: e.scale,
+            x: 1.35,
+            y: 1.35,
           },
           0
         );

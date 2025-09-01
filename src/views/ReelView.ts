@@ -1,5 +1,5 @@
 import anime from "animejs";
-import { Container, Rectangle } from "pixi.js";
+import { Container, Rectangle, Sprite } from "pixi.js";
 import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
 import { iceCubeConfig } from "../configs/spritesConfig";
 import { ElementModel } from "../models/ElementModel";
@@ -13,6 +13,7 @@ const TOTAL_HEIGHT = HEIGHT + OFFSET_Y;
 
 export class Reel extends Container {
   private _uuid: String;
+  private _ice: Sprite[] = [];
   private _elements: Element[] = [];
   private _spinAnimations: anime.AnimeInstance[] = [];
   private _isSpinning: boolean = false;
@@ -67,6 +68,10 @@ export class Reel extends Container {
 
   public getElementByIndex(index: number): Element {
     return this.elements[index];
+  }
+
+  public getIceByIndex(index: number): Sprite {
+    return this._ice[this._ice.length - 1 - index];
   }
 
   public getElementIndex(element: Element): number {
@@ -167,6 +172,7 @@ export class Reel extends Container {
     for (let i = 0; i < 3; i++) {
       const ice = makeSprite(iceCubeConfig(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2));
       this.addChild(ice);
+      this._ice.push(ice);
     }
   }
 
