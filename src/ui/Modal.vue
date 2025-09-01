@@ -124,7 +124,7 @@ li {
 }
 
 .modal-content {
-  bottom: 100%;
+  bottom: 50px;
   position: absolute;
   left: 0;
   padding: 1.5rem;
@@ -134,6 +134,7 @@ li {
   background-color: rgba(255, 255, 255, 0.25);
   border: 1.5px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
+  z-index: 100;
 }
 
 .modal-item {
@@ -188,16 +189,8 @@ li {
 }
 
 :deep(.modal-content.amount-mobile-menu) {
-  bottom: 110%;
   left: 10px;
   border-bottom-left-radius: 10px;
 }
 </style>
 
-<style>
-@media screen and (min-width: 1500px) {
-  .modal-content {
-    bottom: 90% !important;
-  }
-}
-</style>
