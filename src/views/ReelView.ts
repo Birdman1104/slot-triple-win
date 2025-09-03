@@ -2,28 +2,19 @@ import anime from "animejs";
 import { Container, Rectangle, Sprite } from "pixi.js";
 import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
 import { iceCubeConfig } from "../configs/spritesConfig";
+import { ReelViewEvents } from "../events/MainEvents";
 import { ElementModel } from "../models/ElementModel";
 import { ReelModel } from "../models/ReelModel";
-import { last, makeSprite, sample } from "../utils/Utils";
+import { makeSprite } from "../utils/Utils";
 import { Element } from "./ElementView";
-
-const ELEMENT_FRAMES = ["apple", "blueberry", "cherry", "lemon", "strawberry", "watermelon", "vodka", "gin", "whiskey"];
-
-const TOTAL_HEIGHT = HEIGHT + OFFSET_Y;
 
 export class Reel extends Container {
   private _uuid: String;
   private _ice: Sprite[] = [];
   private _elements: Element[] = [];
-  private _spinAnimations: anime.AnimeInstance[] = [];
-  private _isSpinning: boolean = false;
+  private rHeight = 0;
 
-  private _resultIsReady: boolean = false;
-
-  constructor(
-    model: ReelModel,
-    private _index: number
-  ) {
+  constructor(model: ReelModel) {
     super();
     const { elements, uuid } = model;
     this._uuid = uuid;
@@ -43,27 +34,8 @@ export class Reel extends Container {
     return new Rectangle(0, 0, WIDTH, 2.9 * HEIGHT);
   }
 
-  public setResultElements(resultElements: string[]): void {
-    this._resultIsReady = true;
-    const elements = [...this._elements];
-    elements.sort((a, b) => b.y - a.y);
-
-    const newElements = resultElements.map((config) => {
-      const el = new Element(config);
-
-      el.name = config;
-      el.position.set(el.width / 2, -el.height / 2);
-      this._elements.push(el);
-      this.addChild(el);
-      return el;
-    });
-
-    newElements.forEach((el) => {
-      const elements = [...this._elements];
-      elements.sort((a, b) => b.y - a.y);
-      el.y = last(elements).top - el.height / 2 - OFFSET_Y;
-      this.animateElement(el, el.y + TOTAL_HEIGHT);
-    });
+  public getElementByUUID(uuid: string): Element | undefined {
+    return this._elements.find((el) => el.uuid === uuid);
   }
 
   public getElementByIndex(index: number): Element {
@@ -71,118 +43,66 @@ export class Reel extends Container {
   }
 
   public getIceByIndex(index: number): Sprite {
-    return this._ice[this._ice.length - 1 - index];
+    return this._ice[index];
   }
 
   public getElementIndex(element: Element): number {
     return this.elements.indexOf(element);
   }
 
-  public startSpinning(): void {
-    if (this._isSpinning) return;
-
-    this._isSpinning = true;
-    let complete = false;
-
-    this.elements.forEach((el) => {
-      const timeline = anime.timeline({
-        duration: 200,
-        easing: "easeInOutQuad",
-        complete: () => {
-          if (!complete) {
-            complete = true;
-            this.createSpinningElements();
-            this.animateSpinning();
-          }
-        },
-      });
-
-      timeline.add({
-        targets: el,
-        y: "-=50",
-      });
-    });
-  }
-
-  public stopSpinning(): void {
-    if (!this._isSpinning) return;
-    this._isSpinning = false;
-  }
-
-  public destroy(): void {
-    this.stopSpinning();
-    super.destroy();
-  }
-
-  private createSpinningElements(): void {
-    for (let i = 0; i < 3; i++) {
-      const type = sample(ELEMENT_FRAMES);
-      const element = new Element(type);
-      element.name = type;
-      const elements = [...this._elements];
-
-      elements.sort((a, b) => b.y - a.y);
-
-      element.y = last(elements).top - element.height / 2 - OFFSET_Y;
-      element.x = element.width / 2;
-      this.addChild(element);
-      this._elements.push(element);
-    }
-  }
-
-  private animateSpinning(): void {
-    if (!this._isSpinning) return;
-
-    this.elements.forEach((el) => {
-      this.animateElement(el, el.y + TOTAL_HEIGHT);
-    });
-  }
-
-  private animateElement(el: Element, targetY: number): anime.AnimeInstance {
-    this._spinAnimations.push(
+  public dropOldElements(delay: number): void {
+    let count = 0;
+    this.elements.forEach((el, i) => {
       anime({
         targets: el,
-        y: targetY,
-        duration: 300,
-        easing: "linear",
-
+        y: this.rHeight + el.height / 2,
+        duration: 200 * (this.elements.length - i + 1),
+        delay,
+        easing: "easeInBack",
         complete: () => {
-          if (this._isSpinning) {
-            const index = this._elements.indexOf(el);
-            if (el.y > this.height && index === 0 && !this._resultIsReady) {
-              this._elements.splice(index, 1);
-              el.y = last(this._elements).top - el.height / 2 - OFFSET_Y;
-              this._elements.push(el);
+          el.destroy();
+          count++;
 
-              const newType = sample(ELEMENT_FRAMES);
-              el.name = newType;
-              el.updateSkin(newType);
-            }
-
-            if (this._resultIsReady && el.y > this.height) {
-              this._elements.splice(this._elements.indexOf(el), 1);
-              el.destroy();
-            } else {
-              this.animateElement(el, el.y + TOTAL_HEIGHT);
-            }
-
-            if (this._resultIsReady && this._elements.length === 3) {
-              this._elements.forEach((el) => anime.remove(el));
-
-              this.emit("reelStopped", this._index);
-              this._resultIsReady = false;
-              this._isSpinning = false;
-              this.updateElementsPositions();
-            }
+          if (count === this.elements.length) {
+            this.emit(ReelViewEvents.OldElementsDropComplete, this.uuid);
           }
         },
-      })
-    );
+      });
+    });
+  }
+
+  public dropNewElements(delay: number): void {
+    let count = 0;
+
+    this.elements.forEach((el, i) => {
+      const { x: targetX, y: targetY } = this.getElementTargetPosition(el);
+      anime({
+        targets: el,
+        x: targetX,
+        y: targetY,
+        duration: 200 * (this.elements.length - i + 1),
+        delay,
+        easing: "easeInBack",
+        complete: () => {
+          count++;
+          if (count === this.elements.length) {
+            this.emit(ReelViewEvents.NewElementsDropComplete, this.uuid);
+          }
+        },
+      });
+    });
+  }
+
+  public setNewElements(elements: ElementModel[]): void {
+    this._elements = [];
+    this.buildElements(elements);
   }
 
   private build(elements: ElementModel[]): void {
     this.buildIce();
     this.buildElements(elements);
+    this.rHeight = this.calculateHeight();
+    this.updateElementsPositions();
   }
 
   private buildIce(): void {
@@ -195,30 +115,38 @@ export class Reel extends Container {
 
   private buildElements(elements: ElementModel[]): void {
     this._elements = elements.map((config) => {
-      const element = new Element(config.type);
+      const element = new Element(config);
       element.name = config.type;
       element.position.set(element.width / 2, -element.height / 2);
       this.addChild(element);
       return element;
     });
+  }
 
-    this.updateElementsPositions();
+  private calculateHeight(): number {
+    return this._elements.reduce((acc, cur) => acc + cur.height + OFFSET_Y, 0) - OFFSET_Y;
   }
 
   private updateElementsPositions(): void {
-    const arr = [...this._elements];
-    const elements = arr.reverse();
-    for (let i = 0; i < elements.length; i += 1) {
-      const element = elements[i];
+    for (let i = 0; i < this._elements.length; i += 1) {
+      const element = this._elements[i];
 
       if (i === 0) {
         element.y = element.height / 2;
         element.x = element.width / 2;
       } else {
-        const previousEl = elements[i - 1];
+        const previousEl = this._elements[i - 1];
         element.y = previousEl.bottom + element.height / 2 + OFFSET_Y;
         element.x = element.width / 2;
       }
     }
+  }
+
+  private getElementTargetPosition(element: Element): { x: number; y: number } {
+    const index = this.getElementIndex(element);
+    return {
+      x: element.width / 2,
+      y: element.height / 2 + (element.height + OFFSET_Y) * index,
+    };
   }
 }

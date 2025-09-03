@@ -3,8 +3,8 @@ import { ObservableModel } from "./ObservableModel";
 
 export enum ReelState {
   Idle,
-  Spinning,
-  Stop,
+  DropOld,
+  DropNew,
 }
 
 export class ReelModel extends ObservableModel {
@@ -20,7 +20,7 @@ export class ReelModel extends ObservableModel {
     this._index = index;
     this._elements = this.generateElements();
     this.setCustomID(`ReelModel${this._index}`);
-    this.makeObservable("state");
+    this.makeObservable();
   }
 
   get state() {
@@ -49,14 +49,6 @@ export class ReelModel extends ObservableModel {
 
   public getElementByUUID(uuid: string): ElementModel | undefined {
     return this._elements.find((el) => el.uuid === uuid);
-  }
-
-  public startSpinning(): void {
-    this.state = ReelState.Spinning;
-  }
-
-  public stopSpinning(): void {
-    this.state = ReelState.Idle;
   }
 
   public setNewElements(config: ReelResult): void {

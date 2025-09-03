@@ -6,19 +6,15 @@ import { GameModelEvents } from "../events/ModelEvents";
 import type { SlotMachineModel } from "../models/SlotMachineModel";
 import UI from "../ui/components/menu/UI.vue";
 import { delayRunnable } from "../utils/Utils";
-import { SlotMachine } from "./SlotMachineView";
+import { SlotMachineView } from "./SlotMachineView";
 
 export class GameView extends PixiGrid {
-  private slotMachine: SlotMachine | null = null;
+  private slotMachine: SlotMachineView | null = null;
 
   constructor() {
     super();
 
-    lego.event.on(
-      GameModelEvents.SlotMachineUpdate,
-      this.onSlotMachineUpdate,
-      this
-    );
+    lego.event.on(GameModelEvents.SlotMachineUpdate, this.onSlotMachineUpdate, this);
     this.build();
   }
 
@@ -49,8 +45,9 @@ export class GameView extends PixiGrid {
   }
 
   private buildSlotMachine(slotMachine: SlotMachineModel): void {
-    this.slotMachine = new SlotMachine(slotMachine);
+    this.slotMachine = new SlotMachineView(slotMachine);
     this.setChild("slot_machine", this.slotMachine);
+    this.rebuild();
   }
 
   private destroySlotMachine(): void {

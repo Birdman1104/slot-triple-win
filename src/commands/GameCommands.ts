@@ -1,6 +1,6 @@
 import { lego } from "@armathai/lego";
 import { SlotMachineViewEvents } from "../events/MainEvents";
-import { GameState } from "../models/GameModel";
+import { GameModel, GameState } from "../models/GameModel";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
 import { getDefaultPlayerInfo } from "../slotLogic";
@@ -23,6 +23,8 @@ export const onShowIntroCommand = (): void => {
 export const onShowGameCommand = (): void => {
   Head.gameModel?.setState(GameState.Game);
   Head.gameModel?.initSlotMachine();
+
+  (Head.gameModel as GameModel).idleSlotMachine();
 };
 
 export const onSpinButtonClickCommand = () => {
@@ -59,9 +61,15 @@ export const spinResultUpdateCommand = (result: SpinResult): void => {
 };
 
 export const slotMachineStateUpdateCommand = (newState: SlotMachineState, oldState: SlotMachineState): void => {
-  //
+  if (newState === SlotMachineState.WaitingForResult) {
+    Head.gameModel?.slotMachine?.checkForResult();
+  }
 };
 
-export const onStopCompleteCommand = (): void => {
+export const slotMachineOldElementsDropCompleteCommand = (): void => {
+  Head.gameModel?.slotMachine?.setState(SlotMachineState.WaitingForResult);
+};
+
+export const slotMachineNewElementsDropCompleteCommand = (): void => {
   Head.gameModel?.slotMachine?.setState(SlotMachineState.ShowWinLines);
 };

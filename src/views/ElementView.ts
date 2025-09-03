@@ -1,15 +1,25 @@
-import { Container, Rectangle, Sprite, Texture } from "pixi.js";
+import { Container, Rectangle, Sprite } from "pixi.js";
 import { HEIGHT, WIDTH } from "../config";
+import { ElementModel } from "../models/ElementModel";
 import { makeSprite } from "../utils/Utils";
 
 export class Element extends Container {
+  private _uuid: string;
+  private _type: string;
   private element: Sprite | null = null;
 
-  constructor(private _type: string) {
+  constructor(config: ElementModel) {
     super();
+
+    this._uuid = config.uuid;
+    this._type = config.type;
 
     this.updateDimensions();
     this.buildElement();
+  }
+
+  get uuid() {
+    return this._uuid;
   }
 
   get type() {
@@ -18,29 +28,6 @@ export class Element extends Container {
 
   get bottom() {
     return this.y + this.height / 2;
-  }
-
-  get top() {
-    return this.y - this.height / 2;
-  }
-
-  public startAnimation(isWinningItem: boolean): void {
-    // isWinningItem ? this.clearDim() : this.dim();
-  }
-
-  public dim() {
-    // this.element && (this.element.tint = 0xa0a0a0);
-  }
-
-  public clearDim() {
-    // this.element && (this.element.tint = 0xffffff);
-  }
-
-  public updateSkin(type: string): void {
-    this._type = type;
-    if (this.element) {
-      this.element.texture = Texture.from(`${this._type}.png`);
-    }
   }
 
   public getBounds(): Rectangle {

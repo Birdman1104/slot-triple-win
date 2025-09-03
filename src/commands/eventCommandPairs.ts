@@ -7,8 +7,9 @@ import {
   minusButtonClickCommand,
   onShowGameCommand,
   onSpinButtonClickCommand,
-  onStopCompleteCommand,
   plusButtonClickCommand,
+  slotMachineNewElementsDropCompleteCommand,
+  slotMachineOldElementsDropCompleteCommand,
   slotMachineStateUpdateCommand,
   spinResultUpdateCommand,
   winLinesShowCompleteCommand,
@@ -65,7 +66,11 @@ export const eventCommandPairs: { event: any; command: any }[] = [
     command: spinResultUpdateCommand,
   },
   {
-    event: SlotMachineViewEvents.StopComplete,
-    command: onStopCompleteCommand,
+    event: SlotMachineViewEvents.NewElementsDropComplete,
+    command: slotMachineNewElementsDropCompleteCommand,
+  },
+  {
+    event: SlotMachineViewEvents.OldElementsDropComplete,
+    command: slotMachineOldElementsDropCompleteCommand,
   },
 ];

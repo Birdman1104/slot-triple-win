@@ -10,6 +10,8 @@ export const MainGameEvents = {
 };
 
 export const SlotMachineViewEvents = {
+  OldElementsDropComplete: "SlotMachineViewEventsOldElementsDropComplete",
+  NewElementsDropComplete: "SlotMachineViewEventsNewElementsDropComplete",
   WinLinesShowComplete: "SlotMachineViewEventsWinLinesShowComplete",
   WinningsShowComplete: "SlotMachineViewEventsWinningsShowComplete",
   StopComplete: "SlotMachineViewEventsStopComplete",
@@ -22,4 +24,9 @@ export const UIEvents = {
   PlusButtonClick: "UIEventsPlusButtonClick",
   MinusButtonClick: "UIEventsMinusButtonClick",
   MaxBetButtonClick: "UIEventsMaxBetButtonClick",
+};
+
+export const ReelViewEvents = {
+  OldElementsDropComplete: "ReelViewEventsOldElementsDropComplete",
+  NewElementsDropComplete: "ReelViewEventsNewElementsDropComplete",
 };

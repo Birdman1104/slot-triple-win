@@ -59,8 +59,8 @@ export class GameModel extends ObservableModel {
   }
 
   private initializeMachineModel(): void {
-    this._slotMachine = new SlotMachineModel();
-    this._slotMachine.init(getSlotMachineInitialConfig());
+    this._slotMachine = new SlotMachineModel(getSlotMachineInitialConfig());
+    this._slotMachine.init();
   }
 
   private destroyMachineModel(): void {
