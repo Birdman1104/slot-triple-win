@@ -1,12 +1,11 @@
 import { lego } from "@armathai/lego";
 import anime from "animejs";
-import { Container, Graphics, Rectangle, Sprite } from "pixi.js";
+import { Container, Graphics, Rectangle, Sprite, Texture } from "pixi.js";
 import { HEIGHT, OFFSET_X, WIDTH } from "../config";
 import { dockSpriteConfig, reelShadowConfig } from "../configs/spritesConfig";
 import { ReelViewEvents, SlotMachineViewEvents } from "../events/MainEvents";
 import { ReelModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
 import { ElementModel } from "../models/ElementModel";
-import type { ReelModel } from "../models/ReelModel";
 import { SlotMachineModel, SlotMachineState } from "../models/SlotMachineModel";
 import { makeSprite } from "../utils/Utils";
 import { Element } from "./ElementView";
@@ -28,7 +27,6 @@ export class SlotMachineView extends Container {
 
     lego.event
       .on(SlotMachineModelEvents.StateUpdate, this.onStateUpdate, this)
-      .on(SlotMachineModelEvents.ReelsUpdate, this.onReelsUpdate, this)
       .on(SlotMachineModelEvents.SpinResultUpdate, this.onSpinResultUpdate, this)
       .on(ReelModelEvents.ElementsUpdate, this.onReelElementsUpdate, this);
   }
@@ -69,7 +67,7 @@ export class SlotMachineView extends Container {
     const { reels } = this.config;
     this.reelsContainer = new Container();
     this.reels = reels.map((model, i) => {
-      const reel = new Reel(model);
+      const reel = new Reel(model, i);
       reel.on(ReelViewEvents.OldElementsDropComplete, this.onReelOldElementsDropComplete, this);
       reel.on(ReelViewEvents.NewElementsDropComplete, this.onReelNewElementsDropComplete, this);
       reel.position.set(reel.width * i + (i == 0 ? 0 : OFFSET_X), 0);
@@ -81,8 +79,8 @@ export class SlotMachineView extends Container {
     this.addChild(this.reelsContainer);
 
     this.reelsMask = new Graphics();
-    this.reelsMask.beginFill(0xff0000, 0.0001);
-    this.reelsMask.drawRect(this.reelsContainer.x, this.reelsContainer.y - 8, 3.16 * WIDTH, 2.85 * HEIGHT);
+    this.reelsMask.beginFill(0xff0000, 0.0005);
+    this.reelsMask.drawRect(this.reelsContainer.x - 13, this.reelsContainer.y - 15, 3 * WIDTH, 2.9 * HEIGHT);
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 
@@ -118,28 +116,6 @@ export class SlotMachineView extends Container {
 
   private onSpinResultUpdate(result: SpinResult): void {
     this.result = result;
-  }
-
-  private onReelsUpdate(newReels: ReelModel[]): void {
-    if (this.reels.length !== 0) {
-      this.reels.forEach((r) => r.destroy());
-      this.reels = [];
-    }
-
-    this.reels = newReels.map((model: ReelModel, i: number) => {
-      const reel = new Reel(model);
-      reel.position.set(reel.width * i + (i == 0 ? 0 : OFFSET_X), 0);
-      this.reelsContainer.addChild(reel);
-      return reel;
-    });
-
-    this.reelsMask = new Graphics();
-    this.reelsMask.beginFill(0xff0000, 0.0001);
-    this.reelsMask.drawRect(this.reelsContainer.x, this.reelsContainer.y - 8, 3.16 * WIDTH, 2.85 * HEIGHT);
-    this.reelsMask.endFill();
-    this.addChild(this.reelsMask);
-
-    this.reelsContainer.mask = this.reelsMask;
   }
 
   private dropOldElements(): void {
@@ -190,6 +166,7 @@ export class SlotMachineView extends Container {
   private animateLines(lines: { line: WinningLine; winningItemType: string }[]): void {
     const getElements = (line: WinningLine) => line.map((pos, i) => this.reels[i].getElementByIndex(pos));
     const getIce = (line: any) => line.map((pos: any, i: number) => this.reels[i].getIceByIndex(pos));
+
     const animationConfig: { elements: Element[]; ice: Sprite[]; winningItemType: string }[] = lines.map(
       ({ line, winningItemType }) => {
         return { elements: getElements(line), ice: getIce(line), winningItemType };
@@ -208,7 +185,7 @@ export class SlotMachineView extends Container {
       animations[index].complete = () => playNextAnimation(index + 1, animations);
     };
 
-    animationConfig.forEach(({ elements, ice }) => {
+    animationConfig.forEach(({ elements, ice }, lineNumber) => {
       const timeline = anime.timeline({
         duration: 800,
         easing: "easeInBack",
@@ -226,12 +203,20 @@ export class SlotMachineView extends Container {
           0
         );
       });
-      ice.forEach((e) => {
+
+      ice.forEach((e, i) => {
+        const isTwo = (lines[lineNumber].line[i] + i) % 2 === 0;
+        const winTexture = isTwo ? "ice_win_1.png" : "ice_win_2.png";
+        const basicTexture = isTwo ? "ice_1.png" : "ice_2.png";
+        e.texture = Texture.from(winTexture);
         timeline.add(
           {
             targets: e.scale,
             x: 1.35,
             y: 1.35,
+            complete: () => {
+              e.texture = Texture.from(basicTexture);
+            },
           },
           0
         );

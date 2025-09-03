@@ -53,8 +53,8 @@ export const winTypeConfig = (): SpriteConfig => ({
   anchor: { x: 0.5, y: 0.5 },
 });
 
-export const iceCubeConfig = (x: number, y: number): SpriteConfig => ({
-  frame: "ice_1.png",
+export const iceCubeConfig = (x: number, y: number, isEven: boolean): SpriteConfig => ({
+  frame: isEven ? "ice_1.png" : "ice_2.png",
   atlas: "slot_machine.png",
   x,
   y,

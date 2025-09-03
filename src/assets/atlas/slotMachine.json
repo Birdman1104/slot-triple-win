@@ -1,33 +1,9 @@
 {
   "frames": {
-    "ice_win_1.png": {
-      "frame": {
-        "x": 3,
-        "y": 3,
-        "w": 294,
-        "h": 289
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 28,
-        "y": 26,
-        "w": 294,
-        "h": 289
-      },
-      "sourceSize": {
-        "w": 329,
-        "h": 355
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "reel_shadow.png": {
       "frame": {
         "x": 3,
-        "y": 298,
+        "y": 3,
         "w": 287,
         "h": 81
       },
@@ -50,22 +26,22 @@
     },
     "ice_win_2.png": {
       "frame": {
-        "x": 303,
-        "y": 3,
-        "w": 281,
-        "h": 286
+        "x": 3,
+        "y": 90,
+        "w": 263,
+        "h": 268
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
-        "x": 18,
-        "y": 6,
-        "w": 281,
-        "h": 286
+        "x": 16,
+        "y": 5,
+        "w": 263,
+        "h": 268
       },
       "sourceSize": {
-        "w": 313,
-        "h": 307
+        "w": 292,
+        "h": 287
       },
       "pivot": {
         "x": 0.5,
@@ -74,12 +50,12 @@
     },
     "ice_1.png": {
       "frame": {
-        "x": 3,
-        "y": 385,
+        "x": 296,
+        "y": 3,
         "w": 266,
         "h": 262
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 25,
@@ -96,10 +72,34 @@
         "y": 0.5
       }
     },
+    "ice_win_1.png": {
+      "frame": {
+        "x": 3,
+        "y": 359,
+        "w": 266,
+        "h": 263
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 25,
+        "y": 23,
+        "w": 266,
+        "h": 263
+      },
+      "sourceSize": {
+        "w": 298,
+        "h": 322
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
     "ice_2.png": {
       "frame": {
         "x": 275,
-        "y": 385,
+        "y": 359,
         "w": 262,
         "h": 265
       },
@@ -127,8 +127,8 @@
     "image": "slotMachine.png",
     "format": "RGBA8888",
     "size": {
-      "w": 587,
-      "h": 650
+      "w": 561,
+      "h": 625
     },
     "scale": 1
   }

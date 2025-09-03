@@ -14,7 +14,10 @@ export class Reel extends Container {
   private _elements: Element[] = [];
   private rHeight = 0;
 
-  constructor(model: ReelModel) {
+  constructor(
+    model: ReelModel,
+    private index: number
+  ) {
     super();
     const { elements, uuid } = model;
     this._uuid = uuid;
@@ -107,7 +110,7 @@ export class Reel extends Container {
 
   private buildIce(): void {
     for (let i = 0; i < 3; i++) {
-      const ice = makeSprite(iceCubeConfig(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2));
+      const ice = makeSprite(iceCubeConfig(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2, (this.index + i) % 2 === 0));
       this.addChild(ice);
       this._ice.push(ice);
     }
