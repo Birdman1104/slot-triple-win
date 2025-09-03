@@ -7,7 +7,7 @@
     <div class="ui-overlay">
       <div class="section left-section flex-center">
         <div class="close-button-wrapper flex-center">
-          <div class="relative">
+          <div class="btn-background flex-center relative">
             <Transition name="fade-scale">
               <Modal
                 v-if="activeModal === 'menu' && toggleMenu"
@@ -17,9 +17,7 @@
                 @select="handleSelect"
               />
             </Transition>
-          </div>
-          <div class="btn-background flex-center" @pointerdown="toggleMenuBar">
-            <div class="close-button flex-center">
+            <div class="flex-center close-button" @pointerdown="toggleMenuBar">
               <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
               <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
             </div>
@@ -53,23 +51,18 @@
       </div>
 
       <div class="section right-section flex-center">
-        <div class="relative">
-          <Transition name="fade-scale">
-            <Modal
-              v-if="activeModal === 'spinCount' && toggleSpinMenu"
-              :items="spinCountItems"
-              @select="handleSelect"
-              :width="50"
-              :selectedItem="spinCountValue"
-            />
-          </Transition>
-        </div>
-        <div class="refresh-btn-wrapper flex-center relative">
-          <div
-            class="btn-background flex-center"
-            @pointerdown="toggleAmountBar"
-          >
-            <div class="refresh-btn flex-center">
+        <div class="refresh-btn-wrapper flex-center">
+          <div class="btn-background flex-center relative">
+            <Transition name="fade-scale">
+              <Modal
+                v-if="activeModal === 'spinCount' && toggleSpinMenu"
+                :items="spinCountItems"
+                @select="handleSelect"
+                :width="50"
+                :selectedItem="spinCountValue"
+              />
+            </Transition>
+            <div class="refresh-btn flex-center" @pointerdown="toggleAmountBar">
               <div v-if="spinCountValue" class="amount">
                 {{ spinCountValue }}
               </div>
@@ -84,9 +77,7 @@
         <div class="balance-box flex-center flex-center">
           <div class="balance-wrapper flex-center">
             <span class="text">Bet </span
-            ><span id="bet" class="amount"
-              >$ {{ DEFAULT_BET }}
-            </span>
+            ><span id="bet" class="amount">$ {{ DEFAULT_BET }} </span>
           </div>
 
           <div class="bet-button-wrapper flex-center">
@@ -124,6 +115,12 @@
 
 <div v-if="isMobile && orientation === 'portrait-primary'">
   <div class="close-btn-wrapper">
+    <div class="button-background flex-center menu-mb">
+      <div class="close-button-mb flex-center" @pointerdown="toggleMenuBar">
+        <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+        <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
+      </div>
+    </div>
     <Transition name="fade-scale">
       <Modal
         v-if="activeModal === 'menu'"
@@ -136,15 +133,6 @@
         :selectedItem="selectedItem"
       />
     </Transition>
-    <div
-      class="button-background flex-center menu-mb"
-      @pointerdown="toggleMenuBar"
-    >
-      <div class="close-button-mb flex-center">
-        <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
-        <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
-      </div>
-    </div>
   </div>
 
   <div class="menu-wrapper-mb">
@@ -166,8 +154,9 @@
 
       <div class="ui-overlay-mb">
         <div class="section-mb right-section-mb flex-center">
-          <div class="refresh-btn-wrapper-mb flex-center relative">
-            <div class="relative">
+          <div class="refresh-btn-wrapper-mb flex-center">
+  
+            <div class="button-background flex-center relative">
               <Transition name="fade-scale">
                 <Modal
                   v-if="activeModal === 'spinCount' && toggleSpinMenu"
@@ -178,12 +167,10 @@
                   customClass="amount-mobile-menu"
                 />
               </Transition>
-            </div>
-            <div
-              class="button-background flex-center"
-              @pointerdown="toggleAmountBar"
-            >
-              <div class="refresh-btn-mb flex-center">
+              <div
+                class="refresh-btn-mb flex-center"
+                @pointerdown="toggleAmountBar"
+              >
                 <div v-if="spinCountValue" class="amount-mb">
                   {{ spinCountValue }}
                 </div>

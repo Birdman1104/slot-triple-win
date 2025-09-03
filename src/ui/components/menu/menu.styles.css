@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "Jomhuria";
   src: url("../assets/fonts/Jomhuria-Regular.ttf") format("truetype");
@@ -9,15 +8,18 @@
 .fade-scale-enter-active,
 .fade-scale-leave-active {
   transition: all 0.35s ease;
+  transform-origin: bottom center;
 }
 
 .fade-scale-enter-from,
 .fade-scale-leave-to {
+  transform-origin: bottom center;
   transform: scale(0);
 }
 
 .fade-scale-enter-to,
 .fade-scale-leave-from {
+  transform-origin: bottom center;
   transform: scale(1);
 }
 
@@ -25,10 +27,12 @@
   width: 1px;
   height: 60px;
   margin: 14px;
-  background: linear-gradient(to bottom,
-      rgba(192, 177, 165, 0) 0%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(153, 153, 153, 0) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(192, 177, 165, 0) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(153, 153, 153, 0) 100%
+  );
 }
 
 .balance-box {
@@ -67,6 +71,7 @@
 
 .relative {
   position: relative;
+  background: red;
 }
 
 .middle-section {
@@ -133,6 +138,7 @@
 .buy-btn {
   width: 95%;
   height: 95%;
+  z-index: 2;
 }
 
 .close-button img,
@@ -156,9 +162,11 @@
   border: 1.3px solid transparent;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
-    linear-gradient(135deg,
+    linear-gradient(
+      135deg,
       rgba(255, 255, 255, 0.25),
-      rgba(153, 153, 153, 0.25));
+      rgba(153, 153, 153, 0.25)
+    );
 
   background-origin: border-box;
   background-clip: content-box, border-box;
@@ -205,9 +213,11 @@
 .close-button,
 .refresh-btn {
   border-radius: 50%;
-  background: radial-gradient(at left top,
-      rgba(255, 255, 255, 0.55),
-      rgba(168, 147, 121, 0.55));
+  background: radial-gradient(
+    at left top,
+    rgba(255, 255, 255, 0.55),
+    rgba(168, 147, 121, 0.55)
+  );
   border: none;
   box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
 }
@@ -246,7 +256,260 @@
   justify-content: center;
 }
 
+@font-face {
+  font-family: "Jomhuria";
+  src: url("../assets/fonts/Jomhuria-Regular.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
 
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: all 0.35s ease;
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  transform-origin: bottom center;
+  transform: scale(0);
+}
+
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+  transform-origin: bottom center;
+  transform: scale(1);
+}
+
+.balance-box-mb {
+  width: 100%;
+}
+
+span {
+  display: block;
+}
+
+.button-background {
+  box-shadow:
+    inset 0 4px 6px rgba(255, 255, 255, 0.7),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.balance-wrapper-mb {
+  flex-direction: column;
+  flex: 1;
+}
+
+.amount-box-mb {
+  position: absolute;
+  bottom: 12%;
+  z-index: 1000;
+  width: 100%;
+}
+
+.section-mb {
+  flex: 1;
+}
+
+.relative {
+  position: relative;
+}
+
+.middle-section-mb {
+  max-width: fit-content;
+}
+
+.left-section-mb,
+.refresh-btn-wrapper-mb {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.refresh-btn-wrapper-mb {
+  padding-left: 10px;
+}
+
+.right-section-mb {
+  justify-content: end;
+  padding-right: 3%;
+}
+
+.text-mb {
+  font-size: 25px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Jomhuria";
+  line-height: 30%;
+}
+
+.menu-wrapper-mb {
+  position: absolute;
+  bottom: -3.5%;
+}
+
+.wrapper-mb {
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+
+.ui-overlay-mb {
+  position: absolute;
+  left: 0;
+  bottom: 17%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 100px;
+}
+
+.buy-btn-mb {
+  border-radius: 50%;
+  background: radial-gradient(circle at -20% -20%, #ffffff, #dfd2c7);
+  box-shadow:
+    inset 0 4px 6px rgba(255, 255, 255, 0.7),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #d9d9d9;
+}
+
+.close-button-mb,
+.refresh-btn-mb,
+.buy-btn-mb {
+  width: 95%;
+  height: 95%;
+  z-index: 1;
+}
+
+.close-button-mb {
+  z-index: 0;
+}
+
+.close-button-mb img,
+.refresh-btn-mb img {
+  width: 30px;
+  height: 30px;
+}
+
+.buy-btn-text-mb {
+  color: rgba(0, 113, 30, 1);
+  font-size: 22px;
+  text-align: center;
+  word-wrap: break-word;
+  font-family: "Jomhuria";
+}
+
+.button-box-mb {
+  border-radius: 50%;
+  border: 1.3px solid transparent;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.25),
+      rgba(153, 153, 153, 0.25)
+    );
+
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  left: 50%;
+}
+
+.spin-button-mb {
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 0;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at -20% -20%, #ffffff, #a89379);
+  box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.spin-button-mb img {
+  width: 60px;
+  height: 60px;
+}
+
+.dot-mb {
+  width: 14px;
+  height: 14px;
+  background-color: #00711e;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px 0px rgba(255, 255, 255, 0.4) inset;
+}
+
+.amount-mb {
+  color: rgba(255, 255, 255, 1);
+  font-size: 35px;
+  font-family: "Jomhuria";
+}
+
+.bet-button-mb,
+.close-button-mb,
+.refresh-btn-mb {
+  border-radius: 50%;
+  background: radial-gradient(
+    at left top,
+    rgba(255, 255, 255, 0.55),
+    rgba(168, 147, 121, 0.55)
+  );
+  border: none;
+  box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
+}
+
+.bet-button-wrapper-mb {
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.close-btn-wrapper {
+  position: fixed;
+  right: 0;
+}
+.decrease-button-mb,
+.increase-button-mb {
+  width: 90%;
+  height: 90%;
+  padding: 0;
+}
+
+.medium-mb {
+  width: 50px;
+  height: 50px;
+}
+
+.increase-button-mb img {
+  rotate: 180deg;
+}
+
+.flex-center-mb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-mb {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+}
 
 @media screen and (min-width: 1920px) {
   .btn-background {
@@ -385,255 +648,26 @@
   .amount {
     font-size: 18px !important;
   }
-} 
-
-
-
-@font-face {
-  font-family: "Jomhuria";
-  src: url("../assets/fonts/Jomhuria-Regular.ttf") format("truetype");
-  font-weight: 100;
-  font-style: normal;
-}
-
-.fade-scale-enter-active,
-.fade-scale-leave-active {
-  transition: all 0.35s ease;
-}
-
-.fade-scale-enter-from,
-.fade-scale-leave-to {
-  transform: scale(0);
-}
-
-.fade-scale-enter-to,
-.fade-scale-leave-from {
-  transform: scale(1);
-}
-
-.balance-box-mb {
-  width: 100%;
-}
-
-span {
-  display: block;
-}
-
-.button-background {
-  box-shadow:
-    inset 0 4px 6px rgba(255, 255, 255, 0.7),
-    inset 0 -4px 6px rgba(0, 0, 0, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-}
-
-.full-width {
-  width: 100%;
-}
-
-.balance-wrapper-mb {
-  flex-direction: column;
-  flex: 1;
-}
-
-.amount-box-mb {
-  position: absolute;
-  bottom: 12%;
-  z-index: 1000;
-  width: 100%;
-}
-
-.section-mb {
-  flex: 1;
-}
-
-.relative {
-  position: relative;
-}
-
-.middle-section-mb {
-  max-width: fit-content;
-}
-
-.left-section-mb,
-.refresh-btn-wrapper-mb {
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-}
-
-.refresh-btn-wrapper-mb {
-  padding-left: 10px;
-}
-
-.right-section-mb {
-  justify-content: end;
-  padding-right: 3%;
-}
-
-.text-mb {
-  font-size: 25px;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: "Jomhuria";
-  line-height: 30%;
-}
-
-.menu-wrapper-mb {
-  position: absolute;
-  bottom: -3.5%;
-}
-
-.wrapper-mb {
-  position: relative;
-  height: auto;
-  width: 100%;
-}
-
-.ui-overlay-mb {
-  position: absolute;
-  left: 0;
-  bottom: 17%;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  border-radius: 100px;
-}
-
-.buy-btn-mb {
-  border-radius: 50%;
-  background: radial-gradient(circle at -20% -20%, #ffffff, #dfd2c7);
-  box-shadow:
-    inset 0 4px 6px rgba(255, 255, 255, 0.7),
-    inset 0 -4px 6px rgba(0, 0, 0, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid #d9d9d9;
-}
-
-.close-button-mb,
-.refresh-btn-mb,
-.buy-btn-mb {
-  width: 95%;
-  height: 95%;
-}
-
-.close-button-mb img,
-.refresh-btn-mb img {
-  width: 30px;
-  height: 30px;
-}
-
-.buy-btn-text-mb {
-  color: rgba(0, 113, 30, 1);
-  font-size: 22px;
-  text-align: center;
-  word-wrap: break-word;
-  font-family: "Jomhuria";
-}
-
-.button-box-mb {
-  border-radius: 50%;
-  border: 1.3px solid transparent;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.25),
-      rgba(153, 153, 153, 0.25)
-    );
-
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
-  left: 50%;
-}
-
-.spin-button-mb {
-  background-color: rgba(255, 255, 255, 0.25);
-  padding: 0;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle at -20% -20%, #ffffff, #a89379);
-  box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-}
-
-.spin-button-mb img {
-  width: 60px;
-  height: 60px;
-}
-
-.dot-mb {
-  width: 14px;
-  height: 14px;
-  background-color: #00711e;
-  border-radius: 50%;
-  box-shadow: 2px 2px 2px 0px rgba(255, 255, 255, 0.4) inset;
-}
-
-.amount-mb {
-  color: rgba(255, 255, 255, 1);
-  font-size: 35px;
-  font-family: "Jomhuria";
-}
-
-.bet-button-mb,
-.close-button-mb,
-.refresh-btn-mb {
-  border-radius: 50%;
-  background: radial-gradient(
-    at left top,
-    rgba(255, 255, 255, 0.55),
-    rgba(168, 147, 121, 0.55)
-  );
-  border: none;
-  box-shadow: 0px 5.26px 10.53px rgba(0, 0, 0, 0.1);
-}
-
-.bet-button-wrapper-mb {
-  flex-direction: column;
-  margin-left: 10px;
 }
 
 
-.close-btn-wrapper {
-  position: fixed;
-  right: 0;
-}
-.decrease-button-mb,
-.increase-button-mb {
-  width: 90%;
-  height: 90%;
-  padding: 0;
-}
+@media screen and (max-width: 400px){
+  .button-background {
+    width: 45px !important;
+    height: 45px !important;
+  }
 
-.medium-mb {
-  width: 50px;
-  height: 50px;
-}
+  .spin-button-mb {
+    width: 75px !important;
+    height: 75px !important;
+  }
 
-.increase-button-mb img {
-  rotate: 180deg;
-}
+  .spin-button-mb img {
+    width: 50px !important;
+    height: 50px !important;
+  }
 
-.flex-center-mb {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menu-mb {
-  position: absolute;
-  top: 15px;
-  right: 16px;
+  .buy-btn-text-mb {
+    font-size: 18px !important;
+  }
 }
