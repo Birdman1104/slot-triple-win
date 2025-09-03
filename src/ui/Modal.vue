@@ -5,12 +5,6 @@
       :class="['modal-content', props.customClass]"
       :style="{ width: props.width + 'px' }"
     >
-      <img
-        class="close-btn"
-        v-if="isMobile && props.modal === 'menu'"
-        src="/icons/close.svg"
-        @pointerdown="handleClose"
-      />
       <ul>
         <li
           v-for="item in items"
@@ -101,7 +95,6 @@ onBeforeUnmount(() => {
   justify-content: center;
   width: 100%;
   height: 50%;
-  background: red;
   z-index: 1;
   position: absolute;
 }
@@ -184,11 +177,11 @@ li {
 }
 
 :deep(.modal-content.bar-mobile-menu) {
-  top: 10px;
-  right: 10px;
+  right: 30px;
+  top: 80px;
   width: 160px;
   left: unset;
-  border-top-right-radius: 10px;
+  border-top-right-radius: 15px;
 }
 
 :deep(.modal-content.amount-mobile-menu) {
