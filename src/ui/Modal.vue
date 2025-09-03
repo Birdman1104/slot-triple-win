@@ -15,7 +15,7 @@
         <li
           v-for="item in items"
           :key="item.id"
-          @click.stop="selectItem(item)"
+          @pointerdown.stop="selectItem(item)"
           class="modal-item"
         >
           <div
@@ -99,7 +99,11 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  width: 100%;
+  height: 50%;
+  background: red;
+  z-index: 1;
+  position: absolute;
 }
 
 span {
@@ -126,7 +130,6 @@ li {
 .modal-content {
   bottom: 50px;
   position: absolute;
-  left: 0;
   padding: 1.5rem;
   height: 230px;
   border-radius: 52px;
@@ -181,8 +184,8 @@ li {
 }
 
 :deep(.modal-content.bar-mobile-menu) {
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   width: 160px;
   left: unset;
   border-top-right-radius: 10px;
@@ -193,4 +196,3 @@ li {
   border-bottom-left-radius: 10px;
 }
 </style>
-
