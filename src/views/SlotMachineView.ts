@@ -208,12 +208,14 @@ export class SlotMachineView extends Container {
         const isTwo = (lines[lineNumber].line[i] + i) % 2 === 0;
         const winTexture = isTwo ? "ice_win_1.png" : "ice_win_2.png";
         const basicTexture = isTwo ? "ice_1.png" : "ice_2.png";
-        e.texture = Texture.from(winTexture);
         timeline.add(
           {
             targets: e.scale,
             x: 1.35,
             y: 1.35,
+            begin: () => {
+              e.texture = Texture.from(winTexture);
+            },
             complete: () => {
               e.texture = Texture.from(basicTexture);
             },

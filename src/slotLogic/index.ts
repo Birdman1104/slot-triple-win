@@ -3,6 +3,8 @@ import { DEFAULT_BET, SYMBOL_TYPE, SYMBOLS_MULTIPLIERS } from "../configs/Symbol
 const REELS_AMOUNT = 3;
 const ROWS_AMOUNT = 3;
 
+let i = 0;
+
 const LINES = [
   // STRAIGHT LINES
   [0, 0, 0],
@@ -30,7 +32,7 @@ const getReelsData = (): SYMBOL_TYPE[][] => {
 const generateRandomArray = (): number[] => {
   const result: number[] = [];
   const counts: { [key: number]: number } = {};
-  const length = 2; //Object.keys(SYMBOL_TYPE).length;
+  const length = Object.keys(SYMBOL_TYPE).length;
 
   for (let i = 0; i < length; i++) {
     counts[i] = 0;
@@ -38,10 +40,10 @@ const generateRandomArray = (): number[] => {
 
   while (result.length < 9) {
     const randomInt = Math.floor(Math.random() * length);
-    // if (counts[randomInt] < 3) {
-    result.push(randomInt);
-    //   counts[randomInt]++;
-    // }
+    if (counts[randomInt] < 3) {
+      result.push(randomInt);
+      counts[randomInt]++;
+    }
   }
 
   return result;
@@ -73,12 +75,15 @@ const checkWinnings = (reelData: ReelsResult): WinningItemsCount[] => {
 };
 
 export const spin = async (bet: number): Promise<SpinResult> => {
-  // const reels = getReelsData();
-  const reels = [
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.GIN, SYMBOL_TYPE.WHISKEY],
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.LEMON, SYMBOL_TYPE.VODKA],
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.CHERRY],
-  ];
+  const reels =
+    i % 3 === 0
+      ? [
+          [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.GIN, SYMBOL_TYPE.WHISKEY],
+          [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.VODKA],
+          [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.BLUEBERRY],
+        ]
+      : getReelsData();
+  i++;
   const winningLines = checkWinnings(reels);
 
   const winningInfo = winningLines.map(({ elementType, line }) => {
