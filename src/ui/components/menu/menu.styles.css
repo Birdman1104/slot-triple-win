@@ -389,9 +389,6 @@ span {
   z-index: 1;
 }
 
-.close-button-mb {
-  z-index: 0;
-}
 
 .close-button-mb img,
 .refresh-btn-mb img {
@@ -477,10 +474,6 @@ span {
   margin-left: 10px;
 }
 
-.close-btn-wrapper {
-  position: fixed;
-  right: 0;
-}
 .decrease-button-mb,
 .increase-button-mb {
   width: 90%;
@@ -522,6 +515,7 @@ span {
 
   .text {
     font-size: 40px !important;
+    line-height: 45px;
   }
 
   .amount {

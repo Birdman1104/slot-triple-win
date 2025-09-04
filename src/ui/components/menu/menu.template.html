@@ -114,13 +114,7 @@
 </div>
 
 <div v-if="isMobile && orientation === 'portrait-primary'">
-  <div class="close-btn-wrapper">
-    <div class="button-background flex-center menu-mb">
-      <div class="close-button-mb flex-center" @pointerdown="toggleMenuBar">
-        <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
-        <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
-      </div>
-    </div>
+  <div class="button-background flex-center menu-mb">
     <Transition name="fade-scale">
       <Modal
         v-if="activeModal === 'menu'"
@@ -129,10 +123,13 @@
         :modal="'menu'"
         customClass="bar-mobile-menu"
         @select="handleSelect"
-        @close="toggleMenuBar"
         :selectedItem="selectedItem"
       />
     </Transition>
+    <div class="close-button-mb flex-center" @pointerdown="toggleMenuBar">
+      <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+      <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
+    </div>
   </div>
 
   <div class="menu-wrapper-mb">
@@ -155,7 +152,6 @@
       <div class="ui-overlay-mb">
         <div class="section-mb right-section-mb flex-center">
           <div class="refresh-btn-wrapper-mb flex-center">
-  
             <div class="button-background flex-center relative">
               <Transition name="fade-scale">
                 <Modal
