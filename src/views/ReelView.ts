@@ -59,9 +59,16 @@ export class Reel extends Container {
       anime({
         targets: el,
         y: this.rHeight + el.height / 2,
-        duration: 200 * (this.elements.length - i + 1),
+        duration: 100 * (this.elements.length - i + 1),
         delay,
-        easing: "easeInBack",
+        easing: function (el, i, total) {
+          return function easeInBack(x: number): number {
+            const c1 = 1.5;
+            const c3 = c1 + 1;
+
+            return c3 * x * x * x - c1 * x * x;
+          };
+        },
         complete: () => {
           el.destroy();
           count++;
@@ -83,7 +90,7 @@ export class Reel extends Container {
         targets: el,
         x: targetX,
         y: targetY,
-        duration: 200 * (this.elements.length - i + 1),
+        duration: 100 * (this.elements.length - i + 1),
         delay,
         easing: "easeInBack",
         complete: () => {
