@@ -42,11 +42,39 @@ export const introCardDescriptionTextConfig = (description: string, y: number, w
 export const errorTitleTextConfig = (): TextConfig => ({
   text: "Something went wrong",
   x: 0,
-  y: lp(-25, -25),
+  y: -25,
   style: {
     fontSize: lp(42, 28),
     fill: 0xffffff,
     align: "center",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});
+
+export const infoTitleTextConfig = (): TextConfig => ({
+  text: "Information",
+  x: 0,
+  y: -70,
+  style: {
+    fontSize: lp(42, 28),
+    fill: 0xffffff,
+    align: "center",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});
+
+export const infoTextTextConfig = (): TextConfig => ({
+  text: "Some random information for the user. This is just a demo text. You can put anything here. This popup can be used for various purposes. For example, to inform the user about something important.",
+  x: 0,
+  y: lp(40, 5),
+  style: {
+    fontSize: lp(36, 22),
+    fill: 0xffffff,
+    align: "center",
+    wordWrap: true,
+    wordWrapWidth: lp(600, 230),
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,
   },

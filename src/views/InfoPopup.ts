@@ -1,16 +1,14 @@
 import anime from "animejs";
 import { Container, Sprite, Text, Texture } from "pixi.js";
-import { popupBkgConfig, popupCloseButtonConfig, redIconConfig } from "../configs/spritesConfig";
-import { errorTextTextConfig, errorTitleTextConfig } from "../configs/textConfig";
+import { popupBkgConfig, popupCloseButtonConfig } from "../configs/spritesConfig";
+import { infoTextTextConfig, infoTitleTextConfig } from "../configs/textConfig";
 import { makeSprite, makeText } from "../utils/Utils";
 
-export class ErrorPopup extends Container {
-  private errorMessage!: Text;
-  private errorTitle!: Text;
+export class InfoPopup extends Container {
+  private infoMessage!: Text;
+  private infoTitle!: Text;
   private bkg!: Sprite;
   private closeButton!: Sprite;
-  //   private okButton!: Sprite;
-  private redIcon!: Sprite;
 
   constructor() {
     super();
@@ -61,11 +59,10 @@ export class ErrorPopup extends Container {
 
   public rebuild(): void {
     this.rebuildSprite(this.bkg, popupBkgConfig());
-    this.rebuildSprite(this.redIcon, redIconConfig());
     this.rebuildSprite(this.closeButton, popupCloseButtonConfig());
 
-    this.rebuildText(this.errorTitle, errorTitleTextConfig());
-    this.rebuildText(this.errorMessage, errorTextTextConfig());
+    this.rebuildText(this.infoTitle, infoTitleTextConfig());
+    this.rebuildText(this.infoMessage, infoTextTextConfig());
   }
 
   private build() {
@@ -80,14 +77,11 @@ export class ErrorPopup extends Container {
       this.emit("closeErrorPopup");
     });
 
-    this.redIcon = makeSprite(redIconConfig());
-    this.addChild(this.redIcon);
+    this.infoTitle = makeText(infoTitleTextConfig());
+    this.addChild(this.infoTitle);
 
-    this.errorTitle = makeText(errorTitleTextConfig());
-    this.addChild(this.errorTitle);
-
-    this.errorMessage = makeText(errorTextTextConfig());
-    this.addChild(this.errorMessage);
+    this.infoMessage = makeText(infoTextTextConfig());
+    this.addChild(this.infoMessage);
   }
 
   private rebuildSprite(sprite: Sprite, config: SpriteConfig): void {

@@ -19,7 +19,7 @@ export const dockSpriteConfig = (): SpriteConfig => ({
   anchor: { x: 0.5, y: 0 },
 });
 
-export const errorPopupBkgConfig = (): SpriteConfig => ({
+export const popupBkgConfig = (): SpriteConfig => ({
   atlas: "ui.png",
   frame: lp("error_l.png", "error_p.png"),
 });
