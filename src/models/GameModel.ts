@@ -11,6 +11,7 @@ export enum GameState {
 export class GameModel extends ObservableModel {
   private _state: GameState = GameState.Undefined;
   private _slotMachine: SlotMachineModel | null = null;
+  private _isBlockedAction: boolean = false;
 
   constructor() {
     super("GameModel");
@@ -32,6 +33,14 @@ export class GameModel extends ObservableModel {
 
   set slotMachine(value) {
     this._slotMachine = value;
+  }
+
+  get isBlockedAction(): boolean {
+    return this._isBlockedAction;
+  }
+
+  set isBlockedAction(value: boolean) {
+    this._isBlockedAction = value;
   }
 
   public setState(newState: GameState): void {

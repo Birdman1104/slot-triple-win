@@ -8,6 +8,7 @@ import {
   onShowGameCommand,
   onSpinButtonClickCommand,
   plusButtonClickCommand,
+  setBlockActivityCommand,
   slotMachineNewElementsDropCompleteCommand,
   slotMachineOldElementsDropCompleteCommand,
   slotMachineStateUpdateCommand,
@@ -72,5 +73,9 @@ export const eventCommandPairs: { event: any; command: any }[] = [
   {
     event: SlotMachineViewEvents.OldElementsDropComplete,
     command: slotMachineOldElementsDropCompleteCommand,
+  },
+  {
+    event: MainGameEvents.BlockActivity,
+    command: setBlockActivityCommand,
   },
 ];

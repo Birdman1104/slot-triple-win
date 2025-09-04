@@ -7,6 +7,7 @@ export const MainGameEvents = {
   Resize: "MainGameEventsResize",
   ShowIntro: "MainGameEventsShowIntro",
   ShowGame: "MainGameEventsShowGame",
+  BlockActivity: "MainGameEventsBlockActivity",
 };
 
 export const SlotMachineViewEvents = {

@@ -138,6 +138,14 @@ export default {
     };
 
     const onSlotStateUpdate = (state: SlotMachineState): void => {
+      // @narvita TODO - change the spin button to stop button, only when the state is
+      // DropOld,
+      // WaitingForResult,
+      // DropNew,
+      // ShowWinLines,
+      // ShowWinnings,
+
+      // set to SPIN button, when the state is IDLE
       slotState = state;
     };
 

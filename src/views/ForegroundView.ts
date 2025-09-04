@@ -1,7 +1,9 @@
+import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
 import { Graphics } from "pixi.js";
 import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
+import { MainGameEvents } from "../events/MainEvents";
 import { ErrorPopup } from "./ErrorPopup";
 
 export class ForegroundView extends PixiGrid {
@@ -23,6 +25,26 @@ export class ForegroundView extends PixiGrid {
     super.rebuild(this.getGridConfig());
   }
 
+  public showErrorPopup(): void {
+    this.showBlocker();
+    anime({
+      targets: this.errorPopup,
+      alpha: 1,
+      duration: 200,
+      easing: "easeInOutQuad",
+    });
+  }
+
+  public hideErrorPopup(): void {
+    this.hideBlocker();
+    anime({
+      targets: this.errorPopup,
+      alpha: 0,
+      duration: 200,
+      easing: "easeInOutQuad",
+    });
+  }
+
   private build(): void {
     this.buildBlocker();
     this.buildErrorPopup();
@@ -40,6 +62,9 @@ export class ForegroundView extends PixiGrid {
 
   private buildErrorPopup(): void {
     this.errorPopup = new ErrorPopup();
+    this.errorPopup.on("closeErrorPopup", () => {
+      this.hideErrorPopup();
+    });
     this.setChild("popup", this.errorPopup);
     this.errorPopup.hide(true);
   }
@@ -50,6 +75,7 @@ export class ForegroundView extends PixiGrid {
       alpha: 0.7,
       duration: 300,
       easing: "easeInOutQuad",
+      complete: () => lego.event.emit(MainGameEvents.BlockActivity, true),
     });
   }
 
@@ -59,6 +85,7 @@ export class ForegroundView extends PixiGrid {
       alpha: 0,
       duration: 300,
       easing: "easeInOutQuad",
+      complete: () => lego.event.emit(MainGameEvents.BlockActivity, false),
     });
   }
 }

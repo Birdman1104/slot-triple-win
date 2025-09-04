@@ -28,6 +28,7 @@ export const onShowGameCommand = (): void => {
 };
 
 export const onSpinButtonClickCommand = () => {
+  if (Head.gameModel?.isBlockedAction) return;
   if (Head.playerModel && isNaN(Head.playerModel.bet)) return;
   if (Head.gameModel?.slotMachine?.state !== SlotMachineState.Idle) return;
   if (Head.gameModel?.state !== GameState.Game) return;
@@ -72,4 +73,10 @@ export const slotMachineOldElementsDropCompleteCommand = (): void => {
 
 export const slotMachineNewElementsDropCompleteCommand = (): void => {
   Head.gameModel?.slotMachine?.setState(SlotMachineState.ShowWinLines);
+};
+
+export const setBlockActivityCommand = (isBlocked: boolean): void => {
+  if (Head.gameModel) {
+    Head.gameModel.isBlockedAction = isBlocked;
+  }
 };
