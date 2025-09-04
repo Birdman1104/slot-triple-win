@@ -177,8 +177,8 @@ li {
 }
 
 :deep(.modal-content.bar-mobile-menu) {
-  right: 30px;
-  top: 80px;
+  right: 10px;
+  top: 60px;
   width: 160px;
   left: unset;
   border-top-right-radius: 15px;
