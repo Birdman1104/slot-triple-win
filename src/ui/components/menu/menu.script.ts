@@ -30,14 +30,14 @@ export default {
     const activeModal = ref<null | "menu" | "spinCount">(null);
 
     const menuItems = [
-      { id: "sound", text: "Sound", icon: "/icons/sound.svg" },
-      { id: "music", text: "Music", icon: "/icons/music.svg" },
-      { id: "info", text: "Info", icon: "/icons/info.svg" },
-      { id: "turbo", text: "Turbo", icon: "/icons/turbo.svg" },
+      { id: "sound", text: "Sound", icon: "/slot-triple-win/icons/sound.svg" },
+      { id: "music", text: "Music", icon: "/slot-triple-win/icons/music.svg" },
+      { id: "info", text: "Info", icon: "/slot-triple-win/icons/info.svg" },
+      { id: "turbo", text: "Turbo", icon: "/slot-triple-win/icons/turbo.svg" },
       {
         id: "history",
         text: "History",
-        icon: "/icons/history.svg",
+        icon: "/slot-triple-win/icons/history.svg",
       },
     ];
 
