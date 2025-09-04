@@ -515,6 +515,7 @@ span {
 
   .text {
     font-size: 40px !important;
+    line-height: 45px;
   }
 
   .amount {
