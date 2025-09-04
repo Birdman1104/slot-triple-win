@@ -35,8 +35,6 @@ export class GameModel extends ObservableModel {
   }
 
   public setState(newState: GameState): void {
-    console.warn(`GameModel: setState: ${newState}`);
-
     this._state = newState;
   }
 

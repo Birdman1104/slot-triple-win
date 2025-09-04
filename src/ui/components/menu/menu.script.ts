@@ -30,14 +30,14 @@ export default {
     const activeModal = ref<null | "menu" | "spinCount">(null);
 
     const menuItems = [
-      { id: "sound", text: "Sound", icon: "/slot-triple-win/icons/sound.svg" },
-      { id: "music", text: "Music", icon: "/slot-triple-win/icons/music.svg" },
-      { id: "info", text: "Info", icon: "/slot-triple-win/icons/info.svg" },
-      { id: "turbo", text: "Turbo", icon: "/slot-triple-win/icons/turbo.svg" },
+      { id: "sound", text: "Sound", icon: "/icons/sound.svg" },
+      { id: "music", text: "Music", icon: "/icons/music.svg" },
+      { id: "info", text: "Info", icon: "/icons/info.svg" },
+      { id: "turbo", text: "Turbo", icon: "/icons/turbo.svg" },
       {
         id: "history",
         text: "History",
-        icon: "/slot-triple-win/icons/history.svg",
+        icon: "/icons/history.svg",
       },
     ];
 
@@ -99,8 +99,6 @@ export default {
     }
 
     const updateTempBalance = (newBalance: number): void => {
-      console.warn("BALANCE UPDATE", newBalance);
-
       if (tempBalance === -1) {
         tempBalance = newBalance;
         const betElement = document.getElementById("balance");
@@ -118,7 +116,7 @@ export default {
         if (betElement) {
           betElement.textContent = `$ ${tempBalance}`;
         }
-      } else if (slotState === SlotMachineState.RequestSent) {
+      } else if (slotState === SlotMachineState.DropOld) {
         tempBalance = newBalance;
       }
     };

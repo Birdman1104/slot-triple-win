@@ -61,8 +61,8 @@ export class Reel extends Container {
         y: this.rHeight + el.height / 2,
         duration: 100 * (this.elements.length - i + 1),
         delay,
-        easing: function (el, i, total) {
-          return function easeInBack(x: number): number {
+        easing: () => {
+          return (x: number): number => {
             const c1 = 1.5;
             const c3 = c1 + 1;
 

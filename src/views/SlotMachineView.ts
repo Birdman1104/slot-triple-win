@@ -144,7 +144,9 @@ export class SlotMachineView extends Container {
 
   private showWinnings(): void {
     if (this.result.totalWin === 0) {
-      lego.event.emit(SlotMachineViewEvents.WinningsShowComplete);
+      setTimeout(() => {
+        lego.event.emit(SlotMachineViewEvents.WinningsShowComplete);
+      });
       return;
     }
 
@@ -153,7 +155,10 @@ export class SlotMachineView extends Container {
 
   private showWinLines(): void {
     if (this.result.winningInfo.length === 0) {
-      lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
+      setTimeout(() => {
+        lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
+      });
+      return;
     }
 
     const linesData: { line: WinningLine; winningItemType: string }[] = this.result.winningInfo.map((r) => {
