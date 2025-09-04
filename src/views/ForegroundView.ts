@@ -3,7 +3,7 @@ import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
 import { Container, Graphics } from "pixi.js";
 import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
-import { MainGameEvents } from "../events/MainEvents";
+import { MainGameEvents, UIEvents } from "../events/MainEvents";
 import { ErrorPopup } from "./ErrorPopup";
 import { InfoPopup } from "./InfoPopup";
 
@@ -12,9 +12,12 @@ export class ForegroundView extends PixiGrid {
   private infoPopup!: InfoPopup;
   private blocker!: Graphics;
 
+  private popups: Container[] = [];
+
   constructor() {
     super();
 
+    lego.event.on(UIEvents.MenuItemClick, this.onMenuItemClick, this);
     this.build();
   }
 
@@ -27,7 +30,8 @@ export class ForegroundView extends PixiGrid {
     super.rebuild(this.getGridConfig());
   }
 
-  public showErrorPopup(popup: Container): void {
+  public showPopup(popup: Container): void {
+    this.hidePopup();
     this.showBlocker();
     anime({
       targets: popup,
@@ -37,14 +41,20 @@ export class ForegroundView extends PixiGrid {
     });
   }
 
-  public hidePopup(popup: Container): void {
+  public hidePopup(): void {
     this.hideBlocker();
     anime({
-      targets: popup,
+      targets: this.popups,
       alpha: 0,
       duration: 200,
       easing: "easeInOutQuad",
     });
+  }
+
+  private onMenuItemClick(itemId: string): void {
+    if (itemId === "info") {
+      this.showPopup(this.infoPopup);
+    }
   }
 
   private build(): void {
@@ -66,19 +76,21 @@ export class ForegroundView extends PixiGrid {
   private buildErrorPopup(): void {
     this.errorPopup = new ErrorPopup();
     this.errorPopup.on("closeErrorPopup", () => {
-      this.hidePopup(this.errorPopup);
+      this.hidePopup();
     });
     this.setChild("popup", this.errorPopup);
     this.errorPopup.hide(true);
+    this.popups.push(this.errorPopup);
   }
 
   private buildInfoPopup(): void {
     this.infoPopup = new InfoPopup();
     this.infoPopup.on("closeInfoPopup", () => {
-      this.hidePopup(this.infoPopup);
+      this.hidePopup();
     });
     this.setChild("popup", this.infoPopup);
     this.infoPopup.hide(true);
+    this.popups.push(this.infoPopup);
   }
 
   private showBlocker(): void {

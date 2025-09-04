@@ -39,19 +39,11 @@ export class InfoPopup extends Container {
     this.closeButton.eventMode = "none";
     if (force) {
       this.alpha = 0;
-      this.scale.set(0.1, 0.1);
       return;
     }
     anime({
       targets: this,
       alpha: 0,
-      duration: 300,
-      easing: "easeInOutQuad",
-    });
-    anime({
-      targets: this.scale,
-      x: 0.1,
-      y: 0.1,
       duration: 300,
       easing: "easeInOutQuad",
     });
@@ -67,14 +59,18 @@ export class InfoPopup extends Container {
 
   private build() {
     this.bkg = makeSprite(popupBkgConfig());
+    this.bkg.eventMode = "static";
+    this.bkg.on("pointerdown", () => {
+      this.emit("closeInfoPopup");
+    });
     this.addChild(this.bkg);
 
     this.closeButton = makeSprite(popupCloseButtonConfig());
     this.addChild(this.closeButton);
 
-    this.closeButton.interactive = true;
+    this.closeButton.eventMode = "static";
     this.closeButton.on("pointerdown", () => {
-      this.emit("closeErrorPopup");
+      this.emit("closeInfoPopup");
     });
 
     this.infoTitle = makeText(infoTitleTextConfig());

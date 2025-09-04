@@ -29,7 +29,9 @@
 </template>
 
 <script setup>
+import { lego } from "@armathai/lego";
 import { defineEmits, onBeforeUnmount, onMounted, ref } from "vue";
+import { UIEvents } from "../events/MainEvents";
 const isMobile = ref(window.innerWidth <= 768);
 const selectedItemId = ref(null);
 
@@ -59,6 +61,7 @@ const props = defineProps({
 const emits = defineEmits(["close", "select"]);
 
 function selectItem(item) {
+  lego.event.emit(UIEvents.MenuItemClick, item.id);
   selectedItemId.value = item.id;
   emits("select", item);
 }

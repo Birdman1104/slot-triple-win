@@ -41,19 +41,11 @@ export class ErrorPopup extends Container {
     this.closeButton.eventMode = "none";
     if (force) {
       this.alpha = 0;
-      this.scale.set(0.1, 0.1);
       return;
     }
     anime({
       targets: this,
       alpha: 0,
-      duration: 300,
-      easing: "easeInOutQuad",
-    });
-    anime({
-      targets: this.scale,
-      x: 0.1,
-      y: 0.1,
       duration: 300,
       easing: "easeInOutQuad",
     });

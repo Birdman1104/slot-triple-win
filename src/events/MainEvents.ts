@@ -25,6 +25,8 @@ export const UIEvents = {
   PlusButtonClick: "UIEventsPlusButtonClick",
   MinusButtonClick: "UIEventsMinusButtonClick",
   MaxBetButtonClick: "UIEventsMaxBetButtonClick",
+
+  MenuItemClick: "UIEventsMenuItemClick",
 };
 
 export const ReelViewEvents = {
