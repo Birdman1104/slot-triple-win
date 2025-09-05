@@ -23,7 +23,7 @@ export class PlayerModel extends ObservableModel {
   }
 
   set balance(value) {
-    this._balance = value;
+    this._balance = +value.toFixed(1);
   }
 
   get bet() {
@@ -40,7 +40,8 @@ export class PlayerModel extends ObservableModel {
 
   public spin(): void {
     if (this._balance >= this._bet) {
-      this._balance -= this._bet;
+      const value = this._balance - this._bet;
+      this._balance = +value.toFixed(1);
     }
   }
 
@@ -62,11 +63,14 @@ export class PlayerModel extends ObservableModel {
 
   public setPlayerInfo(playerInfo: any): void {
     this._bet = playerInfo.bet;
-    this._balance = playerInfo.balance;
+    this._balance = +playerInfo.balance.toFixed(1);
     this._playerID = playerInfo.id;
   }
 
   public updateBalance(winning: number): void {
-    this._balance += winning;
+    const value = this._balance + winning;
+    const n = +value.toFixed(1);
+    this._balance = n;
+    console.warn(this._balance, +value.toFixed(1));
   }
 }
