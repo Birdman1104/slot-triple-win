@@ -563,6 +563,10 @@ span {
     height: 35px !important;
   }
 
+  .balance-wrapper {
+    min-width: 30px !important;
+  }
+
   .small {
     width: 18px !important;
     height: 18px !important;
