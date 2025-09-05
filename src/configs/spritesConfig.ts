@@ -61,6 +61,16 @@ export const iceCubeConfig = (x: number, y: number, isEven: boolean): SpriteConf
   anchor: { x: 0.5, y: 0.5 },
 });
 
+export const introIceCubeConfig = (x: number, isActive: boolean): SpriteConfig => ({
+  frame: isActive ? "ice_win_1.png" : "ice_1.png",
+  atlas: "slot_machine.png",
+  x,
+  y: 400,
+  anchor: { x: 0.5, y: 0.5 },
+  scaleX: 0.25,
+  scaleY: 0.25,
+});
+
 export const introCardConfig = (frame: string, atlas: string): SpriteConfig => ({
   frame,
   atlas,

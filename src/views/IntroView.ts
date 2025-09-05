@@ -1,11 +1,12 @@
 import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
-import { Container, Graphics, Rectangle, Text } from "pixi.js";
+import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
 import { getIntroViewGridConfig } from "../configs/gridConfigs/introViewGC";
+import { introIceCubeConfig } from "../configs/spritesConfig";
 import { clickToContinueTextConfig, clickToProceedTextConfig } from "../configs/textConfig";
 import { MainGameEvents } from "../events/MainEvents";
-import { delayRunnable, getGameBounds, lp, makeText } from "../utils/Utils";
+import { getGameBounds, lp, makeSprite, makeText } from "../utils/Utils";
 import { IntroCard } from "./IntroCard";
 
 class IntroLandscape extends Container {
@@ -39,6 +40,10 @@ class IntroPortrait extends Container {
   private card1: IntroCard | null = null;
   private card2: IntroCard | null = null;
   private card3: IntroCard | null = null;
+
+  private ice1!: Sprite;
+  private ice2!: Sprite;
+  private ice3!: Sprite;
   private clickToContinue!: Text;
   private clickToProceed!: Text;
 
@@ -51,6 +56,11 @@ class IntroPortrait extends Container {
     this.card2 = new IntroCard(2);
     this.card3 = new IntroCard(3);
 
+    this.ice1 = makeSprite(introIceCubeConfig(-100, true));
+    this.ice2 = makeSprite(introIceCubeConfig(0, false));
+    this.ice3 = makeSprite(introIceCubeConfig(100, false));
+
+    this.addChild(this.ice1, this.ice2, this.ice3);
     const { width } = getGameBounds();
 
     this.card1.position.set(0, 0);
@@ -71,6 +81,10 @@ class IntroPortrait extends Container {
     return [this.card1 as IntroCard, this.card2 as IntroCard, this.card3 as IntroCard];
   }
 
+  get ice(): Sprite[] {
+    return [this.ice1, this.ice2, this.ice3];
+  }
+
   public getBounds(): Rectangle {
     return new Rectangle(-275, -200, 550, 500);
   }
@@ -87,6 +101,9 @@ class IntroPortrait extends Container {
     const { width } = getGameBounds();
     const currentCard = this.cards[this.currentCardIndex];
     const nextCard = this.cards[this.currentCardIndex + 1];
+    this.ice.forEach((ice, index) => {
+      ice.texture = makeSprite(introIceCubeConfig(ice.x, index === this.currentCardIndex + 1)).texture;
+    });
 
     this.currentCardIndex += 1;
     if (this.currentCardIndex === this.cards.length - 1) {
@@ -154,8 +171,6 @@ export class IntroViewWrapper extends PixiGrid {
     this.overlay.on("pointerdown", () => {
       this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
     });
-
-    delayRunnable(0.01, () => lego.event.emit(MainGameEvents.ShowGame));
 
     this.setChild("overlay", this.overlay);
   }
