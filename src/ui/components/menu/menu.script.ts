@@ -2,7 +2,10 @@ import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { DEFAULT_BET } from "../../../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../../../events/MainEvents";
-import { PlayerModelEvents, SlotMachineModelEvents } from "../../../events/ModelEvents";
+import {
+  PlayerModelEvents,
+  SlotMachineModelEvents,
+} from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
@@ -16,7 +19,8 @@ export default {
   },
   setup() {
     let tempBalance = -1;
-    let balance = Head.playerModel?.balance ?? 0;
+    let bet = ref("");
+    let balance = ref("");
     let slotState = SlotMachineState.Unknown;
 
     const isMobile = ref(window.innerWidth <= 768);
@@ -64,6 +68,22 @@ export default {
       window.addEventListener("resize", handleResize);
       orientation.value = screen.orientation.type;
       spinCountValue.value = localStorage.getItem("spinCount") ?? "";
+      if (localStorage.getItem("bet")) {
+        bet.value = localStorage.getItem("bet");
+      } else {
+        localStorage.setItem("bet", DEFAULT_BET.toString());
+        bet.value = localStorage.getItem("bet") ?? "";
+      }
+
+      if (localStorage.getItem("balance")) {
+        balance.value = localStorage.getItem("balance");
+      } else {
+        localStorage.setItem(
+          "balance",
+          Head.playerModel?.balance.toString() ?? "0"
+        );
+        balance.value = localStorage.getItem("balance");
+      }
 
       screen.orientation.addEventListener("change", () => {
         orientation.value = screen.orientation.type;
@@ -83,7 +103,8 @@ export default {
 
     function toggleAmountBar() {
       toggleMenu.value = false;
-      activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
+      activeModal.value =
+        activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 
@@ -119,6 +140,7 @@ export default {
       } else if (slotState === SlotMachineState.DropOld) {
         tempBalance = newBalance;
       }
+      localStorage.setItem("balance", tempBalance.toString());
     };
 
     const updateBalance = (): void => {
@@ -157,7 +179,7 @@ export default {
     return {
       isMobile,
       balance,
-      DEFAULT_BET,
+      bet,
       orientation,
       toggleMenu,
       toggleSpinMenu,
