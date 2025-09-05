@@ -59,7 +59,7 @@ class IntroPortrait extends Container {
     this.ice1 = makeSprite(introIceCubeConfig(-100, true));
     this.ice2 = makeSprite(introIceCubeConfig(0, false));
     this.ice3 = makeSprite(introIceCubeConfig(100, false));
-
+    this.ice1.scale.set(0.3);
     this.addChild(this.ice1, this.ice2, this.ice3);
     const { width } = getGameBounds();
 
@@ -103,6 +103,11 @@ class IntroPortrait extends Container {
     const nextCard = this.cards[this.currentCardIndex + 1];
     this.ice.forEach((ice, index) => {
       ice.texture = makeSprite(introIceCubeConfig(ice.x, index === this.currentCardIndex + 1)).texture;
+      if (index === this.currentCardIndex + 1) {
+        ice.scale.set(0.3);
+      } else {
+        ice.scale.set(0.25);
+      }
     });
 
     this.currentCardIndex += 1;
