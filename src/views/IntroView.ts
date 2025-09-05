@@ -59,7 +59,7 @@ class IntroPortrait extends Container {
     this.ice1 = makeSprite(introIceCubeConfig(-100, true));
     this.ice2 = makeSprite(introIceCubeConfig(0, false));
     this.ice3 = makeSprite(introIceCubeConfig(100, false));
-    this.ice1.scale.set(0.3);
+    this.ice1.scale.set(0.275);
     this.addChild(this.ice1, this.ice2, this.ice3);
     const { width } = getGameBounds();
 
@@ -69,11 +69,11 @@ class IntroPortrait extends Container {
 
     this.addChild(this.card1, this.card2, this.card3);
 
-    this.clickToContinue = makeText(clickToContinueTextConfig(this.width / 2 - 265, this.height - 10));
+    this.clickToContinue = makeText(clickToContinueTextConfig(0, this.height - 50));
     this.clickToContinue.visible = false;
     this.addChild(this.clickToContinue);
 
-    this.clickToProceed = makeText(clickToProceedTextConfig(this.width / 2 - 265, this.height - 10));
+    this.clickToProceed = makeText(clickToProceedTextConfig(0, this.height - 50));
     this.addChild(this.clickToProceed);
   }
 
@@ -104,9 +104,9 @@ class IntroPortrait extends Container {
     this.ice.forEach((ice, index) => {
       ice.texture = makeSprite(introIceCubeConfig(ice.x, index === this.currentCardIndex + 1)).texture;
       if (index === this.currentCardIndex + 1) {
-        ice.scale.set(0.3);
+        ice.scale.set(0.275);
       } else {
-        ice.scale.set(0.25);
+        ice.scale.set(0.225);
       }
     });
 
