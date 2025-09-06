@@ -25,6 +25,3 @@ export const SYMBOLS_MULTIPLIERS = {
   [SYMBOL_TYPE.STRAWBERRY]: 2,
   [SYMBOL_TYPE.CHERRY]: 1,
 };
-
-export const BETS = [0.1, 0.2, 0.25, 0.5, 1, 2, 3, 4, 5, 10, 20];
-export const DEFAULT_BET = 1;

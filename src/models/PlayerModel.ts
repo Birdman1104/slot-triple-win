@@ -1,4 +1,4 @@
-import { BETS } from "../configs/SymbolsConfig";
+import { BETS } from "../slotLogic";
 import { ObservableModel } from "./ObservableModel";
 
 export class PlayerModel extends ObservableModel {

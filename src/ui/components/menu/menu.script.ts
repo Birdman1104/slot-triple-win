@@ -1,6 +1,5 @@
 import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { DEFAULT_BET } from "../../../configs/SymbolsConfig";
 import { SlotMachineViewEvents, UIEvents } from "../../../events/MainEvents";
 import {
   PlayerModelEvents,
@@ -8,6 +7,7 @@ import {
 } from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
+import { DEFAULT_BET } from "../../../slotLogic";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
 import MenuBackgroundSvg from "../../MenuBackgroundSvg.vue";
 import Modal from "../../Modal.vue";

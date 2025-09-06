@@ -1,4 +1,4 @@
-import { DEFAULT_BET, SYMBOL_TYPE, SYMBOLS_MULTIPLIERS } from "../configs/SymbolsConfig";
+import { SYMBOL_TYPE, SYMBOLS_MULTIPLIERS } from "../configs/SymbolsConfig";
 
 const REELS_AMOUNT = 3;
 const ROWS_AMOUNT = 3;
@@ -125,7 +125,7 @@ export const getDefaultPlayerInfo = async (): Promise<any> => {
   return new Promise((resolve) =>
     setTimeout(() => {
       resolve({
-        balance: 10000,
+        balance: DEFAULT_BALANCE,
         bet: DEFAULT_BET,
         id: Math.random() * 1000,
       });
@@ -136,3 +136,7 @@ export const getDefaultPlayerInfo = async (): Promise<any> => {
 export const getSlotMachineInitialConfig = () => {
   return { reels: getDefaultReelsConfig().reels };
 };
+
+export const BETS = [0.1, 0.2, 0.25, 0.5, 1, 2, 3, 4, 5, 10, 20];
+export const DEFAULT_BET = 1;
+export const DEFAULT_BALANCE = 10000;
