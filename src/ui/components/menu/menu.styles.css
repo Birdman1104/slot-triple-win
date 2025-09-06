@@ -127,7 +127,11 @@
 .buy-btn {
   width: 95%;
   height: 95%;
-  z-index: 2;
+  z-index: 3;
+}
+
+.lowZindex {
+  z-index: 1 !important;
 }
 
 .close-button img,
@@ -366,9 +370,8 @@ span {
 .buy-btn-mb {
   width: 95%;
   height: 95%;
-  z-index: 1;
+  z-index: 3;
 }
-
 
 .close-button-mb img,
 .refresh-btn-mb img {
@@ -621,7 +624,6 @@ span {
     font-size: 18px !important;
   }
 }
-
 
 @media screen and (max-width: 400px) {
   .button-background {

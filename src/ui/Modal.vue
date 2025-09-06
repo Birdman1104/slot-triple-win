@@ -1,25 +1,42 @@
 <template>
   <div class="modal-overlay" @click.stop>
-    <div class="modal-content" :class="['modal-content', props.customClass]" :style="{ width: props.width + 'px' }">
+    <div
+      class="modal-content"
+      :class="['modal-content', props.customClass]"
+      :style="{ width: props.width + 'px' }"
+    >
       <ul>
-        <li v-for="item in items" :key="item.id" @pointerdown.stop="selectItem(item)" class="modal-item">
-          <div class="icon" v-if="item.icon" :class="{
-            selected: selectedItemId === item.id || selectedItem === item.id,
-          }">
+        <li
+          v-for="item in items"
+          :key="item.id"
+          @pointerdown.stop="selectItem(item)"
+          class="modal-item"
+          :class="['modal-item', props.itemsClass]"
+        >
+          <div
+            class="icon"
+            v-if="item.icon"
+            :class="{
+              selected: isSelected(item),
+            }"
+          >
             <img :src="item.icon" />
           </div>
-          <span>{{ item.text }}</span>
+          <span>{{ item.text }} </span>
         </li>
       </ul>
     </div>
   </div>
+  <div class="modal-wrapper" @pointerdown="handleClose"></div>
 </template>
 
 <script setup>
 import { lego } from "@armathai/lego";
 import { defineEmits, onBeforeUnmount, onMounted, ref } from "vue";
 import { UIEvents } from "../events/MainEvents";
+import { MenuEnum } from "./enums/ui-enums";
 const isMobile = ref(window.innerWidth <= 768);
+const selected = ref(false);
 const selectedItemId = ref(null);
 
 const props = defineProps({
@@ -31,11 +48,15 @@ const props = defineProps({
     type: Number,
     default: 160,
   },
-  selectedItem: {
+  selectedItems: {
+    type: {},
+    default: {},
+  },
+  customClass: {
     type: String,
     default: "",
   },
-  customClass: {
+  itemsClass: {
     type: String,
     default: "",
   },
@@ -49,9 +70,40 @@ const emits = defineEmits(["close", "select"]);
 
 function selectItem(item) {
   lego.event.emit(UIEvents.MenuItemClick, item.id);
+
   selectedItemId.value = item.id;
+  selected.value = !selected.value;
+
   emits("select", item);
+
+  // TO DO
 }
+
+
+
+function isSelected(item) {
+  return (
+    ((selected.value && selectedItemId.value === item.id) ||
+      props.selectedItems[item.id] === "true") &&
+    item.id != MenuEnum.Info
+  );
+}
+
+// function selectItem(item) {
+//   lego.event.emit(UIEvents.MenuItemClick, item.id);
+
+//   if (selectedItemId.value.includes(item.id)) {
+//     // remove if already selected
+//     selectedItemId.value = selectedItemIds.value.filter(
+//       (id) => id !== item.id
+//     );
+//   } else {
+//     // add if not selected
+//     selectedItemId.value.push(item.id);
+//   }
+
+//   emits("select", item);
+// }
 
 function handleResize() {
   close();
@@ -63,6 +115,7 @@ function handleClose() {
 
 onMounted(() => {
   window.addEventListener("resize", handleResize);
+  console.log(props.selectedItems, "selected");
 });
 
 onBeforeUnmount(() => {
@@ -71,6 +124,16 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.modal-wrapper {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  top: 0;
+  height: 100vh;
+  /* background-color: #00711e; */
+  z-index: 2;
+}
+
 .modal-overlay {
   inset: 0;
   display: flex;
@@ -78,8 +141,9 @@ onBeforeUnmount(() => {
   justify-content: center;
   width: 100%;
   height: 50%;
-  z-index: 1;
+  z-index: 3;
   position: absolute;
+  /* background-color: red; */
 }
 
 span {
@@ -134,9 +198,11 @@ li {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 40%,
-      rgba(255, 255, 255, 0.26),
-      rgba(168, 147, 121, 0.26));
+  background: radial-gradient(
+    circle at 35% 40%,
+    rgba(255, 255, 255, 0.26),
+    rgba(168, 147, 121, 0.26)
+  );
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border: 1px;
   backdrop-filter: blur(10px);
@@ -152,7 +218,8 @@ li {
   border-radius: 50%;
   background:
     linear-gradient(to right, #00be32, #00711e) border-box,
-    radial-gradient(circle, rgba(0, 113, 30, 1), rgba(0, 142, 38, 1)) padding-box;
+    radial-gradient(circle, rgba(0, 113, 30, 1), rgba(0, 142, 38, 1))
+      padding-box;
   background-clip: content-box, border-box;
 }
 
@@ -167,5 +234,9 @@ li {
 :deep(.modal-content.amount-mobile-menu) {
   left: 10px;
   border-bottom-left-radius: 10px;
+}
+
+:deep(.centerd-text) {
+  justify-content: center;
 }
 </style>

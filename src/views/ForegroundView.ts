@@ -6,6 +6,7 @@ import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundVi
 import { MainGameEvents, UIEvents } from "../events/MainEvents";
 import { ErrorPopup } from "./ErrorPopup";
 import { InfoPopup } from "./InfoPopup";
+import { MenuEnum } from "../ui/enums/ui-enums";
 
 export class ForegroundView extends PixiGrid {
   private errorPopup!: ErrorPopup;
@@ -52,7 +53,7 @@ export class ForegroundView extends PixiGrid {
   }
 
   private onMenuItemClick(itemId: string): void {
-    if (itemId === "info") {
+    if (itemId === MenuEnum.Info) {
       this.showPopup(this.infoPopup);
     }
   }

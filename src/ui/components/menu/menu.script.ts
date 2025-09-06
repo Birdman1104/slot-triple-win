@@ -11,6 +11,8 @@ import { DEFAULT_BET } from "../../../slotLogic";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
 import MenuBackgroundSvg from "../../MenuBackgroundSvg.vue";
 import Modal from "../../Modal.vue";
+import { MenuEnum } from "../../enums/ui-enums";
+import { menuItems, spinCountItems } from "../../constants/modal-items-const";
 export default {
   components: {
     MenuBackgroundSvg,
@@ -30,33 +32,20 @@ export default {
     const showStopButton = ref(false);
 
     const selectedItem = ref("");
+
+    const initalSettings = {
+      [MenuEnum.Sound]: "false",
+      [MenuEnum.Music]: "false",
+      [MenuEnum.Turbo]: "false",
+    };
+    const settings = ref({});
     const spinCountValue = ref("");
     const activeModal = ref<null | "menu" | "spinCount">(null);
 
-    const menuItems = [
-      { id: "sound", text: "Sound", icon: "/slot-triple-win/icons/sound.svg" },
-      { id: "music", text: "Music", icon: "/slot-triple-win/icons/music.svg" },
-      { id: "info", text: "Info", icon: "/slot-triple-win/icons/info.svg" },
-      { id: "turbo", text: "Turbo", icon: "/slot-triple-win/icons/turbo.svg" },
-      {
-        id: "history",
-        text: "History",
-        icon: "/slot-triple-win/icons/history.svg",
-      },
-    ];
-
-    const spinCountItems = [
-      { id: "200", text: "200" },
-      { id: "100", text: "100" },
-      { id: "50", text: "50" },
-      { id: "20", text: "20" },
-      { id: "10", text: "10" },
-    ];
-
     const spinButtonClick = () => {
       lego.event.emit(UIEvents.SpinButtonClick);
-      showStopButton.value = true;
     };
+
     const plusButtonClick = () => lego.event.emit(UIEvents.PlusButtonClick);
     const minusButtonClick = () => lego.event.emit(UIEvents.MinusButtonClick);
 
@@ -68,22 +57,13 @@ export default {
       window.addEventListener("resize", handleResize);
       orientation.value = screen.orientation.type;
       spinCountValue.value = localStorage.getItem("spinCount") ?? "";
-      if (localStorage.getItem("bet")) {
-        bet.value = localStorage.getItem("bet");
-      } else {
-        localStorage.setItem("bet", DEFAULT_BET.toString());
-        bet.value = localStorage.getItem("bet") ?? "";
-      }
 
-      if (localStorage.getItem("balance")) {
-        balance.value = localStorage.getItem("balance");
-      } else {
-        localStorage.setItem(
-          "balance",
-          Head.playerModel?.balance.toString() ?? "0"
-        );
-        balance.value = localStorage.getItem("balance");
-      }
+      initLocalStorageItem("bet", bet, DEFAULT_BET.toString());
+      initLocalStorageItem(
+        "balance",
+        balance,
+        Head.playerModel?.balance.toString() ?? "0"
+      );
 
       screen.orientation.addEventListener("change", () => {
         orientation.value = screen.orientation.type;
@@ -95,14 +75,12 @@ export default {
     });
 
     function toggleMenuBar() {
-      toggleSpinMenu.value = false;
-      selectedItem.value = localStorage.getItem("menu") ?? "";
       activeModal.value = activeModal.value === "menu" ? null : "menu";
       toggleMenu.value = !toggleMenu.value;
+      getSettingsFromLocalStorage();
     }
 
     function toggleAmountBar() {
-      toggleMenu.value = false;
       activeModal.value =
         activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
@@ -110,14 +88,43 @@ export default {
 
     function handleSelect(item: any) {
       if (activeModal.value === "spinCount") {
-        localStorage.setItem("spinCount", item.text);
         spinCountValue.value = item.text;
         toggleAmountBar();
       } else {
-        localStorage.setItem("menu", item.id);
-        selectedItem.value = item.id;
+        if (item.id === MenuEnum.Info) {
+          toggleMenuBar();
+        } else if (item.id === MenuEnum.History) {
+          toggleMenuBar();
+        } else {
+          setSetingsToLoacalStorage(item.id);
+        }
       }
     }
+
+    function setSetingsToLoacalStorage(item: string): void {
+      let storedSettings = localStorage.getItem("settings");
+      let settings;
+      if (storedSettings != null) {
+        settings = JSON.parse(storedSettings);
+        if (settings[item] === "true") {
+          settings[item] = "false";
+          localStorage.setItem("settings", JSON.stringify(settings));
+        } else {
+          settings[item] = "true";
+          localStorage.setItem("settings", JSON.stringify(settings));
+        }
+      }
+    }
+
+    function getSettingsFromLocalStorage(): void {
+      let menuSettings = localStorage.getItem("settings");
+      if (menuSettings != null) {
+        settings.value = menuSettings;
+      } else {
+        localStorage.setItem("settings", JSON.stringify(initalSettings));
+      }
+    }
+
 
     const updateTempBalance = (newBalance: number): void => {
       if (tempBalance === -1) {
@@ -140,6 +147,7 @@ export default {
       } else if (slotState === SlotMachineState.DropOld) {
         tempBalance = newBalance;
       }
+
       localStorage.setItem("balance", tempBalance.toString());
     };
 
@@ -149,7 +157,6 @@ export default {
       if (betElement) {
         betElement.textContent = ` $ ${tempBalance} `;
       }
-      showStopButton.value = false;
     };
 
     const betUpdate = (bet: number) => {
@@ -162,13 +169,33 @@ export default {
     const onSlotStateUpdate = (state: SlotMachineState): void => {
       // @narvita TODO - change the spin button to stop button, only when the state is
       // DropOld,
-      // WaitingForResult,
+      // WaitingForResult,ii
       // DropNew,
       // ShowWinLines,
       // ShowWinnings,
 
       // set to SPIN button, when the state is IDLE
+
+      if (state === SlotMachineState.Idle) {
+        showStopButton.value = false;
+      } else {
+        showStopButton.value = true;
+      }
+
       slotState = state;
+    };
+
+    const initLocalStorageItem = (
+      key: string,
+      parameter: { value: string },
+      initialValue: string
+    ) => {
+      let stored = localStorage.getItem(key);
+      if (stored === null) {
+        localStorage.setItem(key, initialValue);
+        stored = initialValue;
+      }
+      parameter.value = stored;
     };
 
     lego.event.on(PlayerModelEvents.BetUpdate, betUpdate);
@@ -183,7 +210,7 @@ export default {
       orientation,
       toggleMenu,
       toggleSpinMenu,
-      selectedItem,
+      settings,
       spinCountValue,
       activeModal,
       menuItems,
