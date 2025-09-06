@@ -58,13 +58,6 @@ export default {
       orientation.value = screen.orientation.type;
       spinCountValue.value = localStorage.getItem("spinCount") ?? "";
 
-      initLocalStorageItem("bet", bet, DEFAULT_BET.toString());
-      initLocalStorageItem(
-        "balance",
-        balance,
-        Head.playerModel?.balance.toString() ?? "0"
-      );
-
       screen.orientation.addEventListener("change", () => {
         orientation.value = screen.orientation.type;
       });
@@ -167,15 +160,6 @@ export default {
     };
 
     const onSlotStateUpdate = (state: SlotMachineState): void => {
-      // @narvita TODO - change the spin button to stop button, only when the state is
-      // DropOld,
-      // WaitingForResult,ii
-      // DropNew,
-      // ShowWinLines,
-      // ShowWinnings,
-
-      // set to SPIN button, when the state is IDLE
-
       if (state === SlotMachineState.Idle) {
         showStopButton.value = false;
       } else {
@@ -185,18 +169,6 @@ export default {
       slotState = state;
     };
 
-    const initLocalStorageItem = (
-      key: string,
-      parameter: { value: string },
-      initialValue: string
-    ) => {
-      let stored = localStorage.getItem(key);
-      if (stored === null) {
-        localStorage.setItem(key, initialValue);
-        stored = initialValue;
-      }
-      parameter.value = stored;
-    };
 
     lego.event.on(PlayerModelEvents.BetUpdate, betUpdate);
     lego.event.on(PlayerModelEvents.BalanceUpdate, updateTempBalance);
