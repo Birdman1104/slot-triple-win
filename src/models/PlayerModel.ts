@@ -49,14 +49,12 @@ export class PlayerModel extends ObservableModel {
     const index = BETS.findIndex((el) => el === this._bet);
     if (index === BETS.length - 1) return; // TODO disable button
     this._bet = BETS[index + 1];
-    localStorage.setItem("bet", this._bet.toString());
   }
 
   public decreaseBet(): void {
     const index = BETS.findIndex((el) => el === this._bet);
     if (index === 0) return; // TODO disable button
     this._bet = BETS[index - 1];
-    localStorage.setItem("bet", this._bet.toString());
   }
 
   public setMaxBet(): void {

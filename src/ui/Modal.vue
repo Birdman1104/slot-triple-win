@@ -65,45 +65,39 @@ const props = defineProps({
     default: "",
   },
 });
+const selectedItems = ref(props.selectedItems);
 
 const emits = defineEmits(["close", "select"]);
 
 function selectItem(item) {
   lego.event.emit(UIEvents.MenuItemClick, item.id);
-
-  selectedItemId.value = item.id;
-  selected.value = !selected.value;
-
-  emits("select", item);
-
-  // TO DO
+  if (props.modal !== "menu") {
+    emits("select", item);
+    return;
+  }
+  if (
+    (item.id == MenuEnum.History || item.id == MenuEnum.Info) &&
+    props.modal === "menu"
+  ) {
+    emits("select", item);
+    return;
+  } else {
+    selectedItems.value[item.id] =
+      selectedItems.value[item.id] === "true" ? "false" : "true";
+    emits("select", { ...selectedItems.value });
+  }
 }
-
-
 
 function isSelected(item) {
-  return (
-    ((selected.value && selectedItemId.value === item.id) ||
-      props.selectedItems[item.id] === "true") &&
-    item.id != MenuEnum.Info
-  );
+  if (
+    (item.id == MenuEnum.History || item.id == MenuEnum.Info) &&
+    props.modal === "menu"
+  ) {
+    return false;
+  } else {
+    return selectedItems.value[item.id] === "true";
+  }
 }
-
-// function selectItem(item) {
-//   lego.event.emit(UIEvents.MenuItemClick, item.id);
-
-//   if (selectedItemId.value.includes(item.id)) {
-//     // remove if already selected
-//     selectedItemId.value = selectedItemIds.value.filter(
-//       (id) => id !== item.id
-//     );
-//   } else {
-//     // add if not selected
-//     selectedItemId.value.push(item.id);
-//   }
-
-//   emits("select", item);
-// }
 
 function handleResize() {
   close();
@@ -115,7 +109,6 @@ function handleClose() {
 
 onMounted(() => {
   window.addEventListener("resize", handleResize);
-  console.log(props.selectedItems, "selected");
 });
 
 onBeforeUnmount(() => {
