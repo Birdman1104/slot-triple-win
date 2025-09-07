@@ -13,11 +13,16 @@
                 v-if="activeModal === 'menu' && toggleMenu"
                 :items="menuItems"
                 :width="160"
-                :selectedItem="selectedItem"
+                :selectedItems="settings"
                 @select="handleSelect"
+                @close="toggleMenuBar"
               />
             </Transition>
-            <div class="flex-center close-button" @pointerdown="toggleMenuBar">
+            <div
+              class="flex-center close-button"
+              @pointerdown="toggleMenuBar"
+              :class="{'flex-center close-button': true, lowZindex: activeModal === 'spinCount'}"
+            >
               <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
               <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
             </div>
@@ -30,7 +35,7 @@
           <span class="text">Balance: </span>
           <span id="balance" class="amount">
             $ {{ balance?.toLocaleString("en-US", { minimumFractionDigits: 2,
-            maximumFractionDigits: 2, }) }} 
+            maximumFractionDigits: 2, }) }}
           </span>
         </div>
       </div>
@@ -58,11 +63,17 @@
                 v-if="activeModal === 'spinCount' && toggleSpinMenu"
                 :items="spinCountItems"
                 @select="handleSelect"
-                :width="50"
+                :width="30"
                 :selectedItem="spinCountValue"
+                @close="toggleAmountBar"
+                itemsClass="centerd-text"
               />
             </Transition>
-            <div class="refresh-btn flex-center" @pointerdown="toggleAmountBar">
+            <div
+              class="refresh-btn flex-center"
+              @pointerdown="toggleAmountBar"
+              :class="{'refresh-btn flex-center': true, lowZindex: activeModal === 'menu'}"
+            >
               <div v-if="spinCountValue" class="amount">
                 {{ spinCountValue }}
               </div>
@@ -123,10 +134,14 @@
         :modal="'menu'"
         customClass="bar-mobile-menu"
         @select="handleSelect"
-        :selectedItem="selectedItem"
+        :selectedItems="settings"
+        @close="toggleMenuBar"
       />
     </Transition>
-    <div class="close-button-mb flex-center" @pointerdown="toggleMenuBar">
+    <div
+      :class="{'close-button-mb flex-center': true, lowZindex: activeModal === 'spinCount'}"
+      @pointerdown="toggleMenuBar"
+    >
       <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
       <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
     </div>
@@ -138,8 +153,8 @@
         <span class="text-mb">Balance: </span>
         <span id="balance" class="amount-mb">
           $ {{ balance.toLocaleString("en-US", { minimumFractionDigits: 2,
-          maximumFractionDigits: 2, }) }} </span
-        >
+          maximumFractionDigits: 2, }) }}
+        </span>
       </div>
       <div class="balance-wrapper-mb flex-center">
         <span class="text-mb">Bet </span
@@ -158,6 +173,7 @@
                   v-if="activeModal === 'spinCount' && toggleSpinMenu"
                   :items="spinCountItems"
                   @select="handleSelect"
+                  @close="toggleAmountBar"
                   :width="50"
                   :selectedItem="spinCountValue"
                   customClass="amount-mobile-menu"
@@ -165,6 +181,7 @@
               </Transition>
               <div
                 class="refresh-btn-mb flex-center"
+                :class="{'refresh-btn-mb flex-center': true, lowZindex: activeModal === 'menu'}"
                 @pointerdown="toggleAmountBar"
               >
                 <div v-if="spinCountValue" class="amount-mb">
