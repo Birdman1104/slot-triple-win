@@ -57,6 +57,8 @@ export default {
       window.addEventListener("resize", handleResize);
       orientation.value = screen.orientation.type;
       spinCountValue.value = localStorage.getItem("spinCount") ?? "";
+      bet.value = Head.playerModel?.bet.toString() || "1";
+      balance.value = Head.playerModel?.balance.toString() || "10000";
 
       screen.orientation.addEventListener("change", () => {
         orientation.value = screen.orientation.type;
@@ -89,35 +91,23 @@ export default {
         } else if (item.id === MenuEnum.History) {
           toggleMenuBar();
         } else {
-          setSetingsToLoacalStorage(item.id);
+          setSetingsToLoacalStorage(item);
         }
       }
     }
 
-    function setSetingsToLoacalStorage(item: string): void {
-      let storedSettings = localStorage.getItem("settings");
-      let settings;
-      if (storedSettings != null) {
-        settings = JSON.parse(storedSettings);
-        if (settings[item] === "true") {
-          settings[item] = "false";
-          localStorage.setItem("settings", JSON.stringify(settings));
-        } else {
-          settings[item] = "true";
-          localStorage.setItem("settings", JSON.stringify(settings));
-        }
-      }
+    function setSetingsToLoacalStorage(item: any): void {
+      localStorage.setItem("settings", JSON.stringify(item));
     }
 
     function getSettingsFromLocalStorage(): void {
       let menuSettings = localStorage.getItem("settings");
       if (menuSettings != null) {
-        settings.value = menuSettings;
+        settings.value = JSON.parse(menuSettings);
       } else {
         localStorage.setItem("settings", JSON.stringify(initalSettings));
       }
     }
-
 
     const updateTempBalance = (newBalance: number): void => {
       if (tempBalance === -1) {
@@ -140,8 +130,6 @@ export default {
       } else if (slotState === SlotMachineState.DropOld) {
         tempBalance = newBalance;
       }
-
-      localStorage.setItem("balance", tempBalance.toString());
     };
 
     const updateBalance = (): void => {
@@ -168,7 +156,6 @@ export default {
 
       slotState = state;
     };
-
 
     lego.event.on(PlayerModelEvents.BetUpdate, betUpdate);
     lego.event.on(PlayerModelEvents.BalanceUpdate, updateTempBalance);
