@@ -21,13 +21,13 @@ class IntroLandscape extends Container {
     this.card2 = new IntroCard(2);
     this.card3 = new IntroCard(3);
 
-    this.card1.position.set(0, 0);
-    this.card2.position.set(this.card1.width * 1.1, 0);
-    this.card3.position.set(this.card2.width * 2.2, 0);
+    this.card1.position.set(0, 54);
+    this.card2.position.set(this.card1.width * 1.1 + 56, 54);
+    this.card3.position.set(this.card2.width * 2.2 + 112, 54);
 
     this.addChild(this.card1, this.card2, this.card3);
 
-    this.clickToContinue = makeText(clickToContinueTextConfig(this.width / 2 - 265, this.height - 180));
+    this.clickToContinue = makeText(clickToContinueTextConfig(this.card2.x, this.height - 24));
     this.addChild(this.clickToContinue);
   }
 
@@ -177,7 +177,7 @@ export class IntroViewWrapper extends PixiGrid {
     this.overlay.alpha = 0;
     this.overlay.eventMode = "static";
     this.overlay.on("pointerdown", () => {
-      this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
+      // this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
     });
 
     this.setChild("overlay", this.overlay);
