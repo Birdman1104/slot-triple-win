@@ -3,7 +3,7 @@ import { lp } from "../utils/Utils";
 export const clickToContinueTextConfig = (x: number, y: number): TextConfig => ({
   text: "Click to continue",
   x,
-  y: 498,
+  y: 404,
   anchor: { x: 0.5, y: 0.5 },
   style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
 });

@@ -14,7 +14,7 @@ const getIntroViewGridLandscapeConfig = () => {
     cells: [
       {
         name: "view",
-        bounds: { x: 0, y: 0.15, width: 1, height: 0.8 },
+        bounds: { x: 0.1, y: 0.15, width: 0.8, height: 0.7 },
       },
       {
         name: "overlay",
@@ -29,7 +29,7 @@ const getIntroViewGridPortraitConfig = () => {
   const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
   return {
     name: "intro",
-    // debug: { color: 0xd9ff27 },
+    debug: { color: 0xd9ff27 },
     bounds,
     cells: [
       {

@@ -177,7 +177,7 @@ export class IntroViewWrapper extends PixiGrid {
     this.overlay.alpha = 0;
     this.overlay.eventMode = "static";
     this.overlay.on("pointerdown", () => {
-      // this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
+      this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
     });
 
     this.setChild("overlay", this.overlay);
