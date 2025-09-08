@@ -14,8 +14,8 @@ const getForegroundViewGridLandscapeConfig = () => {
     cells: [
       {
         name: "popup",
-        bounds: { x: 0, y: 0, width: 1, height: 0.9 },
-        scale: CellScale.showAll,
+        bounds: { x: 0.2, y: 0.1, width: 0.6, height: 0.7 },
+        // scale: CellScale.showAll,
       },
       {
         name: "blocker",
@@ -36,7 +36,7 @@ const getForegroundViewGridPortraitConfig = () => {
       {
         name: "popup",
         bounds: { x: 0, y: 0, width: 1, height: 1 },
-        scale: CellScale.showAll,
+        // scale: CellScale.showAll,
       },
       {
         name: "blocker",

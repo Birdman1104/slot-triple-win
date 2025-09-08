@@ -4,9 +4,9 @@ import anime from "animejs";
 import { Container, Graphics } from "pixi.js";
 import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
 import { MainGameEvents, UIEvents } from "../events/MainEvents";
+import { MenuEnum } from "../ui/enums/ui-enums";
 import { ErrorPopup } from "./ErrorPopup";
 import { InfoPopup } from "./InfoPopup";
-import { MenuEnum } from "../ui/enums/ui-enums";
 
 export class ForegroundView extends PixiGrid {
   private errorPopup!: ErrorPopup;
@@ -20,6 +20,7 @@ export class ForegroundView extends PixiGrid {
 
     lego.event.on(UIEvents.MenuItemClick, this.onMenuItemClick, this);
     this.build();
+    this.showPopup(this.infoPopup);
   }
 
   public getGridConfig(): ICellConfig {
