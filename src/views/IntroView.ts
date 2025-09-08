@@ -4,7 +4,7 @@ import anime from "animejs";
 import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
 import { getIntroViewGridConfig } from "../configs/gridConfigs/introViewGC";
 import { introIceCubeConfig } from "../configs/spritesConfig";
-import { clickToContinueTextConfig, clickToProceedTextConfig } from "../configs/textConfig";
+import { clickToContinueTextConfig } from "../configs/textConfig";
 import { MainGameEvents } from "../events/MainEvents";
 import { getGameBounds, lp, makeSprite, makeText } from "../utils/Utils";
 import { IntroCard } from "./IntroCard";
@@ -73,8 +73,8 @@ class IntroPortrait extends Container {
     this.clickToContinue.visible = false;
     this.addChild(this.clickToContinue);
 
-    this.clickToProceed = makeText(clickToProceedTextConfig(0, this.height - 50));
-    this.addChild(this.clickToProceed);
+    // this.clickToProceed = makeText(clickToProceedTextConfig(0, this.height - 50));
+    // this.addChild(this.clickToProceed);
   }
 
   get cards(): IntroCard[] {
@@ -113,7 +113,10 @@ class IntroPortrait extends Container {
     this.currentCardIndex += 1;
     if (this.currentCardIndex === this.cards.length - 1) {
       this.clickToContinue.visible = true;
-      this.clickToProceed.visible = false;
+      this.ice.forEach((ice) => {
+        ice.visible = false;
+      });
+      // this.clickToProceed.visible = false;
     }
 
     anime({
