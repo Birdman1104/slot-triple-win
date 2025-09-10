@@ -27,8 +27,8 @@ export const popupBkgConfig = (): SpriteConfig => ({
 export const popupCloseButtonConfig = (): SpriteConfig => ({
   atlas: "ui.png",
   frame: "close_button.png",
-  x: lp(290, 100),
-  y: lp(-130, -75),
+  x: lp(570, 205),
+  y: lp(-250, -155),
 });
 
 export const redIconConfig = (): SpriteConfig => ({

@@ -55,9 +55,9 @@ export const errorTitleTextConfig = (): TextConfig => ({
 export const infoTitleTextConfig = (): TextConfig => ({
   text: "Information",
   x: 0,
-  y: -70,
+  y: lp(-203, -150),
   style: {
-    fontSize: lp(42, 28),
+    fontSize: lp(102, 68),
     fill: 0xffffff,
     align: "center",
     fontFamily: "JomhuriaRegular",
@@ -70,11 +70,11 @@ export const infoTextTextConfig = (): TextConfig => ({
   x: 0,
   y: lp(40, 5),
   style: {
-    fontSize: lp(36, 22),
+    fontSize: lp(72, 44),
     fill: 0xffffff,
     align: "center",
     wordWrap: true,
-    wordWrapWidth: lp(600, 230),
+    wordWrapWidth: lp(1200, 440),
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,
   },

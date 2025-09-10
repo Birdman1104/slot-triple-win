@@ -4,20 +4,20 @@
       "frame": {
         "x": 3,
         "y": 3,
-        "w": 710,
-        "h": 364
+        "w": 1420,
+        "h": 729
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
-        "x": 3,
-        "y": 4,
-        "w": 710,
-        "h": 364
+        "x": 6,
+        "y": 7,
+        "w": 1420,
+        "h": 729
       },
       "sourceSize": {
-        "w": 716,
-        "h": 372
+        "w": 1432,
+        "h": 742
       },
       "pivot": {
         "x": 0.5,
@@ -27,21 +27,21 @@
     "error_p.png": {
       "frame": {
         "x": 3,
-        "y": 373,
-        "w": 320,
-        "h": 248
+        "y": 738,
+        "w": 639,
+        "h": 498
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
-        "x": 0,
-        "y": 4,
-        "w": 320,
-        "h": 248
+        "x": 1,
+        "y": 7,
+        "w": 639,
+        "h": 498
       },
       "sourceSize": {
-        "w": 320,
-        "h": 256
+        "w": 640,
+        "h": 510
       },
       "pivot": {
         "x": 0.5,
@@ -50,22 +50,22 @@
     },
     "red_triangle.png": {
       "frame": {
-        "x": 329,
-        "y": 373,
-        "w": 105,
-        "h": 97
+        "x": 648,
+        "y": 738,
+        "w": 210,
+        "h": 193
       },
       "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
-        "x": 3,
-        "y": 3,
-        "w": 105,
-        "h": 97
+        "x": 7,
+        "y": 6,
+        "w": 210,
+        "h": 193
       },
       "sourceSize": {
-        "w": 111,
-        "h": 102
+        "w": 222,
+        "h": 202
       },
       "pivot": {
         "x": 0.5,
@@ -74,22 +74,22 @@
     },
     "close_button.png": {
       "frame": {
-        "x": 329,
-        "y": 484,
-        "w": 18,
-        "h": 18
+        "x": 648,
+        "y": 954,
+        "w": 36,
+        "h": 36
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
-        "x": 3,
-        "y": 3,
-        "w": 18,
-        "h": 18
+        "x": 6,
+        "y": 6,
+        "w": 36,
+        "h": 36
       },
       "sourceSize": {
-        "w": 24,
-        "h": 24
+        "w": 48,
+        "h": 48
       },
       "pivot": {
         "x": 0.5,
@@ -103,8 +103,8 @@
     "image": "ui.png",
     "format": "RGBA8888",
     "size": {
-      "w": 716,
-      "h": 624
+      "w": 1426,
+      "h": 1239
     },
     "scale": 1
   }
