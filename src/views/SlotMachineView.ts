@@ -2,7 +2,12 @@ import { lego } from "@armathai/lego";
 import anime from "animejs";
 import { Container, Graphics, Rectangle, Sprite, Texture } from "pixi.js";
 import { HEIGHT, OFFSET_X, WIDTH } from "../config";
-import { dockSpriteConfig, reelShadowConfig } from "../configs/spritesConfig";
+import {
+  dockLeftShadowConfig,
+  dockRightShadowConfig,
+  dockSpriteConfig,
+  reelShadowConfig,
+} from "../configs/spritesConfig";
 import { ReelViewEvents, SlotMachineViewEvents } from "../events/MainEvents";
 import { ReelModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
 import { ElementModel } from "../models/ElementModel";
@@ -41,7 +46,9 @@ export class SlotMachineView extends Container {
 
   private build(): void {
     this.dock = makeSprite(dockSpriteConfig());
-    this.addChild(this.dock);
+    const leftShadow = makeSprite(dockLeftShadowConfig());
+    const rightShadow = makeSprite(dockRightShadowConfig());
+    this.addChild(this.dock, leftShadow, rightShadow);
 
     this.buildReels();
 

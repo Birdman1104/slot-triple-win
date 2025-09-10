@@ -19,6 +19,24 @@ export const dockSpriteConfig = (): SpriteConfig => ({
   anchor: { x: 0.5, y: 0 },
 });
 
+export const dockLeftShadowConfig = (): SpriteConfig => ({
+  frame: "shadow_left.png",
+  x: -1175,
+  y: 1085,
+  scaleX: 1.5,
+  scaleY: 1.5,
+  anchor: { x: 0, y: 1 },
+});
+
+export const dockRightShadowConfig = (): SpriteConfig => ({
+  frame: "shadow_right.png",
+  x: 1932,
+  y: 1112,
+  scaleX: 1.5,
+  scaleY: 1.5,
+  anchor: { x: 1, y: 1 },
+});
+
 export const popupBkgConfig = (): SpriteConfig => ({
   atlas: "ui.png",
   frame: lp("error_l.png", "error_p.png"),
