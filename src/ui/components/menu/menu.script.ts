@@ -75,16 +75,18 @@ export default {
       getSettingsFromLocalStorage();
     }
 
-    function toggleAmountBar() {
+    function toggleAmountBar(event: Event) {
+      event.preventDefault();
+      
       activeModal.value =
         activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 
-    function handleSelect(item: any) {
+    function handleSelect(item: any, event: Event) {
       if (activeModal.value === "spinCount") {
         spinCountValue.value = item.text;
-        toggleAmountBar();
+        toggleAmountBar(event);
       } else {
         if (item.id === MenuEnum.Info) {
           toggleMenuBar();
