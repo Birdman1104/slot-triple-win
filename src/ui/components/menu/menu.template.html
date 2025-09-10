@@ -15,7 +15,7 @@
                 :width="160"
                 :modal="'menu'"
                 :selectedItems="settings"
-                @select="handleSelect"
+                @select="handleSelect($event)"
                 @close="toggleMenuBar"
               />
             </Transition>
@@ -63,11 +63,11 @@
               <Modal
                 v-if="activeModal === 'spinCount' && toggleSpinMenu"
                 :items="spinCountItems"
-                @select="handleSelect"
+                @select="handleSelect($event)"
                 :width="30"
                 :selectedItem="spinCountValue"
                 :modal="'spinCount'"
-                @close="toggleAmountBar"
+                @close="toggleAmountBar($event)"
                 itemsClass="centerd-text"
               />
             </Transition>
@@ -135,7 +135,7 @@
         :width="160"
         :modal="'menu'"
         customClass="bar-mobile-menu"
-        @select="handleSelect"
+        @select="handleSelect($event)"
         :selectedItems="settings"
         @close="toggleMenuBar"
       />
@@ -174,7 +174,7 @@
                 <Modal
                   v-if="activeModal === 'spinCount' && toggleSpinMenu"
                   :items="spinCountItems"
-                  @select="handleSelect"
+                  @select="handleSelect($event)"
                   @close="toggleAmountBar"
                   :width="50"
                   :modal="'spinCount'"
