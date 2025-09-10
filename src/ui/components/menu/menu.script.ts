@@ -69,15 +69,17 @@ export default {
       window.removeEventListener("resize", handleResize);
     });
 
-    function toggleMenuBar() {
+    function toggleMenuBar(event?: Event) {
+      event?.preventDefault();
+
       activeModal.value = activeModal.value === "menu" ? null : "menu";
       toggleMenu.value = !toggleMenu.value;
       getSettingsFromLocalStorage();
     }
 
-    function toggleAmountBar(event: Event) {
-      event.preventDefault();
-      
+    function toggleAmountBar(event?: Event) {
+      event?.preventDefault();
+
       activeModal.value =
         activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
@@ -86,7 +88,7 @@ export default {
     function handleSelect(item: any, event: Event) {
       if (activeModal.value === "spinCount") {
         spinCountValue.value = item.text;
-        toggleAmountBar(event);
+        toggleAmountBar();
       } else {
         if (item.id === MenuEnum.Info) {
           toggleMenuBar();

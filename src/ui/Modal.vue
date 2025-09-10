@@ -3,13 +3,13 @@
     <div
       class="modal-content"
       :class="['modal-content', props.customClass]"
-      :style="{ width: props.width + 'px' }"
+      :style="{ width: props.width + 'px', height: props.height + 'px' }"
     >
       <ul>
         <li
           v-for="item in items"
           :key="item.id"
-          @pointerdown.stop="selectItem(item)"
+          @pointerdown.stop="selectItem(item, $event)"
           class="modal-item"
           :class="['modal-item', props.itemsClass]"
         >
@@ -26,8 +26,8 @@
         </li>
       </ul>
     </div>
+    <div class="modal-wrapper" @pointerdown="handleClose($event)"></div>
   </div>
-  <div class="modal-wrapper" @pointerdown="handleClose"></div>
 </template>
 
 <script setup>
@@ -47,6 +47,10 @@ const props = defineProps({
   width: {
     type: Number,
     default: 160,
+  },
+  height: {
+    type: Number,
+    default: 250,
   },
   selectedItems: {
     type: {},
@@ -69,22 +73,22 @@ const selectedItems = ref(props.selectedItems);
 
 const emits = defineEmits(["close", "select"]);
 
-function selectItem(item) {
+function selectItem(item, event) {
   lego.event.emit(UIEvents.MenuItemClick, item.id);
   if (props.modal !== "menu") {
-    emits("select", item);
+    emits("select", item, event);
     return;
   }
   if (
     (item.id == MenuEnum.History || item.id == MenuEnum.Info) &&
     props.modal === "menu"
   ) {
-    emits("select", item);
+    emits("select", item, event);
     return;
   } else {
     selectedItems.value[item.id] =
       selectedItems.value[item.id] === "true" ? "false" : "true";
-    emits("select", { ...selectedItems.value });
+    emits("select", { ...selectedItems.value }, event);
   }
 }
 
@@ -103,8 +107,8 @@ function handleResize() {
   close();
 }
 
-function handleClose() {
-  emits("close");
+function handleClose(event) {
+  emits("close", event);
 }
 
 onMounted(() => {
@@ -123,7 +127,6 @@ onBeforeUnmount(() => {
   width: 100vw;
   top: 0;
   height: 100vh;
-  /* background-color: #00711e; */
   z-index: 2;
 }
 
@@ -136,7 +139,6 @@ onBeforeUnmount(() => {
   height: 50%;
   z-index: 3;
   position: absolute;
-  /* background-color: red; */
 }
 
 span {
@@ -164,7 +166,7 @@ li {
   bottom: 50px;
   position: absolute;
   padding: 1.5rem;
-  height: 230px;
+  height: 250px;
   border-radius: 52px;
   backdrop-filter: blur(18px);
   background-color: rgba(255, 255, 255, 0.25);
@@ -204,6 +206,7 @@ li {
   justify-content: center;
   overflow: hidden;
   padding: 1px;
+  border: 2px solid transparent;
 }
 
 .icon.selected {
