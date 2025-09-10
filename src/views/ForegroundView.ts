@@ -20,7 +20,6 @@ export class ForegroundView extends PixiGrid {
 
     lego.event.on(UIEvents.MenuItemClick, this.onMenuItemClick, this);
     this.build();
-    this.showPopup(this.errorPopup);
   }
 
   public getGridConfig(): ICellConfig {

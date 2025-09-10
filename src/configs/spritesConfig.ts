@@ -34,9 +34,9 @@ export const popupCloseButtonConfig = (): SpriteConfig => ({
 export const redIconConfig = (): SpriteConfig => ({
   atlas: "ui.png",
   frame: "red_triangle.png",
-  y: lp(-100, -65),
-  scaleX: lp(1, 0.6),
-  scaleY: lp(1, 0.6),
+  y: lp(-200, -135),
+  scaleX: lp(0.8, 0.5),
+  scaleY: lp(0.8, 0.5),
 });
 
 export const iceCrackConfig = (): SpriteConfig => ({

@@ -42,9 +42,9 @@ export const introCardDescriptionTextConfig = (description: string, y: number, w
 export const errorTitleTextConfig = (): TextConfig => ({
   text: "Something went wrong",
   x: 0,
-  y: -25,
+  y: lp(-60, -55),
   style: {
-    fontSize: lp(42, 28),
+    fontSize: lp(102, 68),
     fill: 0xffffff,
     align: "center",
     fontFamily: "JomhuriaRegular",
@@ -83,13 +83,13 @@ export const infoTextTextConfig = (): TextConfig => ({
 export const errorTextTextConfig = (): TextConfig => ({
   text: "Something went wrong while processing your request. Don’t worry-it’s usually just a hiccup. Please try again, or check your connection if the problem continues.",
   x: 0,
-  y: lp(40, 33),
+  y: lp(90, 48),
   style: {
-    fontSize: lp(36, 22),
+    fontSize: lp(72, 38),
     fill: 0xffffff,
     align: "center",
     wordWrap: true,
-    wordWrapWidth: lp(600, 230),
+    wordWrapWidth: lp(1200, 440),
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,
   },

@@ -181,9 +181,5 @@ export class IntroViewWrapper extends PixiGrid {
     });
 
     this.setChild("overlay", this.overlay);
-
-    setTimeout(() => {
-      lego.event.emit(MainGameEvents.ShowGame);
-    });
   }
 }
