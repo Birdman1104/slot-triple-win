@@ -16,12 +16,12 @@
                 :modal="'menu'"
                 :selectedItems="settings"
                 @select="handleSelect($event)"
-                @close="toggleMenuBar"
+                @close="toggleMenuBar($event)"
               />
             </Transition>
             <div
               class="flex-center close-button"
-              @pointerdown="toggleMenuBar"
+              @pointerdown="toggleMenuBar($event)"
               :class="{'flex-center close-button': true, lowZindex: activeModal === 'spinCount'}"
             >
               <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
@@ -50,7 +50,6 @@
             <img v-if="showStopButton" src="/icons/stop.svg" />
             <div v-if="!showStopButton" class="flex-center">
               <img src="/icons/spin.svg" />
-              <!-- <div class="dot"></div> -->
             </div>
           </button>
         </div>
@@ -65,6 +64,7 @@
                 :items="spinCountItems"
                 @select="handleSelect($event)"
                 :width="30"
+                :height="220"
                 :selectedItem="spinCountValue"
                 :modal="'spinCount'"
                 @close="toggleAmountBar($event)"
@@ -73,7 +73,7 @@
             </Transition>
             <div
               class="refresh-btn flex-center"
-              @pointerdown="toggleAmountBar"
+              @pointerdown="toggleAmountBar($event)"
               :class="{'refresh-btn flex-center': true, lowZindex: activeModal === 'menu'}"
             >
               <div v-if="spinCountValue" class="amount">
@@ -137,12 +137,12 @@
         customClass="bar-mobile-menu"
         @select="handleSelect($event)"
         :selectedItems="settings"
-        @close="toggleMenuBar"
+        @close="toggleMenuBar($event)"
       />
     </Transition>
     <div
       :class="{'close-button-mb flex-center': true, lowZindex: activeModal === 'spinCount'}"
-      @pointerdown="toggleMenuBar"
+      @pointerdown="toggleMenuBar($event)"
     >
       <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
       <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
@@ -175,8 +175,9 @@
                   v-if="activeModal === 'spinCount' && toggleSpinMenu"
                   :items="spinCountItems"
                   @select="handleSelect($event)"
-                  @close="toggleAmountBar"
+                  @close="toggleAmountBar($event)"
                   :width="50"
+                  :height="220"
                   :modal="'spinCount'"
                   :selectedItem="spinCountValue"
                   customClass="amount-mobile-menu"
@@ -185,7 +186,7 @@
               <div
                 class="refresh-btn-mb flex-center"
                 :class="{'refresh-btn-mb flex-center': true, lowZindex: activeModal === 'menu'}"
-                @pointerdown="toggleAmountBar"
+                @pointerdown="toggleAmountBar($event)"
               >
                 <div v-if="spinCountValue" class="amount-mb">
                   {{ spinCountValue }}
@@ -219,7 +220,6 @@
               <img v-if="showStopButton" src="/icons/stop.svg" />
               <div v-if="!showStopButton" class="flex-center">
                 <img src="/icons/spin.svg" />
-                <!-- <div class="dot-mb"></div> -->
               </div>
             </button>
           </div>
