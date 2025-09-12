@@ -21,11 +21,11 @@
             </Transition>
             <div
               class="flex-center close-button"
-              @pointerdown="toggleMenuBar($event)"
+              @click="toggleMenuBar($event)"
               :class="{'flex-center close-button': true, lowZindex: activeModal === 'spinCount'}"
             >
               <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
-              <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
+              <img v-else src="/icons/menuBar.svg" />
             </div>
           </div>
 
@@ -43,10 +43,7 @@
 
       <div class="section middle-section flex-center">
         <div class="button-box">
-          <button
-            class="spin-button flex-center"
-            @pointerdown="spinButtonClick"
-          >
+          <button class="spin-button flex-center" @click="spinButtonClick">
             <img v-if="showStopButton" src="/icons/stop.svg" />
             <div v-if="!showStopButton" class="flex-center">
               <img src="/icons/spin.svg" />
@@ -73,7 +70,7 @@
             </Transition>
             <div
               class="refresh-btn flex-center"
-              @pointerdown="toggleAmountBar($event)"
+              @click="toggleAmountBar($event)"
               :class="{'refresh-btn flex-center': true, lowZindex: activeModal === 'menu'}"
             >
               <div v-if="spinCountValue" class="amount">
@@ -97,7 +94,7 @@
             <div class="btn-background small flex-center">
               <button
                 class="increase-button bet-button flex-center"
-                @pointerdown="plusButtonClick"
+                @click="plusButtonClick"
               >
                 <img src="/icons/arrow.svg" />
               </button>
@@ -105,7 +102,7 @@
             <div class="btn-background small flex-center">
               <button
                 class="decrease-button bet-button flex-center"
-                @pointerdown="minusButtonClick"
+                @click="minusButtonClick"
               >
                 <img src="/icons/arrow.svg" />
               </button>
@@ -142,10 +139,14 @@
     </Transition>
     <div
       :class="{'close-button-mb flex-center': true, lowZindex: activeModal === 'spinCount'}"
-      @pointerdown="toggleMenuBar($event)"
+      @click="toggleMenuBar($event)"
     >
+      {{activeModal}}
       <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
-      <img v-if="activeModal !== 'menu'" src="/icons/menuBar.svg" />
+      <img
+        v-if="!activeModal || activeModal === null"
+        src="/icons/menuBar.svg"
+      />
     </div>
   </div>
 
@@ -186,7 +187,7 @@
               <div
                 class="refresh-btn-mb flex-center"
                 :class="{'refresh-btn-mb flex-center': true, lowZindex: activeModal === 'menu'}"
-                @pointerdown="toggleAmountBar($event)"
+                @click="toggleAmountBar($event)"
               >
                 <div v-if="spinCountValue" class="amount-mb">
                   {{ spinCountValue }}
@@ -202,7 +203,7 @@
               <div class="button-background flex-center">
                 <button
                   class="decrease-button-mb bet-button-mb flex-center"
-                  @pointerdown="minusButtonClick"
+                  @click="minusButtonClick"
                 >
                   <img src="/icons/arrow.svg" />
                 </button>
@@ -213,10 +214,7 @@
 
         <div class="section-mb middle-section-mb flex-center">
           <div class="button-box-mb">
-            <button
-              class="spin-button-mb flex-center"
-              @pointerdown="spinButtonClick"
-            >
+            <button class="spin-button-mb flex-center" @click="spinButtonClick">
               <img v-if="showStopButton" src="/icons/stop.svg" />
               <div v-if="!showStopButton" class="flex-center">
                 <img src="/icons/spin.svg" />
@@ -231,7 +229,7 @@
               <div class="button-background flex-center">
                 <button
                   class="increase-button-mb bet-button-mb flex-center"
-                  @pointerdown="plusButtonClick"
+                  @click="plusButtonClick"
                 >
                   <img src="/icons/arrow.svg" />
                 </button>

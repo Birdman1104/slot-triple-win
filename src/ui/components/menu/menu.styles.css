@@ -2,6 +2,12 @@
   outline: none;
 }
 
+/* * {
+  touch-action: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+} */
+
 .fade-scale-enter-active,
 .fade-scale-leave-active {
   transition: all 0.35s ease;

@@ -24,12 +24,14 @@ export default {
     let bet = ref("");
     let balance = ref("");
     let slotState = SlotMachineState.Unknown;
+    let lastTouchEnd = 0;
 
     const isMobile = ref(window.innerWidth <= 768);
     const orientation = ref("");
     const toggleMenu = ref(false);
     const toggleSpinMenu = ref(false);
     const showStopButton = ref(false);
+    let showCloseBtn = ref(false);
 
     const selectedItem = ref("");
 
@@ -41,6 +43,18 @@ export default {
     const settings = ref({});
     const spinCountValue = ref("");
     const activeModal = ref<null | "menu" | "spinCount">(null);
+
+    document.addEventListener(
+      "touchend",
+      function (event) {
+        const now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      },
+      false
+    );
 
     const spinButtonClick = () => {
       lego.event.emit(UIEvents.SpinButtonClick);
@@ -70,10 +84,16 @@ export default {
     });
 
     function toggleMenuBar(event?: Event) {
+      showCloseBtn.value = !showCloseBtn.value;
+      console.log("here");
+
       event?.preventDefault();
 
       activeModal.value = activeModal.value === "menu" ? null : "menu";
+      console.log(activeModal.value);
+
       toggleMenu.value = !toggleMenu.value;
+      
       getSettingsFromLocalStorage();
     }
 
@@ -179,6 +199,7 @@ export default {
       menuItems,
       spinCountItems,
       showStopButton,
+      showCloseBtn,
       spinButtonClick,
       plusButtonClick,
       minusButtonClick,
