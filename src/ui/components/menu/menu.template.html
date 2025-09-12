@@ -65,7 +65,7 @@
                 :selectedItem="spinCountValue"
                 :modal="'spinCount'"
                 @close="toggleAmountBar($event)"
-                itemsClass="centerd-text"
+                itemsClass="centered-text"
               />
             </Transition>
             <div
@@ -141,12 +141,8 @@
       :class="{'close-button-mb flex-center': true, lowZindex: activeModal === 'spinCount'}"
       @click="toggleMenuBar($event)"
     >
-      {{activeModal}}
-      <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
-      <img
-        v-if="!activeModal || activeModal === null"
-        src="/icons/menuBar.svg"
-      />
+    <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+    <img v-else src="/icons/menuBar.svg" />
     </div>
   </div>
 

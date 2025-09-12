@@ -27,9 +27,7 @@ class IntroLandscape extends Container {
 
     this.addChild(this.card1, this.card2, this.card3);
 
-    this.clickToContinue = makeText(
-      clickToContinueTextConfig(this.card2.x, this.height - 24)
-    );
+    this.clickToContinue = makeText(clickToContinueTextConfig(this.card2.x, this.height - 24));
     this.addChild(this.clickToContinue);
   }
 
@@ -71,9 +69,7 @@ class IntroPortrait extends Container {
 
     this.addChild(this.card1, this.card2, this.card3);
 
-    this.clickToContinue = makeText(
-      clickToContinueTextConfig(0, this.height - 50)
-    );
+    this.clickToContinue = makeText(clickToContinueTextConfig(0, this.height - 50));
     this.clickToContinue.visible = false;
     this.addChild(this.clickToContinue);
 
@@ -82,11 +78,7 @@ class IntroPortrait extends Container {
   }
 
   get cards(): IntroCard[] {
-    return [
-      this.card1 as IntroCard,
-      this.card2 as IntroCard,
-      this.card3 as IntroCard,
-    ];
+    return [this.card1 as IntroCard, this.card2 as IntroCard, this.card3 as IntroCard];
   }
 
   get ice(): Sprite[] {
@@ -110,9 +102,7 @@ class IntroPortrait extends Container {
     const currentCard = this.cards[this.currentCardIndex];
     const nextCard = this.cards[this.currentCardIndex + 1];
     this.ice.forEach((ice, index) => {
-      ice.texture = makeSprite(
-        introIceCubeConfig(ice.x, index === this.currentCardIndex + 1)
-      ).texture;
+      ice.texture = makeSprite(introIceCubeConfig(ice.x, index === this.currentCardIndex + 1)).texture;
       if (index === this.currentCardIndex + 1) {
         ice.scale.set(0.275);
       } else {
@@ -162,10 +152,6 @@ export class IntroViewWrapper extends PixiGrid {
     this.buildOverlay();
 
     this.rebuild();
-
-    setTimeout(() => {
-      lego.event.emit(MainGameEvents.ShowGame);
-    });
   }
 
   public getGridConfig(): ICellConfig {
@@ -191,9 +177,7 @@ export class IntroViewWrapper extends PixiGrid {
     this.overlay.alpha = 0;
     this.overlay.eventMode = "static";
     this.overlay.on("pointerdown", () => {
-      this.isPortrait
-        ? this.portraitView.processClick()
-        : this.landscapeView.processClick();
+      this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
     });
 
     setTimeout(() => {

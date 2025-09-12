@@ -7,7 +7,6 @@ import {
 } from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
-import { DEFAULT_BET } from "../../../slotLogic";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
 import MenuBackgroundSvg from "../../MenuBackgroundSvg.vue";
 import Modal from "../../Modal.vue";
@@ -31,11 +30,8 @@ export default {
     const toggleMenu = ref(false);
     const toggleSpinMenu = ref(false);
     const showStopButton = ref(false);
-    let showCloseBtn = ref(false);
 
-    const selectedItem = ref("");
-
-    const initalSettings = {
+    const initialSettings = {
       [MenuEnum.Sound]: "false",
       [MenuEnum.Music]: "false",
       [MenuEnum.Turbo]: "false",
@@ -84,16 +80,9 @@ export default {
     });
 
     function toggleMenuBar(event?: Event) {
-      showCloseBtn.value = !showCloseBtn.value;
-      console.log("here");
-
       event?.preventDefault();
-
       activeModal.value = activeModal.value === "menu" ? null : "menu";
-      console.log(activeModal.value);
-
       toggleMenu.value = !toggleMenu.value;
-      
       getSettingsFromLocalStorage();
     }
 
@@ -105,7 +94,7 @@ export default {
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 
-    function handleSelect(item: any, event: Event) {
+    function handleSelect(item: any) {
       if (activeModal.value === "spinCount") {
         spinCountValue.value = item.text;
         toggleAmountBar();
@@ -115,12 +104,12 @@ export default {
         } else if (item.id === MenuEnum.History) {
           toggleMenuBar();
         } else {
-          setSetingsToLoacalStorage(item);
+          setSettingsToLocalStorage(item);
         }
       }
     }
 
-    function setSetingsToLoacalStorage(item: any): void {
+    function setSettingsToLocalStorage(item: any): void {
       localStorage.setItem("settings", JSON.stringify(item));
     }
 
@@ -129,7 +118,7 @@ export default {
       if (menuSettings != null) {
         settings.value = JSON.parse(menuSettings);
       } else {
-        localStorage.setItem("settings", JSON.stringify(initalSettings));
+        localStorage.setItem("settings", JSON.stringify(initialSettings));
       }
     }
 
@@ -199,7 +188,6 @@ export default {
       menuItems,
       spinCountItems,
       showStopButton,
-      showCloseBtn,
       spinButtonClick,
       plusButtonClick,
       minusButtonClick,
