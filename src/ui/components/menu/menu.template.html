@@ -1,7 +1,4 @@
-<div
-  class="menu-wrapper"
-  v-if="!isMobile || (isMobile && orientation === 'landscape-primary')"
->
+<div class="menu-wrapper" v-if="!isMobile || (isMobile && orientation === 'landscape-primary')">
   <div class="wrapper">
     <MenuBackgroundSvg />
     <div class="ui-overlay">
@@ -9,21 +6,11 @@
         <div class="close-button-wrapper flex-center">
           <div class="btn-background flex-center relative">
             <Transition name="fade-scale">
-              <Modal
-                v-if="activeModal === 'menu' && toggleMenu"
-                :items="menuItems"
-                :width="160"
-                :modal="'menu'"
-                :selectedItems="settings"
-                @select="handleSelect($event)"
-                @close="toggleMenuBar($event)"
-              />
+              <Modal v-if="activeModal === 'menu' && toggleMenu" :items="menuItems" :width="160" :modal="'menu'"
+                :selectedItems="settings" @select="handleSelect($event)" @close="toggleMenuBar($event)" />
             </Transition>
-            <div
-              class="flex-center close-button"
-              @click="toggleMenuBar($event)"
-              :class="{'flex-center close-button': true, lowZindex: activeModal === 'spinCount'}"
-            >
+            <div class="flex-center close-button" @click="toggleMenuBar($event)"
+              :class="{'flex-center close-button': true, lowZindex: activeModal === 'spinCount'}">
               <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
               <img v-else src="/icons/menuBar.svg" />
             </div>
@@ -56,24 +43,13 @@
         <div class="refresh-btn-wrapper flex-center">
           <div class="btn-background flex-center relative">
             <Transition name="fade-scale">
-              <Modal
-                v-if="activeModal === 'spinCount' && toggleSpinMenu"
-                :items="spinCountItems"
-                @select="handleSelect($event)"
-                :width="30"
-                :height="220"
-                :selectedItem="spinCountValue"
-                :modal="'spinCount'"
-                @close="toggleAmountBar($event)"
-                itemsClass="centered-text"
-              />
+              <Modal v-if="activeModal === 'spinCount' && toggleSpinMenu" :items="spinCountItems"
+                @select="handleSelect($event)" :width="30" :height="220" :selectedItem="spinCountValue"
+                :modal="'spinCount'" @close="toggleAmountBar($event)" itemsClass="centered-text" />
             </Transition>
-            <div
-              class="refresh-btn flex-center"
-              @click="toggleAmountBar($event)"
-              :class="{'refresh-btn flex-center': true, lowZindex: activeModal === 'menu'}"
-            >
-              <div v-if="spinCountValue" class="amount">
+            <div class="refresh-btn flex-center" @click="toggleAmountBar($event)"
+              :class="{'refresh-btn flex-center': true, lowZindex: activeModal === 'menu'}">
+              <div v-if="spinCountValue" class="amount spin-count">
                 {{ spinCountValue }}
               </div>
 
@@ -86,24 +62,17 @@
 
         <div class="balance-box flex-center flex-center">
           <div class="balance-wrapper flex-center">
-            <span class="text">Bet </span
-            ><span id="bet" class="amount">$ {{ bet }} </span>
+            <span class="text">Bet </span><span id="bet" class="amount">$ {{ bet }} </span>
           </div>
 
           <div class="bet-button-wrapper flex-center">
             <div class="btn-background small flex-center">
-              <button
-                class="increase-button bet-button flex-center"
-                @click="plusButtonClick"
-              >
+              <button class="increase-button bet-button flex-center" @click="plusButtonClick">
                 <img src="/icons/arrow.svg" />
               </button>
             </div>
             <div class="btn-background small flex-center">
-              <button
-                class="decrease-button bet-button flex-center"
-                @click="minusButtonClick"
-              >
+              <button class="decrease-button bet-button flex-center" @click="minusButtonClick">
                 <img src="/icons/arrow.svg" />
               </button>
             </div>
@@ -126,23 +95,13 @@
 <div v-if="isMobile && orientation === 'portrait-primary'">
   <div class="button-background flex-center menu-mb">
     <Transition name="fade-scale">
-      <Modal
-        v-if="activeModal === 'menu'"
-        :items="menuItems"
-        :width="160"
-        :modal="'menu'"
-        customClass="bar-mobile-menu"
-        @select="handleSelect($event)"
-        :selectedItems="settings"
-        @close="toggleMenuBar($event)"
-      />
+      <Modal v-if="activeModal === 'menu'" :items="menuItems" :width="160" :modal="'menu'" customClass="bar-mobile-menu"
+        @select="handleSelect($event)" :selectedItems="settings" @close="toggleMenuBar($event)" />
     </Transition>
-    <div
-      :class="{'close-button-mb flex-center': true, lowZindex: activeModal === 'spinCount'}"
-      @click="toggleMenuBar($event)"
-    >
-    <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
-    <img v-else src="/icons/menuBar.svg" />
+    <div :class="{'close-button-mb flex-center': true, lowZindex: activeModal === 'spinCount'}"
+      @click="toggleMenuBar($event)">
+      <img v-if="activeModal === 'menu'" src="/icons/close.svg" />
+      <img v-else src="/icons/menuBar.svg" />
     </div>
   </div>
 
@@ -156,8 +115,7 @@
         </span>
       </div>
       <div class="balance-wrapper-mb flex-center">
-        <span class="text-mb">Bet </span
-        ><span id="bet" class="amount-mb">$ {{ bet }} </span>
+        <span class="text-mb">Bet </span><span id="bet" class="amount-mb">$ {{ bet }} </span>
       </div>
     </div>
     <div class="wrapper-mb">
@@ -168,23 +126,13 @@
           <div class="refresh-btn-wrapper-mb flex-center">
             <div class="button-background flex-center relative">
               <Transition name="fade-scale">
-                <Modal
-                  v-if="activeModal === 'spinCount' && toggleSpinMenu"
-                  :items="spinCountItems"
-                  @select="handleSelect($event)"
-                  @close="toggleAmountBar($event)"
-                  :width="50"
-                  :height="220"
-                  :modal="'spinCount'"
-                  :selectedItem="spinCountValue"
-                  customClass="amount-mobile-menu"
-                />
+                <Modal v-if="activeModal === 'spinCount' && toggleSpinMenu" :items="spinCountItems"
+                  @select="handleSelect($event)" @close="toggleAmountBar($event)" :width="50" :height="220"
+                  :modal="'spinCount'" :selectedItem="spinCountValue" customClass="amount-mobile-menu" />
               </Transition>
-              <div
-                class="refresh-btn-mb flex-center"
+              <div class="refresh-btn-mb flex-center"
                 :class="{'refresh-btn-mb flex-center': true, lowZindex: activeModal === 'menu'}"
-                @click="toggleAmountBar($event)"
-              >
+                @click="toggleAmountBar($event)">
                 <div v-if="spinCountValue" class="amount-mb">
                   {{ spinCountValue }}
                 </div>
@@ -197,10 +145,7 @@
           <div class="balance-box-mb flex-center">
             <div class="bet-button-wrapper-mb flex-center">
               <div class="button-background flex-center">
-                <button
-                  class="decrease-button-mb bet-button-mb flex-center"
-                  @click="minusButtonClick"
-                >
+                <button class="decrease-button-mb bet-button-mb flex-center" @click="minusButtonClick">
                   <img src="/icons/arrow.svg" />
                 </button>
               </div>
@@ -223,10 +168,7 @@
           <div class="balance-box-mb flex-center">
             <div class="bet-button-wrapper-mb flex-center">
               <div class="button-background flex-center">
-                <button
-                  class="increase-button-mb bet-button-mb flex-center"
-                  @click="plusButtonClick"
-                >
+                <button class="increase-button-mb bet-button-mb flex-center" @click="plusButtonClick">
                   <img src="/icons/arrow.svg" />
                 </button>
               </div>

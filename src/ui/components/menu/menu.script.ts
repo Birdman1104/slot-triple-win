@@ -1,17 +1,14 @@
 import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { SlotMachineViewEvents, UIEvents } from "../../../events/MainEvents";
-import {
-  PlayerModelEvents,
-  SlotMachineModelEvents,
-} from "../../../events/ModelEvents";
+import { PlayerModelEvents, SlotMachineModelEvents } from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
 import MenuBackgroundSvg from "../../MenuBackgroundSvg.vue";
 import Modal from "../../Modal.vue";
-import { MenuEnum } from "../../enums/ui-enums";
 import { menuItems, spinCountItems } from "../../constants/modal-items-const";
+import { MenuEnum } from "../../enums/ui-enums";
 export default {
   components: {
     MenuBackgroundSvg,
@@ -89,8 +86,7 @@ export default {
     function toggleAmountBar(event?: Event) {
       event?.preventDefault();
 
-      activeModal.value =
-        activeModal.value === "spinCount" ? null : "spinCount";
+      activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 
