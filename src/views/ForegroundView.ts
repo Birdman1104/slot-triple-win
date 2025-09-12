@@ -3,7 +3,8 @@ import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
 import { Container, Graphics } from "pixi.js";
 import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
-import { MainGameEvents, UIEvents } from "../events/MainEvents";
+import { ForegroundViewEvents, MainGameEvents, UIEvents } from "../events/MainEvents";
+import { SlotMachineModelEvents } from "../events/ModelEvents";
 import { MenuEnum } from "../ui/enums/ui-enums";
 import { ErrorPopup } from "./ErrorPopup";
 import { InfoPopup } from "./InfoPopup";
@@ -18,7 +19,9 @@ export class ForegroundView extends PixiGrid {
   constructor() {
     super();
 
-    lego.event.on(UIEvents.MenuItemClick, this.onMenuItemClick, this);
+    lego.event
+      .on(UIEvents.MenuItemClick, this.onMenuItemClick, this)
+      .on(SlotMachineModelEvents.ErrorResultUpdate, this.onErrorResultUpdate, this);
     this.build();
   }
 
@@ -59,6 +62,11 @@ export class ForegroundView extends PixiGrid {
     }
   }
 
+  private onErrorResultUpdate(error: ErrorResult): void {
+    this.errorPopup.setErrorText(error);
+    this.showPopup(this.errorPopup);
+  }
+
   private build(): void {
     this.buildBlocker();
     this.buildErrorPopup();
@@ -78,6 +86,7 @@ export class ForegroundView extends PixiGrid {
   private buildErrorPopup(): void {
     this.errorPopup = new ErrorPopup();
     this.errorPopup.on("closeErrorPopup", () => {
+      lego.event.emit(ForegroundViewEvents.ErrorPopupHideComplete);
       this.hidePopup();
     });
     this.setChild("popup", this.errorPopup);

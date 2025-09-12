@@ -11,6 +11,7 @@ export enum SlotMachineState {
   DropNew,
   ShowWinLines,
   ShowWinnings,
+  Error,
 }
 
 export class SlotMachineModel extends ObservableModel {
@@ -32,6 +33,8 @@ export class SlotMachineModel extends ObservableModel {
   };
   private tempSpinResult!: SpinResult;
   private isResultReady = false;
+
+  private _errorResult: ErrorResult | null = null;
 
   public constructor(config: any) {
     super("SlotMachineModel");
@@ -74,6 +77,14 @@ export class SlotMachineModel extends ObservableModel {
     this._spinResult = value;
   }
 
+  get errorResult() {
+    return this._errorResult;
+  }
+
+  set errorResult(value) {
+    this._errorResult = value;
+  }
+
   public init(): void {
     //
   }
@@ -101,8 +112,6 @@ export class SlotMachineModel extends ObservableModel {
   public spin(bet: number): void {
     // TODO check for NaN values
     if (isNaN(bet as number)) return;
-    this.state = SlotMachineState.DropOld;
-    this.isResultReady = false;
     this.getSpinResult(bet);
   }
 
@@ -132,7 +141,17 @@ export class SlotMachineModel extends ObservableModel {
   }
 
   private async getSpinResult(bet: number): Promise<void> {
-    this.tempSpinResult = await spin(bet as number);
+    const result = (await spin(bet as number)) as SpinResult | ErrorResult;
+    if ("errorCode" in result) {
+      this.state = SlotMachineState.Error;
+      this.errorResult = result;
+      return;
+    } else {
+      this.state = SlotMachineState.DropOld;
+      this.isResultReady = false;
+      this.tempSpinResult = result as SpinResult;
+    }
+
     this.isResultReady = true;
     this.canCheck && this.checkForResult();
   }

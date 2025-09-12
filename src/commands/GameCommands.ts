@@ -78,3 +78,7 @@ export const setBlockActivityCommand = (isBlocked: boolean): void => {
     Head.gameModel.isBlockedAction = isBlocked;
   }
 };
+
+export const errorPopupHideCompleteCommand = (): void => {
+  Head.gameModel?.slotMachine?.setState(SlotMachineState.Idle);
+};

@@ -18,6 +18,11 @@ export class ErrorPopup extends Container {
     this.build();
   }
 
+  public setErrorText(error: ErrorResult): void {
+    this.errorMessage.text = error.errorText;
+    this.errorTitle.text = "Error " + error.errorCode;
+  }
+
   public show(): void {
     anime({
       targets: this,
@@ -67,7 +72,7 @@ export class ErrorPopup extends Container {
     this.closeButton = makeSprite(popupCloseButtonConfig());
     this.addChild(this.closeButton);
 
-    this.closeButton.interactive = true;
+    this.closeButton.eventMode = "static";
     this.closeButton.on("pointerdown", () => {
       this.emit("closeErrorPopup");
     });

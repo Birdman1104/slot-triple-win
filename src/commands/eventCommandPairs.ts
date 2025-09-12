@@ -1,7 +1,8 @@
 import { lego } from "@armathai/lego";
-import { MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
+import { ForegroundViewEvents, MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import {
+  errorPopupHideCompleteCommand,
   initModelsCommand,
   maxBetButtonClickCommand,
   minusButtonClickCommand,
@@ -77,5 +78,9 @@ export const eventCommandPairs: { event: any; command: any }[] = [
   {
     event: MainGameEvents.BlockActivity,
     command: setBlockActivityCommand,
+  },
+  {
+    event: ForegroundViewEvents.ErrorPopupHideComplete,
+    command: errorPopupHideCompleteCommand,
   },
 ];

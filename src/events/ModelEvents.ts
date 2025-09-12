@@ -6,6 +6,7 @@ export const ElementModelEvents = {
 export const GameModelEvents = {
   StateUpdate: "GameModelStateUpdate",
   SlotMachineUpdate: "GameModelSlotMachineUpdate",
+  IsBlockedActionUpdate: "GameModelIsBlockedActionUpdate",
 };
 
 export const HeadEvents = {
@@ -29,6 +30,7 @@ export const SlotMachineModelEvents = {
   ConfigUpdate: "SlotMachineModelConfigUpdate",
   ReelsUpdate: "SlotMachineModelReelsUpdate",
   SpinResultUpdate: "SlotMachineModelSpinResultUpdate",
+  ErrorResultUpdate: "SlotMachineModelErrorResultUpdate",
 };
 
 export const SlotModelEvents = { TypeUpdate: "SlotModelTypeUpdate" };

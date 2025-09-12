@@ -76,3 +76,8 @@ type PlayerInfo = {
   bet: number;
   id: number;
 };
+
+type ErrorResult = {
+  errorText: string;
+  errorCode: number;
+};

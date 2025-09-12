@@ -33,3 +33,8 @@ export const ReelViewEvents = {
   OldElementsDropComplete: "ReelViewEventsOldElementsDropComplete",
   NewElementsDropComplete: "ReelViewEventsNewElementsDropComplete",
 };
+
+export const ForegroundViewEvents = {
+  ErrorPopupHideComplete: "ForegroundViewEventsErrorPopupHideComplete",
+  InfoPopupHideComplete: "ForegroundViewEventsInfoPopupHideComplete",
+};
