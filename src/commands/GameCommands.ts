@@ -30,9 +30,13 @@ export const onSpinButtonClickCommand = () => {
   if (Head.playerModel && isNaN(Head.playerModel.bet)) return;
   if (Head.gameModel?.slotMachine?.state !== SlotMachineState.Idle) return;
   if (Head.gameModel?.state !== GameState.Game) return;
-  Head.playerModel?.spin();
-  lego.event.emit(SlotMachineViewEvents.UpdateUIBalance);
-  Head.gameModel?.slotMachine?.spin(Head.playerModel?.bet as number);
+
+  if (Head.playerModel?.spin()) {
+    lego.event.emit(SlotMachineViewEvents.UpdateUIBalance);
+    Head.gameModel?.slotMachine?.spin(Head.playerModel?.bet as number);
+  } else {
+    Head.gameModel?.slotMachine?.setError();
+  }
 };
 
 export const plusButtonClickCommand = (): void => {

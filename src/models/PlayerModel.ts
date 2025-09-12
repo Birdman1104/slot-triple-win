@@ -38,10 +38,13 @@ export class PlayerModel extends ObservableModel {
     //
   }
 
-  public spin(): void {
+  public spin(): boolean {
     if (this._balance >= this._bet) {
       const value = this._balance - this._bet;
       this._balance = +value.toFixed(1);
+      return true;
+    } else {
+      return false;
     }
   }
 

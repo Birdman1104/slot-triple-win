@@ -74,7 +74,18 @@ const checkWinnings = (reelData: ReelsResult): WinningItemsCount[] => {
   return linesInfo.filter((l) => l.count >= 3);
 };
 
-export const spin = async (bet: number): Promise<SpinResult | ErrorResult> => {
+export const getError = (): Promise<ErrorResult> => {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve({
+        errorText: "An error occurred, please reload the page or contact support",
+        errorCode: Math.ceil(Math.random() * 150 + 400),
+      });
+    }, 500)
+  );
+};
+
+export const spin = async (bet: number): Promise<SpinResult> => {
   const reels =
     i % 3 === 0
       ? [
@@ -98,19 +109,13 @@ export const spin = async (bet: number): Promise<SpinResult | ErrorResult> => {
 
   const totalWin = winningInfo.reduce((acc, curr) => acc + curr.winAmount, 0);
 
-  const errorProbability = 0.9; // 5% chance of error
   return new Promise((resolve) =>
     setTimeout(() => {
-      Math.random() < errorProbability
-        ? resolve({
-            errorText: "An error occurred, please reload the page or contact support",
-            errorCode: Math.ceil(Math.random() * 150 + 400),
-          })
-        : resolve({
-            reels,
-            winningInfo,
-            totalWin,
-          });
+      resolve({
+        reels,
+        winningInfo,
+        totalWin,
+      });
     }, 10)
   );
 };
@@ -145,4 +150,4 @@ export const getSlotMachineInitialConfig = () => {
 
 export const BETS = [0.1, 0.2, 0.25, 0.5, 1, 2, 3, 4, 5, 10, 20, 50, 100, 200, 250, 500, 1000, 2000];
 export const DEFAULT_BET = 1;
-export const DEFAULT_BALANCE = 10000;
+export const DEFAULT_BALANCE = 3000;

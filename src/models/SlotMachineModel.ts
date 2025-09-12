@@ -1,4 +1,4 @@
-import { spin } from "../slotLogic";
+import { getError, spin } from "../slotLogic";
 import { last } from "../utils/Utils";
 import { ObservableModel } from "./ObservableModel";
 import { ReelModel } from "./ReelModel";
@@ -140,17 +140,16 @@ export class SlotMachineModel extends ObservableModel {
     return config.reels.map((reelConfig: any, index: number) => new ReelModel(reelConfig, index));
   }
 
+  public async setError(): Promise<void> {
+    this.state = SlotMachineState.Error;
+    this.errorResult = await getError();
+  }
+
   private async getSpinResult(bet: number): Promise<void> {
-    const result = (await spin(bet as number)) as SpinResult | ErrorResult;
-    if ("errorCode" in result) {
-      this.state = SlotMachineState.Error;
-      this.errorResult = result;
-      return;
-    } else {
-      this.state = SlotMachineState.DropOld;
-      this.isResultReady = false;
-      this.tempSpinResult = result as SpinResult;
-    }
+    const result = (await spin(bet as number)) as SpinResult;
+    this.state = SlotMachineState.DropOld;
+    this.isResultReady = false;
+    this.tempSpinResult = result as SpinResult;
 
     this.isResultReady = true;
     this.canCheck && this.checkForResult();
