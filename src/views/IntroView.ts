@@ -180,9 +180,6 @@ export class IntroViewWrapper extends PixiGrid {
       this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
     });
 
-    setTimeout(() => {
-      lego.event.emit(MainGameEvents.ShowGame);
-    });
     this.setChild("overlay", this.overlay);
   }
 }
