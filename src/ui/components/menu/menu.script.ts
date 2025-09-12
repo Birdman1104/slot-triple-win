@@ -1,18 +1,14 @@
 import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { SlotMachineViewEvents, UIEvents } from "../../../events/MainEvents";
-import {
-  PlayerModelEvents,
-  SlotMachineModelEvents,
-} from "../../../events/ModelEvents";
+import { PlayerModelEvents, SlotMachineModelEvents } from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
-import { DEFAULT_BET } from "../../../slotLogic";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
 import MenuBackgroundSvg from "../../MenuBackgroundSvg.vue";
 import Modal from "../../Modal.vue";
-import { MenuEnum } from "../../enums/ui-enums";
 import { menuItems, spinCountItems } from "../../constants/modal-items-const";
+import { MenuEnum } from "../../enums/ui-enums";
 export default {
   components: {
     MenuBackgroundSvg,
@@ -24,6 +20,7 @@ export default {
     let bet = ref("");
     let balance = ref("");
     let slotState = SlotMachineState.Unknown;
+    let lastTouchEnd = 0;
 
     const isMobile = ref(window.innerWidth <= 768);
     const orientation = ref("");
@@ -31,9 +28,7 @@ export default {
     const toggleSpinMenu = ref(false);
     const showStopButton = ref(false);
 
-    const selectedItem = ref("");
-
-    const initalSettings = {
+    const initialSettings = {
       [MenuEnum.Sound]: "false",
       [MenuEnum.Music]: "false",
       [MenuEnum.Turbo]: "false",
@@ -41,6 +36,18 @@ export default {
     const settings = ref({});
     const spinCountValue = ref("");
     const activeModal = ref<null | "menu" | "spinCount">(null);
+
+    document.addEventListener(
+      "touchend",
+      function (event) {
+        const now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      },
+      false
+    );
 
     const spinButtonClick = () => {
       lego.event.emit(UIEvents.SpinButtonClick);
@@ -71,7 +78,6 @@ export default {
 
     function toggleMenuBar(event?: Event) {
       event?.preventDefault();
-
       activeModal.value = activeModal.value === "menu" ? null : "menu";
       toggleMenu.value = !toggleMenu.value;
       getSettingsFromLocalStorage();
@@ -80,12 +86,11 @@ export default {
     function toggleAmountBar(event?: Event) {
       event?.preventDefault();
 
-      activeModal.value =
-        activeModal.value === "spinCount" ? null : "spinCount";
+      activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 
-    function handleSelect(item: any, event: Event) {
+    function handleSelect(item: any) {
       if (activeModal.value === "spinCount") {
         spinCountValue.value = item.text;
         toggleAmountBar();
@@ -95,12 +100,12 @@ export default {
         } else if (item.id === MenuEnum.History) {
           toggleMenuBar();
         } else {
-          setSetingsToLoacalStorage(item);
+          setSettingsToLocalStorage(item);
         }
       }
     }
 
-    function setSetingsToLoacalStorage(item: any): void {
+    function setSettingsToLocalStorage(item: any): void {
       localStorage.setItem("settings", JSON.stringify(item));
     }
 
@@ -109,7 +114,7 @@ export default {
       if (menuSettings != null) {
         settings.value = JSON.parse(menuSettings);
       } else {
-        localStorage.setItem("settings", JSON.stringify(initalSettings));
+        localStorage.setItem("settings", JSON.stringify(initialSettings));
       }
     }
 

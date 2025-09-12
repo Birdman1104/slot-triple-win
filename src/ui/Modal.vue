@@ -232,7 +232,7 @@ li {
   border-bottom-left-radius: 10px;
 }
 
-:deep(.centerd-text) {
+:deep(.centered-text) {
   justify-content: center;
 }
 </style>
