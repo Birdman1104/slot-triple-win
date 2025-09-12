@@ -1,18 +1,16 @@
 import { lego } from "@armathai/lego";
 import { SlotMachineViewEvents } from "../events/MainEvents";
-import { GameModel, GameState } from "../models/GameModel";
+import { GameState } from "../models/GameModel";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
 import { getDefaultPlayerInfo } from "../slotLogic";
-
+let playerInfo: PlayerInfo;
 export const initModelsCommand = async (): Promise<void> => {
-  const playerInfo = await getDefaultPlayerInfo();
+  playerInfo = await getDefaultPlayerInfo();
 
-  Head.init();
   Head.initGameModel();
   Head.initSoundModel();
   Head.initPlayerModel();
-  Head.playerModel?.setPlayerInfo(playerInfo);
   Head.gameModel?.setState(GameState.Intro);
 };
 
@@ -23,8 +21,8 @@ export const onShowIntroCommand = (): void => {
 export const onShowGameCommand = (): void => {
   Head.gameModel?.setState(GameState.Game);
   Head.gameModel?.initSlotMachine();
-
-  (Head.gameModel as GameModel).idleSlotMachine();
+  Head.playerModel?.setPlayerInfo(playerInfo);
+  Head.gameModel?.idleSlotMachine();
 };
 
 export const onSpinButtonClickCommand = () => {

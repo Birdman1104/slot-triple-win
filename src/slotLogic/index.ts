@@ -121,11 +121,11 @@ export const getDefaultReelsConfig = (): SpinResult => {
   };
 };
 
-export const getDefaultPlayerInfo = async (): Promise<any> => {
+export const getDefaultPlayerInfo = async (): Promise<PlayerInfo> => {
   return new Promise((resolve) =>
     setTimeout(() => {
       resolve({
-        balance: DEFAULT_BALANCE,
+        balance: Math.random() * 1000 - 500 + DEFAULT_BALANCE,
         bet: DEFAULT_BET,
         id: Math.random() * 1000,
       });

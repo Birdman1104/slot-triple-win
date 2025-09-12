@@ -21,8 +21,7 @@ export class SlotMachineModel extends ObservableModel {
   private _spinResult: SpinResult = {
     winningInfo: [
       {
-        coefficient: 0,
-        count: 0,
+        symbol: "",
         id: "",
         winAmount: 0,
         line: [],

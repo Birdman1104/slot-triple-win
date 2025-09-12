@@ -61,7 +61,7 @@ export class PlayerModel extends ObservableModel {
     this._bet = BETS[BETS.length - 1];
   }
 
-  public setPlayerInfo(playerInfo: any): void {
+  public setPlayerInfo(playerInfo: PlayerInfo): void {
     this._bet = playerInfo.bet;
     this._balance = +playerInfo.balance.toFixed(1);
     this._playerID = playerInfo.id;
@@ -71,6 +71,5 @@ export class PlayerModel extends ObservableModel {
     const value = this._balance + winning;
     const n = +value.toFixed(1);
     this._balance = n;
-    console.warn(this._balance, +value.toFixed(1));
   }
 }
