@@ -26,10 +26,17 @@ export const onShowGameCommand = (): void => {
 };
 
 export const onSpinButtonClickCommand = () => {
-  if (Head.gameModel?.isBlockedAction) return;
   if (Head.playerModel && isNaN(Head.playerModel.bet)) return;
-  if (Head.gameModel?.slotMachine?.state !== SlotMachineState.Idle) return;
   if (Head.gameModel?.state !== GameState.Game) return;
+
+  if (Head.gameModel.slotMachine && Head.gameModel.slotMachine.state === SlotMachineState.Error) {
+    lego.event.emit("closeErrorPopup");
+    Head.gameModel.slotMachine.setState(SlotMachineState.Idle);
+    return;
+  }
+
+  if (Head.gameModel?.slotMachine?.state !== SlotMachineState.Idle) return;
+  if (Head.gameModel?.isBlockedAction) return;
 
   if (Head.playerModel?.spin()) {
     lego.event.emit(SlotMachineViewEvents.UpdateUIBalance);
@@ -78,6 +85,8 @@ export const slotMachineNewElementsDropCompleteCommand = (): void => {
 };
 
 export const setBlockActivityCommand = (isBlocked: boolean): void => {
+  console.warn("remove block", isBlocked);
+
   if (Head.gameModel) {
     Head.gameModel.isBlockedAction = isBlocked;
   }

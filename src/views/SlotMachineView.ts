@@ -95,7 +95,7 @@ export class SlotMachineView extends Container {
   }
 
   private onStateUpdate(newState: SlotMachineState): void {
-    console.warn("SlotMachineView: State update:", SlotMachineState[newState]);
+    // console.warn("SlotMachineView: State update:", SlotMachineState[newState]);
 
     switch (newState) {
       case SlotMachineState.DropOld:

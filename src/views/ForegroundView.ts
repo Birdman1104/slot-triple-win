@@ -21,7 +21,8 @@ export class ForegroundView extends PixiGrid {
 
     lego.event
       .on(UIEvents.MenuItemClick, this.onMenuItemClick, this)
-      .on(SlotMachineModelEvents.ErrorResultUpdate, this.onErrorResultUpdate, this);
+      .on(SlotMachineModelEvents.ErrorResultUpdate, this.onErrorResultUpdate, this)
+      .on("closeErrorPopup", this.onCloseErrorPopup, this);
     this.build();
   }
 
@@ -48,11 +49,14 @@ export class ForegroundView extends PixiGrid {
 
   public hidePopup(): void {
     this.hideBlocker();
-    anime({
-      targets: this.popups,
-      alpha: 0,
-      duration: 200,
-      easing: "easeInOutQuad",
+    this.popups.forEach((popup) => {
+      if (popup.alpha === 0) return;
+      anime({
+        targets: popup,
+        alpha: 0,
+        duration: 200,
+        easing: "easeInOutQuad",
+      });
     });
   }
 
@@ -60,6 +64,10 @@ export class ForegroundView extends PixiGrid {
     if (itemId === MenuEnum.Info) {
       this.showPopup(this.infoPopup);
     }
+  }
+
+  private onCloseErrorPopup(): void {
+    this.hidePopup();
   }
 
   private onErrorResultUpdate(error: ErrorResult): void {

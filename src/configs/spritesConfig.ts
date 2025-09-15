@@ -30,8 +30,8 @@ export const dockLeftShadowConfig = (): SpriteConfig => ({
 
 export const dockRightShadowConfig = (): SpriteConfig => ({
   frame: "shadow_right.png",
-  x: 1932,
-  y: 1112,
+  x: 1635,
+  y: 979,
   scaleX: 1.5,
   scaleY: 1.5,
   anchor: { x: 1, y: 1 },

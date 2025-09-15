@@ -148,6 +148,6 @@ export const getSlotMachineInitialConfig = () => {
   return { reels: getDefaultReelsConfig().reels };
 };
 
-export const BETS = [0.1, 0.2, 0.25, 0.5, 1, 2, 3, 4, 5, 10, 20, 50, 100, 200, 250, 500, 1000, 2000];
+export const BETS = [1, 2, 3, 4, 5, 10, 20, 50, 100, 200, 250, 500, 1000, 2000];
 export const DEFAULT_BET = 1;
 export const DEFAULT_BALANCE = 3000;
