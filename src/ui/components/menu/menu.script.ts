@@ -1,10 +1,7 @@
 import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { SlotMachineViewEvents, UIEvents } from "../../../events/MainEvents";
-import {
-  PlayerModelEvents,
-  SlotMachineModelEvents,
-} from "../../../events/ModelEvents";
+import { PlayerModelEvents, SlotMachineModelEvents } from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
@@ -53,9 +50,7 @@ export default {
     function handleResize() {
       isMobile.value =
         window.innerWidth <= 768 &&
-        (window.orientation === 90 ||
-          window.orientation === 270 ||
-          window.orientation === 0);
+        (window.orientation === 90 || window.orientation === 270 || window.orientation === 0);
     }
 
     onMounted(() => {
@@ -86,8 +81,7 @@ export default {
     function toggleAmountBar(event?: Event) {
       event?.preventDefault();
 
-      activeModal.value =
-        activeModal.value === "spinCount" ? null : "spinCount";
+      activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 
@@ -158,7 +152,7 @@ export default {
     };
 
     const onSlotStateUpdate = (state: SlotMachineState): void => {
-      if (state === SlotMachineState.Idle) {
+      if (state === SlotMachineState.Idle || state === SlotMachineState.Error) {
         showStopButton.value = false;
       } else {
         showStopButton.value = true;
