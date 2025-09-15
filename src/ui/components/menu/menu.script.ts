@@ -60,7 +60,10 @@ export default {
     const minusButtonClick = () => lego.event.emit(UIEvents.MinusButtonClick);
 
     function handleResize() {
-      isMobile.value = window.innerWidth <= 768;
+      isMobile.value =
+        window.innerWidth <= 768 &&
+        (window.orientation === 90 || window.orientation === 270);
+      console.log(window.orientation);
     }
 
     onMounted(() => {
