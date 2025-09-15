@@ -1,7 +1,10 @@
 import { lego } from "@armathai/lego";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { SlotMachineViewEvents, UIEvents } from "../../../events/MainEvents";
-import { PlayerModelEvents, SlotMachineModelEvents } from "../../../events/ModelEvents";
+import {
+  PlayerModelEvents,
+  SlotMachineModelEvents,
+} from "../../../events/ModelEvents";
 import Head from "../../../models/Head";
 import { SlotMachineState } from "../../../models/SlotMachineModel";
 import MenuBackgroundMobile from "../../MenuBackgroundMobile.vue";
@@ -62,6 +65,7 @@ export default {
 
     onMounted(() => {
       window.addEventListener("resize", handleResize);
+      window.addEventListener("orientationchange", handleResize);
       orientation.value = screen.orientation.type;
       spinCountValue.value = localStorage.getItem("spinCount") ?? "";
       bet.value = Head.playerModel?.bet.toString() || "1";
@@ -74,6 +78,7 @@ export default {
 
     onBeforeUnmount(() => {
       window.removeEventListener("resize", handleResize);
+      window.addEventListener("orientationchange", handleResize);
     });
 
     function toggleMenuBar(event?: Event) {
@@ -86,7 +91,8 @@ export default {
     function toggleAmountBar(event?: Event) {
       event?.preventDefault();
 
-      activeModal.value = activeModal.value === "spinCount" ? null : "spinCount";
+      activeModal.value =
+        activeModal.value === "spinCount" ? null : "spinCount";
       toggleSpinMenu.value = !toggleSpinMenu.value;
     }
 

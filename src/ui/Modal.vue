@@ -103,20 +103,18 @@ function isSelected(item) {
   }
 }
 
-function handleResize() {
-  close();
-}
+function handleResize() {}
 
 function handleClose(event) {
   emits("close", event);
 }
 
 onMounted(() => {
-  window.addEventListener("resize", handleResize);
+  // window.addEventListener("resize", handleResize);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", handleResize);
+  // window.removeEventListener("resize", handleResize);
 });
 </script>
 
