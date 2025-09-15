@@ -4,6 +4,7 @@
     viewBox="0 0 320 152"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    @click="stopEvent"
   >
     <!-- Blurred background -->
     <g filter="url(#bgBlur)">
@@ -45,6 +46,13 @@
     </defs>
   </svg>
 </template>
+<script setup>
+function stopEvent() {
+  console.log('xdghjk');
+  
+  event.preventDefault();
+}
+</script>
 
 <style scoped>
 .menu-background {

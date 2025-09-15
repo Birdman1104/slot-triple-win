@@ -40,18 +40,9 @@ export default {
     const spinCountValue = ref("");
     const activeModal = ref<null | "menu" | "spinCount">(null);
 
-    document.addEventListener(
-      "touchend",
-      function (event) {
-        const now = new Date().getTime();
-        if (now - lastTouchEnd <= 300) {
-          event.preventDefault();
-        }
-        lastTouchEnd = now;
-      },
-      false
-    );
-
+    function stopEvent(event: Event) {
+      event.preventDefault();
+    }
     const spinButtonClick = () => {
       lego.event.emit(UIEvents.SpinButtonClick);
     };
@@ -200,6 +191,7 @@ export default {
       toggleMenuBar,
       toggleAmountBar,
       handleSelect,
+      stopEvent,
     };
   },
 };
