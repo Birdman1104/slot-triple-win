@@ -1,5 +1,6 @@
 <template>
   <svg
+  @click="stopEvent"
     class="menu-background"
     width="1386"
     viewBox="0 0 1386 193"
@@ -17,6 +18,7 @@
         "
       ></div>
     </foreignObject>
+    
     <g filter="url(#filter0_d_77_4844)" data-figma-bg-blur-radius="19.7357">
       <mask id="path-1-inside-1_77_4844" fill="white">
         <path
@@ -90,7 +92,11 @@
   </svg>
 </template>
 
-<script setup></script>
+<script setup>
+function stopEvent() {
+  event.preventDefault();
+}
+</script>
 
 <style scoped>
 .menu-background {
