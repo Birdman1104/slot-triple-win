@@ -62,8 +62,9 @@ export default {
     function handleResize() {
       isMobile.value =
         window.innerWidth <= 768 &&
-        (window.orientation === 90 || window.orientation === 270);
-      console.log(window.orientation);
+        (window.orientation === 90 ||
+          window.orientation === 270 ||
+          window.orientation === 0);
     }
 
     onMounted(() => {
