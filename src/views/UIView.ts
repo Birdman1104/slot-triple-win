@@ -1,7 +1,7 @@
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import { uiButBonusBtnL, uiPortraitBkgL } from "../configs/spritesConfig";
+import { uiButBonusBtnL, uiLineL, uiPortraitBkgL } from "../configs/spritesConfig";
 import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
@@ -15,6 +15,8 @@ export class UILandscapeWrapper extends Container {
   private spinBtn!: SpinButton;
   private balance!: Balance;
   private bet!: Bet;
+
+  private lines: Sprite[] = [];
 
   constructor() {
     super();
@@ -32,6 +34,7 @@ export class UILandscapeWrapper extends Container {
     this.buildSpinButtonBkg();
     this.buildBalance();
     this.buildBet();
+    this.buildLines();
   }
 
   private buildBkg(): void {
@@ -67,6 +70,14 @@ export class UILandscapeWrapper extends Container {
     this.bet.x = 657;
     this.addChild(this.bet);
     this.bet.setBet(100);
+  }
+
+  private buildLines(): void {
+    [-1130, 300, 1130].forEach((x) => {
+      const line = makeSprite(uiLineL(x));
+      this.addChild(line);
+      this.lines.push(line);
+    });
   }
 }
 
