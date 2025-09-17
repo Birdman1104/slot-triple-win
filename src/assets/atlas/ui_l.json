@@ -1,0 +1,423 @@
+{
+  "frames": {
+    "menu_bkg.png": {
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 600,
+        "h": 736
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 600,
+        "h": 736
+      },
+      "sourceSize": {
+        "w": 600,
+        "h": 736
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "spin_btn_bkg.png": {
+      "frame": {
+        "x": 609,
+        "y": 3,
+        "w": 274,
+        "h": 271
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 5,
+        "y": 5,
+        "w": 274,
+        "h": 271
+      },
+      "sourceSize": {
+        "w": 282,
+        "h": 279
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "line.png": {
+      "frame": {
+        "x": 609,
+        "y": 283,
+        "w": 3,
+        "h": 166
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 3,
+        "w": 3,
+        "h": 166
+      },
+      "sourceSize": {
+        "w": 3,
+        "h": 170
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "buy_bonus.png": {
+      "frame": {
+        "x": 609,
+        "y": 292,
+        "w": 164,
+        "h": 164
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 4,
+        "w": 164,
+        "h": 164
+      },
+      "sourceSize": {
+        "w": 171,
+        "h": 171
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "menu.png": {
+      "frame": {
+        "x": 609,
+        "y": 462,
+        "w": 164,
+        "h": 164
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 4,
+        "w": 164,
+        "h": 164
+      },
+      "sourceSize": {
+        "w": 171,
+        "h": 171
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "menu_close.png": {
+      "frame": {
+        "x": 3,
+        "y": 745,
+        "w": 164,
+        "h": 164
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 4,
+        "w": 164,
+        "h": 164
+      },
+      "sourceSize": {
+        "w": 171,
+        "h": 171
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "multiple_spins_bkg.png": {
+      "frame": {
+        "x": 173,
+        "y": 745,
+        "w": 164,
+        "h": 164
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 4,
+        "w": 164,
+        "h": 164
+      },
+      "sourceSize": {
+        "w": 171,
+        "h": 171
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "icon_bkg.png": {
+      "frame": {
+        "x": 343,
+        "y": 745,
+        "w": 118,
+        "h": 118
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 1,
+        "w": 118,
+        "h": 118
+      },
+      "sourceSize": {
+        "w": 119,
+        "h": 119
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "arrow_down.png": {
+      "frame": {
+        "x": 781,
+        "y": 283,
+        "w": 100,
+        "h": 99
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 3,
+        "w": 100,
+        "h": 99
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 103
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "arrow_up.png": {
+      "frame": {
+        "x": 779,
+        "y": 389,
+        "w": 100,
+        "h": 99
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 3,
+        "w": 100,
+        "h": 99
+      },
+      "sourceSize": {
+        "w": 103,
+        "h": 103
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "spin_button.png": {
+      "frame": {
+        "x": 779,
+        "y": 494,
+        "w": 82,
+        "h": 88
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 82,
+        "h": 88
+      },
+      "sourceSize": {
+        "w": 82,
+        "h": 88
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "multiple_spins_icon.png": {
+      "frame": {
+        "x": 779,
+        "y": 582,
+        "w": 67,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 7,
+        "w": 67,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "music_icon.png": {
+      "frame": {
+        "x": 343,
+        "y": 869,
+        "w": 36,
+        "h": 48
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 36,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 36,
+        "h": 48
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "sound_icon.png": {
+      "frame": {
+        "x": 397,
+        "y": 869,
+        "w": 48,
+        "h": 38
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 9,
+        "w": 48,
+        "h": 38
+      },
+      "sourceSize": {
+        "w": 56,
+        "h": 56
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "turbo_icon.png": {
+      "frame": {
+        "x": 451,
+        "y": 869,
+        "w": 38,
+        "h": 48
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 0,
+        "w": 38,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 48
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "info_icon.png": {
+      "frame": {
+        "x": 467,
+        "y": 745,
+        "w": 47,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 47,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 47,
+        "h": 47
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "history_icon.png": {
+      "frame": {
+        "x": 467,
+        "y": 798,
+        "w": 44,
+        "h": 44
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 4,
+        "w": 44,
+        "h": 44
+      },
+      "sourceSize": {
+        "w": 52,
+        "h": 52
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://github.com/odrick/free-tex-packer-core",
+    "version": "0.3.4",
+    "image": "ui_l.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 883,
+      "h": 912
+    },
+    "scale": 1
+  }
+}

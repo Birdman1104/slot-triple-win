@@ -109,3 +109,57 @@ export const winTextConfig = (): TextConfig => ({
     letterSpacing: 1,
   },
 });
+
+export const balanceTitleConfig = (): TextConfig => ({
+  text: "Balance",
+  x: 0,
+  y: -40,
+  anchor: { x: 0.5, y: 0.5 },
+  alpha: 0.7,
+  style: {
+    fontSize: 80,
+    fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});
+
+export const betTitleConfig = (): TextConfig => ({
+  text: "Bet",
+  x: 0,
+  y: -40,
+  anchor: { x: 0.5, y: 0.5 },
+  alpha: 0.7,
+  style: {
+    fontSize: 80,
+    fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});
+
+export const balanceTextConfig = (): TextConfig => ({
+  text: "$0",
+  x: 0,
+  y: 20,
+  anchor: { x: 0.5, y: 0.5 },
+  style: {
+    fontSize: 125,
+    fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});
+
+export const betTextConfig = (): TextConfig => ({
+  text: "$0",
+  x: 0,
+  y: 20,
+  anchor: { x: 0.5, y: 0.5 },
+  style: {
+    fontSize: 125,
+    fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});

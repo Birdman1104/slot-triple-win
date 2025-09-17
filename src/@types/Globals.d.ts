@@ -24,12 +24,14 @@ type SpriteConfig = {
   tint?: number;
   alpha?: number;
   rotation?: number;
+  name?: string;
 };
 
 interface TextConfig {
   text: string;
   x?: number;
   y?: number;
+  alpha?: number;
   anchor?: { x: number; y: number };
   style: Partial<ITextStyle>;
 }

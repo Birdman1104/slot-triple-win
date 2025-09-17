@@ -58,6 +58,7 @@ export const makeSprite = (config: SpriteConfig): Sprite => {
     tint = 0xffffff,
     alpha = 1,
     rotation = 0,
+    name = "",
   } = config;
 
   const texture = SPRITESHEET[atlas] ? getTextureFromSpriteSheet(atlas, frame) : Texture.from(frame);
@@ -68,6 +69,7 @@ export const makeSprite = (config: SpriteConfig): Sprite => {
   sprite.tint = tint;
   sprite.alpha = alpha;
   sprite.rotation = rotation;
+  name && (sprite.name = name);
   return sprite;
 };
 
@@ -98,10 +100,11 @@ export const drawPoint = (
 };
 
 export const makeText = (config: TextConfig, name?: string): Text => {
-  const { text: content, x = 0, y = 0, style = {}, anchor = { x: 0.5, y: 0.5 } } = config;
+  const { text: content, x = 0, y = 0, alpha = 1, style = {}, anchor = { x: 0.5, y: 0.5 } } = config;
   const text = new Text(content, style);
   text.position.set(x, y);
   text.anchor.set(anchor.x, anchor.y);
+  text.alpha = alpha;
   name && (text.name = name);
   return text;
 };

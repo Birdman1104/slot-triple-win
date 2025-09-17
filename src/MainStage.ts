@@ -3,16 +3,19 @@ import { BackgroundView } from "./views/BackgroundView.ts";
 import { ForegroundView } from "./views/ForegroundView.ts";
 import { GameView } from "./views/GameView.ts";
 import { IntroViewWrapper } from "./views/IntroView.ts";
+import { UILandscapeView } from "./views/UIView.ts";
 
 class PixiStage extends Container {
   private intro: IntroViewWrapper | null = null;
   private gameView: GameView | null = null;
   private bgView: BackgroundView | null = null;
   private foregroundView: ForegroundView | null = null;
+  private uiLandscape: UILandscapeView | null = null;
 
   public resize(): void {
     this.intro?.rebuild();
     this.bgView?.rebuild();
+    this.uiLandscape?.rebuild();
     this.gameView?.rebuild();
     this.foregroundView?.rebuild();
   }
@@ -39,6 +42,9 @@ class PixiStage extends Container {
 
     this.foregroundView = new ForegroundView();
     this.addChild(this.foregroundView);
+
+    this.uiLandscape = new UILandscapeView();
+    this.addChild(this.uiLandscape);
   }
 }
 

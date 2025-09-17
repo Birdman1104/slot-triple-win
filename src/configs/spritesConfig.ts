@@ -95,3 +95,39 @@ export const introCardConfig = (frame: string, atlas: string): SpriteConfig => (
   scaleX: 0.666666,
   scaleY: 0.666666,
 });
+
+export const uiPortraitBkgL = (): SpriteConfig => ({
+  frame: "ui_bkg_l.png",
+});
+
+export const uiMenuBtnL = (): SpriteConfig => ({
+  frame: "menu.png",
+  atlas: "ui_l",
+  name: "menu_button",
+  x: -1231,
+  y: 12,
+});
+
+export const uiButBonusBtnL = (): SpriteConfig => ({
+  frame: "buy_bonus.png",
+  atlas: "ui_l",
+  name: "buy_bonus_button",
+  x: 1231,
+  y: 12,
+});
+
+export const uiSpinBtnBkgL = (): SpriteConfig => ({
+  frame: "spin_btn_bkg.png",
+  atlas: "ui_l",
+  name: "spin_button_background",
+  x: -12,
+  y: 9,
+});
+
+export const betArrowBtnL = (type: "up" | "down"): SpriteConfig => ({
+  frame: `arrow_${type}.png`,
+  atlas: "ui_l",
+  name: type,
+  x: 150,
+  y: type === "up" ? -30 : 50,
+});

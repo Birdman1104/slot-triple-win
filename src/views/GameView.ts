@@ -1,11 +1,8 @@
 import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
-import { createApp } from "vue";
 import { getGameViewGridConfig } from "../configs/gridConfigs/gameViewGC";
 import { GameModelEvents } from "../events/ModelEvents";
 import type { SlotMachineModel } from "../models/SlotMachineModel";
-import UI from "../ui/components/menu/UI.vue";
-import { delayRunnable } from "../utils/Utils";
 import { SlotMachineView } from "./SlotMachineView";
 
 export class GameView extends PixiGrid {
@@ -34,11 +31,11 @@ export class GameView extends PixiGrid {
     if (slotMachine) {
       this.buildSlotMachine(slotMachine);
 
-      delayRunnable(0.01, () => {
-        const uiRoot = document.createElement("div");
-        document.body.appendChild(uiRoot);
-        createApp(UI).mount(uiRoot);
-      });
+      // delayRunnable(0.01, () => {
+      //   const uiRoot = document.createElement("div");
+      //   document.body.appendChild(uiRoot);
+      //   createApp(UI).mount(uiRoot);
+      // });
     } else {
       this.destroySlotMachine();
     }

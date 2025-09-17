@@ -15,6 +15,9 @@ import symbolsJson from "../atlas/symbols.json";
 import uiPng from "../atlas/ui.png?inline";
 import uiJson from "../atlas/ui.json";
 
+import ui_lPng from "../atlas/ui_l.png?inline";
+import ui_lJson from "../atlas/ui_l.json";
+
 import winsPng from "../atlas/wins.png?inline";
 import winsJson from "../atlas/wins.json";
 
@@ -24,5 +27,6 @@ export const ATLASES = [
   { name: "slotMachine", img: slotMachinePng, json: slotMachineJson },
   { name: "symbols", img: symbolsPng, json: symbolsJson },
   { name: "ui", img: uiPng, json: uiJson },
+  { name: "ui_l", img: ui_lPng, json: ui_lJson },
   { name: "wins", img: winsPng, json: winsJson },
 ];
