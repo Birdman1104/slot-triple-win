@@ -163,3 +163,17 @@ export const betTextConfig = (): TextConfig => ({
     letterSpacing: 1,
   },
 });
+
+export const menuButtonTextConfig = (text: string): TextConfig => ({
+  text,
+  x: 180,
+  y: 51,
+  anchor: { x: 0, y: 0.5 },
+  style: {
+    align: "left",
+    fontSize: 100,
+    fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});

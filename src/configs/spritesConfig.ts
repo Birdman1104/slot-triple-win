@@ -1,3 +1,4 @@
+import { Point } from "pixi.js";
 import { lp } from "../utils/Utils";
 
 export const gameBkgSpriteConfig = (): SpriteConfig => ({
@@ -100,14 +101,6 @@ export const uiPortraitBkgL = (): SpriteConfig => ({
   frame: "ui_bkg_l.png",
 });
 
-export const uiMenuBtnL = (): SpriteConfig => ({
-  frame: "menu.png",
-  atlas: "ui_l",
-  name: "menu_button",
-  x: -1231,
-  y: 12,
-});
-
 export const uiButBonusBtnL = (): SpriteConfig => ({
   frame: "buy_bonus.png",
   atlas: "ui_l",
@@ -146,4 +139,45 @@ export const uiSpinBtnStopL = (): SpriteConfig => ({
   name: "spin_button_stop",
   x: -12,
   y: 0,
+});
+
+export const uiMenuBtnL = (): SpriteConfig => ({
+  frame: "menu.png",
+  atlas: "ui_l",
+  name: "menu_button",
+  x: 0,
+  y: 0,
+});
+
+export const uiMenuCloseBtnL = (): SpriteConfig => ({
+  frame: "menu_close.png",
+  atlas: "ui_l",
+  name: "menu_close_button",
+  x: 0,
+  y: 0,
+});
+
+export const uiMenuBkgL = (): SpriteConfig => ({
+  frame: "menu_bkg.png",
+  atlas: "ui_l",
+  name: "menu_background",
+  anchor: new Point(0.5, 1.2),
+  x: 0,
+  y: 0,
+});
+
+export const uiMenuButtonBkgL = (): SpriteConfig => ({
+  frame: "icon_bkg.png",
+  atlas: "ui_l",
+  name: "icon_bkg",
+  x: 100,
+  y: 62,
+});
+
+export const uiMenuButtonL = (type: string): SpriteConfig => ({
+  frame: type,
+  atlas: "ui_l",
+  name: type,
+  x: 100,
+  y: 54,
 });

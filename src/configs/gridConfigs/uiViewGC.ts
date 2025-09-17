@@ -8,12 +8,12 @@ const getUIViewGridLandscapeConfig = () => {
   const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
   return {
     name: "ui",
-    debug: { color: 0xff0027 },
+    // debug: { color: 0xff0027 },
     bounds,
     cells: [
       {
         name: "ui_bar",
-        bounds: { x: 0, y: 0.8, width: 1, height: 0.2 },
+        bounds: { x: 0.075, y: 0.8, width: 0.85, height: 0.2 },
       },
     ],
   };

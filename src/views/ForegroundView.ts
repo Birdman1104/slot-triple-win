@@ -5,7 +5,6 @@ import { Container, Graphics } from "pixi.js";
 import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
 import { ForegroundViewEvents, MainGameEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
-import { MenuEnum } from "../ui/enums/ui-enums";
 import { ErrorPopup } from "./ErrorPopup";
 import { InfoPopup } from "./InfoPopup";
 
@@ -20,7 +19,7 @@ export class ForegroundView extends PixiGrid {
     super();
 
     lego.event
-      .on(UIEvents.MenuItemClick, this.onMenuItemClick, this)
+      .on(UIEvents.InfoButtonClick, this.onMenuItemClick, this)
       .on(SlotMachineModelEvents.ErrorResultUpdate, this.onErrorResultUpdate, this)
       .on("closeErrorPopup", this.onCloseErrorPopup, this);
     this.build();
@@ -60,10 +59,8 @@ export class ForegroundView extends PixiGrid {
     });
   }
 
-  private onMenuItemClick(itemId: string): void {
-    if (itemId === MenuEnum.Info) {
-      this.showPopup(this.infoPopup);
-    }
+  private onMenuItemClick(): void {
+    this.showPopup(this.infoPopup);
   }
 
   private onCloseErrorPopup(): void {

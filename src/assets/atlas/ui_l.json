@@ -216,9 +216,33 @@
         "y": 0.5
       }
     },
-    "icon_bkg.png": {
+    "icon_bkg_green.png": {
       "frame": {
         "x": 609,
+        "y": 619,
+        "w": 118,
+        "h": 119
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 3,
+        "y": 3,
+        "w": 118,
+        "h": 119
+      },
+      "sourceSize": {
+        "w": 123,
+        "h": 123
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "icon_bkg.png": {
+      "frame": {
+        "x": 733,
         "y": 619,
         "w": 118,
         "h": 118
@@ -266,8 +290,8 @@
     },
     "arrow_up.png": {
       "frame": {
-        "x": 779,
-        "y": 560,
+        "x": 733,
+        "y": 743,
         "w": 100,
         "h": 99
       },
@@ -290,8 +314,8 @@
     },
     "multiple_spins_icon.png": {
       "frame": {
-        "x": 798,
-        "y": 283,
+        "x": 657,
+        "y": 744,
         "w": 67,
         "h": 66
       },
@@ -314,8 +338,8 @@
     },
     "music_icon.png": {
       "frame": {
-        "x": 733,
-        "y": 619,
+        "x": 779,
+        "y": 560,
         "w": 36,
         "h": 48
       },
@@ -338,12 +362,12 @@
     },
     "sound_icon.png": {
       "frame": {
-        "x": 798,
-        "y": 355,
+        "x": 839,
+        "y": 743,
         "w": 48,
         "h": 38
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 4,
@@ -362,8 +386,8 @@
     },
     "turbo_icon.png": {
       "frame": {
-        "x": 798,
-        "y": 399,
+        "x": 839,
+        "y": 797,
         "w": 38,
         "h": 48
       },
@@ -386,8 +410,8 @@
     },
     "info_icon.png": {
       "frame": {
-        "x": 775,
-        "y": 665,
+        "x": 821,
+        "y": 560,
         "w": 47,
         "h": 47
       },
@@ -410,8 +434,8 @@
     },
     "history_icon.png": {
       "frame": {
-        "x": 828,
-        "y": 665,
+        "x": 657,
+        "y": 851,
         "w": 44,
         "h": 44
       },

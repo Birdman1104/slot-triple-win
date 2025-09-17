@@ -1,20 +1,77 @@
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
-import { Container, type Sprite } from "pixi.js";
+import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import { uiButBonusBtnL, uiMenuBtnL, uiPortraitBkgL } from "../configs/spritesConfig";
+import { uiButBonusBtnL, uiPortraitBkgL } from "../configs/spritesConfig";
 import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
+import { MenuLandscapeView } from "./Menu";
 import { SpinButton } from "./SpinButton";
 
-export class UILandscapeView extends PixiGrid {
-  private wrapper = new Container();
+export class UILandscapeWrapper extends Container {
   private bkg!: Sprite;
-  private menuBtn!: Sprite;
+  private menu!: MenuLandscapeView;
   private buyBonusBtn!: Sprite;
   private spinBtn!: SpinButton;
   private balance!: Balance;
   private bet!: Bet;
+
+  constructor() {
+    super();
+    this.build();
+  }
+
+  public getBounds(skipUpdate?: boolean, rect?: Rectangle): Rectangle {
+    return this.bkg.getBounds(skipUpdate, rect);
+  }
+
+  private build() {
+    this.buildBkg();
+    this.buildMenu();
+    this.buildBuyBonusButton();
+    this.buildSpinButtonBkg();
+    this.buildBalance();
+    this.buildBet();
+  }
+
+  private buildBkg(): void {
+    this.bkg = makeSprite(uiPortraitBkgL());
+    this.addChild(this.bkg);
+  }
+
+  private buildMenu(): void {
+    this.menu = new MenuLandscapeView();
+    this.menu.position.set(-1228, 12);
+    this.addChild(this.menu);
+  }
+
+  private buildBuyBonusButton(): void {
+    this.buyBonusBtn = makeSprite(uiButBonusBtnL());
+    this.addChild(this.buyBonusBtn);
+  }
+
+  private buildSpinButtonBkg(): void {
+    this.spinBtn = new SpinButton();
+    this.addChild(this.spinBtn);
+  }
+
+  private buildBalance(): void {
+    this.balance = new Balance();
+    this.balance.x = -657;
+    this.addChild(this.balance);
+    this.balance.setBalance(1000);
+  }
+
+  private buildBet(): void {
+    this.bet = new Bet();
+    this.bet.x = 657;
+    this.addChild(this.bet);
+    this.bet.setBet(100);
+  }
+}
+
+export class UILandscapeView extends PixiGrid {
+  private wrapper = new UILandscapeWrapper();
 
   constructor() {
     super();
@@ -30,47 +87,6 @@ export class UILandscapeView extends PixiGrid {
   }
 
   private build() {
-    this.buildBkg();
-    this.buildMenuButton();
-    this.buildBuyBonusButton();
-    this.buildSpinButtonBkg();
-    this.buildBalance();
-    this.buildBet();
-
     this.setChild("ui_bar", this.wrapper);
-  }
-
-  private buildBkg(): void {
-    this.bkg = makeSprite(uiPortraitBkgL());
-    this.wrapper.addChild(this.bkg);
-  }
-
-  private buildMenuButton(): void {
-    this.menuBtn = makeSprite(uiMenuBtnL());
-    this.wrapper.addChild(this.menuBtn);
-  }
-
-  private buildBuyBonusButton(): void {
-    this.buyBonusBtn = makeSprite(uiButBonusBtnL());
-    this.wrapper.addChild(this.buyBonusBtn);
-  }
-
-  private buildSpinButtonBkg(): void {
-    this.spinBtn = new SpinButton();
-    this.wrapper.addChild(this.spinBtn);
-  }
-
-  private buildBalance(): void {
-    this.balance = new Balance();
-    this.balance.x = -657;
-    this.wrapper.addChild(this.balance);
-    this.balance.setBalance(1000);
-  }
-
-  private buildBet(): void {
-    this.bet = new Bet();
-    this.bet.x = 657;
-    this.wrapper.addChild(this.bet);
-    this.bet.setBet(100);
   }
 }

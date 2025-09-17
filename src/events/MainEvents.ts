@@ -27,6 +27,12 @@ export const UIEvents = {
   MaxBetButtonClick: "UIEventsMaxBetButtonClick",
 
   MenuItemClick: "UIEventsMenuItemClick",
+
+  SoundButtonClick: "UIEventsSoundButtonClick",
+  MusicButtonClick: "UIEventsMusicButtonClick",
+  InfoButtonClick: "UIEventsInfoButtonClick",
+  TurboButtonClick: "UIEventsTurboButtonClick",
+  HistoryButtonClick: "UIEventsHistoryButtonClick",
 };
 
 export const ReelViewEvents = {
