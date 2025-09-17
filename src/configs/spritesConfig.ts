@@ -116,6 +116,14 @@ export const uiButBonusBtnL = (): SpriteConfig => ({
   y: 12,
 });
 
+export const betArrowBtnL = (type: "up" | "down"): SpriteConfig => ({
+  frame: `arrow_${type}.png`,
+  atlas: "ui_l",
+  name: type,
+  x: 150,
+  y: type === "up" ? -30 : 50,
+});
+
 export const uiSpinBtnBkgL = (): SpriteConfig => ({
   frame: "spin_btn_bkg.png",
   atlas: "ui_l",
@@ -124,10 +132,18 @@ export const uiSpinBtnBkgL = (): SpriteConfig => ({
   y: 9,
 });
 
-export const betArrowBtnL = (type: "up" | "down"): SpriteConfig => ({
-  frame: `arrow_${type}.png`,
+export const uiSpinBtnArrowL = (): SpriteConfig => ({
+  frame: "spin_button.png",
   atlas: "ui_l",
-  name: type,
-  x: 150,
-  y: type === "up" ? -30 : 50,
+  name: "spin_button_arrow",
+  x: -12,
+  y: -10,
+});
+
+export const uiSpinBtnStopL = (): SpriteConfig => ({
+  frame: "spin_btn_stop.png",
+  atlas: "ui_l",
+  name: "spin_button_stop",
+  x: -12,
+  y: 0,
 });

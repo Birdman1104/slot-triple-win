@@ -48,14 +48,38 @@
         "y": 0.5
       }
     },
-    "line.png": {
+    "spin_button.png": {
       "frame": {
         "x": 609,
+        "y": 283,
+        "w": 160,
+        "h": 174
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 10,
+        "y": 1,
+        "w": 160,
+        "h": 174
+      },
+      "sourceSize": {
+        "w": 175,
+        "h": 175
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "line.png": {
+      "frame": {
+        "x": 789,
         "y": 283,
         "w": 3,
         "h": 166
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
@@ -75,7 +99,7 @@
     "buy_bonus.png": {
       "frame": {
         "x": 609,
-        "y": 292,
+        "y": 449,
         "w": 164,
         "h": 164
       },
@@ -97,30 +121,6 @@
       }
     },
     "menu.png": {
-      "frame": {
-        "x": 609,
-        "y": 462,
-        "w": 164,
-        "h": 164
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 4,
-        "y": 4,
-        "w": 164,
-        "h": 164
-      },
-      "sourceSize": {
-        "w": 171,
-        "h": 171
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "menu_close.png": {
       "frame": {
         "x": 3,
         "y": 745,
@@ -144,7 +144,7 @@
         "y": 0.5
       }
     },
-    "multiple_spins_bkg.png": {
+    "menu_close.png": {
       "frame": {
         "x": 173,
         "y": 745,
@@ -168,10 +168,58 @@
         "y": 0.5
       }
     },
-    "icon_bkg.png": {
+    "multiple_spins_bkg.png": {
       "frame": {
         "x": 343,
         "y": 745,
+        "w": 164,
+        "h": 164
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 4,
+        "w": 164,
+        "h": 164
+      },
+      "sourceSize": {
+        "w": 171,
+        "h": 171
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "spin_btn_stop.png": {
+      "frame": {
+        "x": 513,
+        "y": 745,
+        "w": 138,
+        "h": 140
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 13,
+        "y": 14,
+        "w": 138,
+        "h": 140
+      },
+      "sourceSize": {
+        "w": 164,
+        "h": 168
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "icon_bkg.png": {
+      "frame": {
+        "x": 609,
+        "y": 619,
         "w": 118,
         "h": 118
       },
@@ -194,32 +242,8 @@
     },
     "arrow_down.png": {
       "frame": {
-        "x": 781,
-        "y": 283,
-        "w": 100,
-        "h": 99
-      },
-      "rotated": true,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 2,
-        "y": 3,
-        "w": 100,
-        "h": 99
-      },
-      "sourceSize": {
-        "w": 103,
-        "h": 103
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "arrow_up.png": {
-      "frame": {
         "x": 779,
-        "y": 389,
+        "y": 455,
         "w": 100,
         "h": 99
       },
@@ -240,24 +264,24 @@
         "y": 0.5
       }
     },
-    "spin_button.png": {
+    "arrow_up.png": {
       "frame": {
         "x": 779,
-        "y": 494,
-        "w": 82,
-        "h": 88
+        "y": 560,
+        "w": 100,
+        "h": 99
       },
-      "rotated": true,
-      "trimmed": false,
+      "rotated": false,
+      "trimmed": true,
       "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 82,
-        "h": 88
+        "x": 2,
+        "y": 3,
+        "w": 100,
+        "h": 99
       },
       "sourceSize": {
-        "w": 82,
-        "h": 88
+        "w": 103,
+        "h": 103
       },
       "pivot": {
         "x": 0.5,
@@ -266,8 +290,8 @@
     },
     "multiple_spins_icon.png": {
       "frame": {
-        "x": 779,
-        "y": 582,
+        "x": 798,
+        "y": 283,
         "w": 67,
         "h": 66
       },
@@ -290,12 +314,12 @@
     },
     "music_icon.png": {
       "frame": {
-        "x": 343,
-        "y": 869,
+        "x": 733,
+        "y": 619,
         "w": 36,
         "h": 48
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
@@ -314,8 +338,8 @@
     },
     "sound_icon.png": {
       "frame": {
-        "x": 397,
-        "y": 869,
+        "x": 798,
+        "y": 355,
         "w": 48,
         "h": 38
       },
@@ -338,12 +362,12 @@
     },
     "turbo_icon.png": {
       "frame": {
-        "x": 451,
-        "y": 869,
+        "x": 798,
+        "y": 399,
         "w": 38,
         "h": 48
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 1,
@@ -362,8 +386,8 @@
     },
     "info_icon.png": {
       "frame": {
-        "x": 467,
-        "y": 745,
+        "x": 775,
+        "y": 665,
         "w": 47,
         "h": 47
       },
@@ -386,8 +410,8 @@
     },
     "history_icon.png": {
       "frame": {
-        "x": 467,
-        "y": 798,
+        "x": 828,
+        "y": 665,
         "w": 44,
         "h": 44
       },
