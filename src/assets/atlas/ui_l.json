@@ -24,14 +24,38 @@
         "y": 0.5
       }
     },
-    "spin_btn_bkg.png": {
+    "multiple_numbers_bkg.png": {
       "frame": {
         "x": 609,
         "y": 3,
+        "w": 244,
+        "h": 736
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 244,
+        "h": 736
+      },
+      "sourceSize": {
+        "w": 244,
+        "h": 736
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "spin_btn_bkg.png": {
+      "frame": {
+        "x": 3,
+        "y": 745,
         "w": 274,
         "h": 271
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 5,
@@ -50,12 +74,12 @@
     },
     "spin_button.png": {
       "frame": {
-        "x": 609,
-        "y": 283,
+        "x": 283,
+        "y": 745,
         "w": 160,
         "h": 174
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 10,
@@ -74,12 +98,12 @@
     },
     "line.png": {
       "frame": {
-        "x": 789,
-        "y": 283,
+        "x": 283,
+        "y": 925,
         "w": 3,
         "h": 166
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
@@ -98,8 +122,8 @@
     },
     "buy_bonus.png": {
       "frame": {
-        "x": 609,
-        "y": 449,
+        "x": 449,
+        "y": 745,
         "w": 164,
         "h": 164
       },
@@ -122,7 +146,7 @@
     },
     "menu.png": {
       "frame": {
-        "x": 3,
+        "x": 619,
         "y": 745,
         "w": 164,
         "h": 164
@@ -146,8 +170,8 @@
     },
     "menu_close.png": {
       "frame": {
-        "x": 173,
-        "y": 745,
+        "x": 859,
+        "y": 3,
         "w": 164,
         "h": 164
       },
@@ -170,8 +194,8 @@
     },
     "multiple_spins_bkg.png": {
       "frame": {
-        "x": 343,
-        "y": 745,
+        "x": 859,
+        "y": 173,
         "w": 164,
         "h": 164
       },
@@ -194,12 +218,12 @@
     },
     "spin_btn_stop.png": {
       "frame": {
-        "x": 513,
-        "y": 745,
+        "x": 859,
+        "y": 343,
         "w": 138,
         "h": 140
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 13,
@@ -218,12 +242,12 @@
     },
     "icon_bkg_green.png": {
       "frame": {
-        "x": 609,
-        "y": 619,
+        "x": 859,
+        "y": 487,
         "w": 118,
         "h": 119
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 3,
@@ -242,8 +266,8 @@
     },
     "icon_bkg.png": {
       "frame": {
-        "x": 733,
-        "y": 619,
+        "x": 859,
+        "y": 611,
         "w": 118,
         "h": 118
       },
@@ -266,12 +290,12 @@
     },
     "arrow_down.png": {
       "frame": {
-        "x": 779,
-        "y": 455,
+        "x": 455,
+        "y": 915,
         "w": 100,
         "h": 99
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 2,
@@ -290,12 +314,12 @@
     },
     "arrow_up.png": {
       "frame": {
-        "x": 733,
-        "y": 743,
+        "x": 560,
+        "y": 915,
         "w": 100,
         "h": 99
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 2,
@@ -314,12 +338,12 @@
     },
     "multiple_spins_icon.png": {
       "frame": {
-        "x": 657,
-        "y": 744,
+        "x": 283,
+        "y": 934,
         "w": 67,
         "h": 66
       },
-      "rotated": false,
+      "rotated": true,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 7,
@@ -338,8 +362,8 @@
     },
     "music_icon.png": {
       "frame": {
-        "x": 779,
-        "y": 560,
+        "x": 984,
+        "y": 487,
         "w": 36,
         "h": 48
       },
@@ -362,8 +386,8 @@
     },
     "sound_icon.png": {
       "frame": {
-        "x": 839,
-        "y": 743,
+        "x": 984,
+        "y": 541,
         "w": 48,
         "h": 38
       },
@@ -386,8 +410,8 @@
     },
     "turbo_icon.png": {
       "frame": {
-        "x": 839,
-        "y": 797,
+        "x": 984,
+        "y": 595,
         "w": 38,
         "h": 48
       },
@@ -410,8 +434,8 @@
     },
     "info_icon.png": {
       "frame": {
-        "x": 821,
-        "y": 560,
+        "x": 355,
+        "y": 934,
         "w": 47,
         "h": 47
       },
@@ -434,8 +458,8 @@
     },
     "history_icon.png": {
       "frame": {
-        "x": 657,
-        "y": 851,
+        "x": 665,
+        "y": 915,
         "w": 44,
         "h": 44
       },
@@ -463,8 +487,8 @@
     "image": "ui_l.png",
     "format": "RGBA8888",
     "size": {
-      "w": 883,
-      "h": 912
+      "w": 1026,
+      "h": 1019
     },
     "scale": 1
   }

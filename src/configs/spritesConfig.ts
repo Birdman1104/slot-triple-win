@@ -138,23 +138,18 @@ export const uiSpinBtnStopL = (): SpriteConfig => ({
   atlas: "ui_l",
   name: "spin_button_stop",
   x: -12,
-  y: 0,
 });
 
 export const uiMenuBtnL = (): SpriteConfig => ({
   frame: "menu.png",
   atlas: "ui_l",
   name: "menu_button",
-  x: 0,
-  y: 0,
 });
 
 export const uiMenuCloseBtnL = (): SpriteConfig => ({
   frame: "menu_close.png",
   atlas: "ui_l",
   name: "menu_close_button",
-  x: 0,
-  y: 0,
 });
 
 export const uiMenuBkgL = (): SpriteConfig => ({
@@ -162,8 +157,6 @@ export const uiMenuBkgL = (): SpriteConfig => ({
   atlas: "ui_l",
   name: "menu_background",
   anchor: new Point(0.5, 1.2),
-  x: 0,
-  y: 0,
 });
 
 export const uiMenuButtonBkgL = (): SpriteConfig => ({
@@ -187,5 +180,24 @@ export const uiLineL = (x: number): SpriteConfig => ({
   atlas: "ui_l",
   name: "line_" + x,
   x,
-  y: 0,
+});
+
+export const uiMultipleSpinsBkgL = (): SpriteConfig => ({
+  frame: "multiple_spins_bkg.png",
+  atlas: "ui_l",
+  name: "multiple_spins_bkg",
+});
+
+export const uiMultipleSpinsIconL = (): SpriteConfig => ({
+  frame: "multiple_spins_icon.png",
+  atlas: "ui_l",
+  name: "multiple_spins_icon",
+  y: -10,
+});
+
+export const uiMultipleNumbersBkgL = (): SpriteConfig => ({
+  frame: "multiple_numbers_bkg.png",
+  atlas: "ui_l",
+  name: "multiple_numbers_bkg",
+  anchor: { x: 0.5, y: 1.2 },
 });

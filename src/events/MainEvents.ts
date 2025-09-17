@@ -33,6 +33,8 @@ export const UIEvents = {
   InfoButtonClick: "UIEventsInfoButtonClick",
   TurboButtonClick: "UIEventsTurboButtonClick",
   HistoryButtonClick: "UIEventsHistoryButtonClick",
+
+  MultipleSpinNumberClick: "UIEventsMultipleSpinNumberClick",
 };
 
 export const ReelViewEvents = {

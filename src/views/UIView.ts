@@ -6,6 +6,7 @@ import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
 import { MenuLandscapeView } from "./Menu";
+import { MultipleSpins } from "./MultipleSpinsL";
 import { SpinButton } from "./SpinButton";
 
 export class UILandscapeWrapper extends Container {
@@ -14,6 +15,7 @@ export class UILandscapeWrapper extends Container {
   private buyBonusBtn!: Sprite;
   private spinBtn!: SpinButton;
   private balance!: Balance;
+  private multipleSpins!: MultipleSpins;
   private bet!: Bet;
 
   private lines: Sprite[] = [];
@@ -34,6 +36,7 @@ export class UILandscapeWrapper extends Container {
     this.buildSpinButtonBkg();
     this.buildBalance();
     this.buildBet();
+    this.buildMultipleSpins();
     this.buildLines();
   }
 
@@ -69,7 +72,12 @@ export class UILandscapeWrapper extends Container {
     this.bet = new Bet();
     this.bet.x = 657;
     this.addChild(this.bet);
-    this.bet.setBet(100);
+  }
+
+  private buildMultipleSpins(): void {
+    this.multipleSpins = new MultipleSpins();
+    this.multipleSpins.position.set(208, 11);
+    this.addChild(this.multipleSpins);
   }
 
   private buildLines(): void {

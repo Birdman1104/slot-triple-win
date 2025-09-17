@@ -177,3 +177,28 @@ export const menuButtonTextConfig = (text: string): TextConfig => ({
     letterSpacing: 1,
   },
 });
+
+export const multipleSpinsTextConfig = (text = ""): TextConfig => ({
+  text,
+  y: -14,
+  anchor: { x: 0.5, y: 0.5 },
+  style: {
+    fontSize: 100,
+    fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});
+
+export const multipleSpinsButtonTextConfig = (text = ""): TextConfig => ({
+  text,
+  x: 122,
+  y: 62,
+  anchor: { x: 0.5, y: 0.5 },
+  style: {
+    fontSize: 100,
+    fill: "#ffffff",
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});

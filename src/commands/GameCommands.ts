@@ -85,8 +85,6 @@ export const slotMachineNewElementsDropCompleteCommand = (): void => {
 };
 
 export const setBlockActivityCommand = (isBlocked: boolean): void => {
-  console.warn("remove block", isBlocked);
-
   if (Head.gameModel) {
     Head.gameModel.isBlockedAction = isBlocked;
   }
