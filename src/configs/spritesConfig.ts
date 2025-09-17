@@ -181,3 +181,11 @@ export const uiMenuButtonL = (type: string): SpriteConfig => ({
   x: 100,
   y: 54,
 });
+
+export const uiLineL = (x: number): SpriteConfig => ({
+  frame: "line.png",
+  atlas: "ui_l",
+  name: "line_" + x,
+  x,
+  y: 0,
+});
