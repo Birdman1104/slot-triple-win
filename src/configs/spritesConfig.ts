@@ -97,8 +97,8 @@ export const introCardConfig = (frame: string, atlas: string): SpriteConfig => (
   scaleY: 0.666666,
 });
 
-export const uiPortraitBkgL = (): SpriteConfig => ({
-  frame: "ui_bkg_l.png",
+export const uiPortraitBkg = (type: "p" | "l"): SpriteConfig => ({
+  frame: `ui_bkg_${type}.png`,
 });
 
 export const uiButBonusBtnL = (): SpriteConfig => ({

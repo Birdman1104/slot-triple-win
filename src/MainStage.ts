@@ -1,9 +1,11 @@
 import { Container } from "pixi.js";
+import { lp } from "./utils/Utils.ts";
 import { BackgroundView } from "./views/BackgroundView.ts";
 import { ForegroundView } from "./views/ForegroundView.ts";
 import { GameView } from "./views/GameView.ts";
 import { IntroViewWrapper } from "./views/IntroView.ts";
-import { UILandscapeView } from "./views/UIView.ts";
+import { UILandscapeView } from "./views/UIViewLandscape.ts";
+import { UIPortraitView } from "./views/UIViewPortrait.ts";
 
 class PixiStage extends Container {
   private intro: IntroViewWrapper | null = null;
@@ -11,13 +13,23 @@ class PixiStage extends Container {
   private bgView: BackgroundView | null = null;
   private foregroundView: ForegroundView | null = null;
   private uiLandscape: UILandscapeView | null = null;
+  private uiPortrait: UIPortraitView | null = null;
 
   public resize(): void {
     this.intro?.rebuild();
     this.bgView?.rebuild();
-    this.uiLandscape?.rebuild();
     this.gameView?.rebuild();
     this.foregroundView?.rebuild();
+
+    if (this.uiLandscape) {
+      this.uiLandscape.visible = lp(true, false);
+      this.uiLandscape.visible && this.uiLandscape.rebuild();
+    }
+
+    if (this.uiPortrait) {
+      this.uiPortrait.visible = lp(false, true);
+      this.uiPortrait.visible && this.uiPortrait.rebuild();
+    }
   }
 
   public hideIntro(): void {
@@ -45,6 +57,10 @@ class PixiStage extends Container {
 
     this.uiLandscape = new UILandscapeView();
     this.addChild(this.uiLandscape);
+
+    this.uiPortrait = new UIPortraitView();
+    this.addChild(this.uiPortrait);
+    this.resize();
   }
 }
 

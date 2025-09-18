@@ -13,7 +13,7 @@ export class Bet extends Container {
   private upArrow!: Sprite;
   private downArrow!: Sprite;
 
-  constructor() {
+  constructor(private isPortrait = false) {
     super();
 
     lego.event.on(PlayerModelEvents.BetUpdate, this.betUpdate, this);
@@ -33,19 +33,21 @@ export class Bet extends Container {
     this.betText = makeText(betTextConfig());
     this.addChild(this.betText);
 
-    this.upArrow = makeSprite(betArrowBtnL("up"));
-    this.upArrow.eventMode = "static";
-    this.upArrow.on("pointerdown", () => {
-      lego.event.emit(UIEvents.PlusButtonClick);
-    });
-    this.addChild(this.upArrow);
+    if (!this.isPortrait) {
+      this.upArrow = makeSprite(betArrowBtnL("up"));
+      this.upArrow.eventMode = "static";
+      this.upArrow.on("pointerdown", () => {
+        lego.event.emit(UIEvents.PlusButtonClick);
+      });
+      this.addChild(this.upArrow);
 
-    this.downArrow = makeSprite(betArrowBtnL("down"));
-    this.downArrow.eventMode = "static";
-    this.downArrow.on("pointerdown", () => {
-      lego.event.emit(UIEvents.MinusButtonClick);
-    });
-    this.addChild(this.downArrow);
+      this.downArrow = makeSprite(betArrowBtnL("down"));
+      this.downArrow.eventMode = "static";
+      this.downArrow.on("pointerdown", () => {
+        lego.event.emit(UIEvents.MinusButtonClick);
+      });
+      this.addChild(this.downArrow);
+    }
   }
 
   private betUpdate(bet: number): void {

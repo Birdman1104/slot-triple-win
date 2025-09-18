@@ -1,28 +1,25 @@
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import { uiButBonusBtnL, uiLineL, uiPortraitBkgL } from "../configs/spritesConfig";
+import { uiButBonusBtnL, uiPortraitBkg } from "../configs/spritesConfig";
 import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
-import { MenuLandscapeView } from "./Menu";
 import { MultipleSpins } from "./MultipleSpinsL";
 import { SpinButton } from "./SpinButton";
 
-export class UILandscapeWrapper extends Container {
+class UIPortraitWrapper extends Container {
   private bkg!: Sprite;
-  private menu!: MenuLandscapeView;
   private buyBonusBtn!: Sprite;
   private spinBtn!: SpinButton;
   private balance!: Balance;
   private multipleSpins!: MultipleSpins;
   private bet!: Bet;
 
-  private lines: Sprite[] = [];
-
   constructor() {
     super();
     this.build();
+    // drawBounds(this);
   }
 
   public getBounds(skipUpdate?: boolean, rect?: Rectangle): Rectangle {
@@ -31,46 +28,51 @@ export class UILandscapeWrapper extends Container {
 
   private build() {
     this.buildBkg();
-    this.buildMenu();
+    // this.buildMenu();
     this.buildBuyBonusButton();
-    this.buildSpinButtonBkg();
+    this.buildSpinButton();
     this.buildBalance();
     this.buildBet();
-    this.buildMultipleSpins();
-    this.buildLines();
+    // this.buildMultipleSpins();
   }
 
   private buildBkg(): void {
-    this.bkg = makeSprite(uiPortraitBkgL());
+    this.bkg = makeSprite(uiPortraitBkg("p"));
     this.addChild(this.bkg);
   }
 
-  private buildMenu(): void {
-    this.menu = new MenuLandscapeView();
-    this.menu.position.set(-1228, 12);
-    this.addChild(this.menu);
-  }
+  // private buildMenu(): void {
+  //   this.menu = new MenuLandscapeView();
+  //   this.menu.position.set(-1228, 12);
+  //   this.addChild(this.menu);
+  // }
 
   private buildBuyBonusButton(): void {
     this.buyBonusBtn = makeSprite(uiButBonusBtnL());
+    this.buyBonusBtn.scale.set(0.6);
+    this.buyBonusBtn.position.set(260, -41);
     this.addChild(this.buyBonusBtn);
   }
 
-  private buildSpinButtonBkg(): void {
+  private buildSpinButton(): void {
     this.spinBtn = new SpinButton();
+    this.spinBtn.scale.set(0.6);
+    this.spinBtn.position.set(-1, -43);
     this.addChild(this.spinBtn);
   }
 
   private buildBalance(): void {
     this.balance = new Balance();
-    this.balance.x = -657;
+    this.balance.position.set(-215, 80);
+    this.balance.scale.set(0.45);
     this.addChild(this.balance);
-    this.balance.setBalance(1000);
   }
 
   private buildBet(): void {
-    this.bet = new Bet();
-    this.bet.x = 657;
+    this.bet = new Bet(true);
+    this.bet.x = 215;
+    this.bet.y = 80;
+    this.bet.scale.set(0.45);
     this.addChild(this.bet);
   }
 
@@ -79,18 +81,9 @@ export class UILandscapeWrapper extends Container {
     this.multipleSpins.position.set(208, 11);
     this.addChild(this.multipleSpins);
   }
-
-  private buildLines(): void {
-    [-1130, 300, 1130].forEach((x) => {
-      const line = makeSprite(uiLineL(x));
-      this.addChild(line);
-      this.lines.push(line);
-    });
-  }
 }
-
-export class UILandscapeView extends PixiGrid {
-  private wrapper = new UILandscapeWrapper();
+export class UIPortraitView extends PixiGrid {
+  private wrapper = new UIPortraitWrapper();
 
   constructor() {
     super();

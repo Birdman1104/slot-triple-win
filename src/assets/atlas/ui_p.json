@@ -1,0 +1,39 @@
+{
+  "frames": {
+    "multiple_numbers_bkg_p.png": {
+      "frame": {
+        "x": 3,
+        "y": 3,
+        "w": 148,
+        "h": 418
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 148,
+        "h": 418
+      },
+      "sourceSize": {
+        "w": 148,
+        "h": 418
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://github.com/odrick/free-tex-packer-core",
+    "version": "0.3.4",
+    "image": "ui_p.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 154,
+      "h": 424
+    },
+    "scale": 1
+  }
+}
