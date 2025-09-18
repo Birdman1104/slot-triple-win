@@ -1,7 +1,9 @@
+import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import { uiButBonusBtnL, uiPortraitBkg } from "../configs/spritesConfig";
+import { betArrowBtnL, uiButBonusBtnL, uiPortraitBkg } from "../configs/spritesConfig";
+import { UIEvents } from "../events/MainEvents";
 import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
@@ -15,6 +17,9 @@ class UIPortraitWrapper extends Container {
   private balance!: Balance;
   private multipleSpins!: MultipleSpins;
   private bet!: Bet;
+
+  private upArrow!: Sprite;
+  private downArrow!: Sprite;
 
   constructor() {
     super();
@@ -63,17 +68,34 @@ class UIPortraitWrapper extends Container {
 
   private buildBalance(): void {
     this.balance = new Balance();
-    this.balance.position.set(-215, 80);
+    this.balance.position.set(-170, 80);
     this.balance.scale.set(0.45);
     this.addChild(this.balance);
   }
 
   private buildBet(): void {
     this.bet = new Bet(true);
-    this.bet.x = 215;
-    this.bet.y = 80;
+    this.bet.position.set(140, 80);
     this.bet.scale.set(0.45);
     this.addChild(this.bet);
+
+    this.upArrow = makeSprite(betArrowBtnL("up"));
+    this.upArrow.scale.set(1.4);
+    this.upArrow.x = 146;
+    this.upArrow.eventMode = "static";
+    this.upArrow.on("pointerdown", () => {
+      lego.event.emit(UIEvents.PlusButtonClick);
+    });
+    this.addChild(this.upArrow);
+
+    this.downArrow = makeSprite(betArrowBtnL("down"));
+    this.downArrow.scale.set(1.4);
+    this.downArrow.position.set(-162, -30);
+    this.downArrow.eventMode = "static";
+    this.downArrow.on("pointerdown", () => {
+      lego.event.emit(UIEvents.MinusButtonClick);
+    });
+    this.addChild(this.downArrow);
   }
 
   private buildMultipleSpins(): void {
