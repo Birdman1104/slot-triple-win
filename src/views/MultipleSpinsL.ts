@@ -12,7 +12,11 @@ class MultipleSpinButton extends Container {
   private valueText!: Text;
   private hitAreaGr!: Graphics;
 
-  constructor(private value: number) {
+  constructor(
+    private value: number,
+    private w: number,
+    private h: number
+  ) {
     super();
 
     this.build();
@@ -25,8 +29,8 @@ class MultipleSpinButton extends Container {
     this.hitAreaGr.alpha = 0;
   }
 
-  public getBounds(skipUpdate?: boolean, rect?: Rectangle): Rectangle {
-    return new Rectangle(0, 0, 244, 127);
+  public getBounds(): Rectangle {
+    return new Rectangle(0, 0, this.w, this.h);
   }
   private build(): void {
     this.valueText = makeText(multipleSpinsButtonTextConfig(this.value.toString()));
@@ -36,7 +40,6 @@ class MultipleSpinButton extends Container {
 
 class MultipleSpinsToggle extends Container {
   private bkg!: Sprite;
-  private buttons: MultipleSpinButton[] = [];
 
   private _isHidden = false;
 
@@ -81,8 +84,8 @@ class MultipleSpinsToggle extends Container {
     this.bkg = makeSprite(uiMultipleNumbersBkgL());
     this.addChild(this.bkg);
 
-    this.buttons = values.map((v, i) => {
-      const button = new MultipleSpinButton(v);
+    values.forEach((v, i) => {
+      const button = new MultipleSpinButton(v, 244, 127);
       button.y = -this.bkg.height * 1.2 + 50 + button.height * i;
       button.x = -this.bkg.width / 2;
       button.on("numberClicked", (value: number) => {

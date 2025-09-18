@@ -38,7 +38,7 @@ class UIPortraitWrapper extends Container {
     this.buildSpinButton();
     this.buildBalance();
     this.buildBet();
-    // this.buildMultipleSpins();
+    this.buildMultipleSpins();
   }
 
   private buildBkg(): void {
@@ -55,7 +55,7 @@ class UIPortraitWrapper extends Container {
   private buildBuyBonusButton(): void {
     this.buyBonusBtn = makeSprite(uiButBonusBtnL());
     this.buyBonusBtn.scale.set(0.6);
-    this.buyBonusBtn.position.set(260, -41);
+    this.buyBonusBtn.position.set(260, -37);
     this.addChild(this.buyBonusBtn);
   }
 
@@ -100,7 +100,8 @@ class UIPortraitWrapper extends Container {
 
   private buildMultipleSpins(): void {
     this.multipleSpins = new MultipleSpins();
-    this.multipleSpins.position.set(208, 11);
+    this.multipleSpins.position.set(-273, -37);
+    this.multipleSpins.scale.set(0.6);
     this.addChild(this.multipleSpins);
   }
 }
