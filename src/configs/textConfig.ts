@@ -164,14 +164,14 @@ export const betTextConfig = (): TextConfig => ({
   },
 });
 
-export const menuButtonTextConfig = (text: string): TextConfig => ({
+export const menuButtonTextConfig = (text: string, fontSize = 100): TextConfig => ({
   text,
   x: 180,
   y: 51,
   anchor: { x: 0, y: 0.5 },
   style: {
     align: "left",
-    fontSize: 100,
+    fontSize,
     fill: "#ffffff",
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,

@@ -50,6 +50,13 @@ export const popupCloseButtonConfig = (): SpriteConfig => ({
   y: lp(-250, -155),
 });
 
+export const portraitMenuCloseButtonConfig = (): SpriteConfig => ({
+  atlas: "ui.png",
+  frame: "close_button.png",
+  x: 0,
+  y: 0,
+});
+
 export const redIconConfig = (): SpriteConfig => ({
   atlas: "ui.png",
   frame: "red_triangle.png",
@@ -157,6 +164,13 @@ export const uiMenuBkgL = (): SpriteConfig => ({
   atlas: "ui_l",
   name: "menu_background",
   anchor: new Point(0.5, 1.2),
+});
+
+export const uiMenuBkgP = (): SpriteConfig => ({
+  frame: "menu_bkg_p.png",
+  atlas: "ui_p",
+  name: "menu_background",
+  anchor: new Point(0.85, 0.125),
 });
 
 export const uiMenuButtonBkgL = (): SpriteConfig => ({

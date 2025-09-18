@@ -1,8 +1,32 @@
 {
   "frames": {
-    "multiple_numbers_bkg_p.png": {
+    "menu_bkg_p.png": {
       "frame": {
         "x": 3,
+        "y": 3,
+        "w": 430,
+        "h": 608
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 430,
+        "h": 608
+      },
+      "sourceSize": {
+        "w": 430,
+        "h": 608
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "multiple_numbers_bkg_p.png": {
+      "frame": {
+        "x": 439,
         "y": 3,
         "w": 148,
         "h": 418
@@ -31,8 +55,8 @@
     "image": "ui_p.png",
     "format": "RGBA8888",
     "size": {
-      "w": 154,
-      "h": 424
+      "w": 590,
+      "h": 614
     },
     "scale": 1
   }

@@ -1,14 +1,128 @@
 import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
+import anime from "animejs";
 import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import { betArrowBtnL, uiButBonusBtnL, uiPortraitBkg } from "../configs/spritesConfig";
+import {
+  betArrowBtnL,
+  portraitMenuCloseButtonConfig,
+  uiButBonusBtnL,
+  uiMenuBkgP,
+  uiMenuBtnL,
+  uiPortraitBkg,
+} from "../configs/spritesConfig";
 import { UIEvents } from "../events/MainEvents";
 import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
+import { buttonsConfig, MenuButton } from "./Menu";
 import { MultipleSpins } from "./MultipleSpinsL";
 import { SpinButton } from "./SpinButton";
+
+class MenuTogglePortrait extends Container {
+  private bkg!: Sprite;
+  private buttons: MenuButton[] = [];
+  private closeBtn!: Sprite;
+
+  constructor() {
+    super();
+
+    this.build();
+  }
+
+  public hide(): void {
+    this.closeBtn.eventMode = "none";
+    anime({
+      targets: this.scale,
+      x: 0,
+      y: 0,
+      duration: 300,
+      easing: "easeInOutSine",
+      complete: () => {
+        this.emit("menuClosed");
+      },
+    });
+  }
+
+  public show(): void {
+    anime({
+      targets: this.scale,
+      x: 1,
+      y: 1,
+      duration: 300,
+      easing: "easeInOutSine",
+      complete: () => {
+        this.emit("menuOpened");
+        this.closeBtn.eventMode = "static";
+      },
+    });
+  }
+
+  private build(): void {
+    this.bkg = makeSprite(uiMenuBkgP());
+    this.addChild(this.bkg);
+
+    buttonsConfig.forEach((c, i) => {
+      const button = new MenuButton(c, 400, 110, 70);
+      button.on("close", () => this.hide());
+      button.y = i * button.height - this.height * 0.07;
+      button.x = -this.bkg.width + 50;
+      this.addChild(button);
+      this.buttons.push(button);
+    });
+
+    this.closeBtn = makeSprite(portraitMenuCloseButtonConfig());
+    this.closeBtn.on("pointerdown", () => this.hide());
+    this.addChild(this.closeBtn);
+  }
+}
+class MenuPortraitView extends Container {
+  private menuButton!: Sprite;
+  private menu!: MenuTogglePortrait;
+
+  constructor() {
+    super();
+    this.build();
+  }
+
+  public getBounds(skipUpdate?: boolean, rect?: Rectangle): Rectangle {
+    return this.menuButton.getBounds();
+  }
+
+  private build(): void {
+    this.buildMenuButton();
+    this.buildMenu();
+  }
+
+  private buildMenuButton(): void {
+    this.menuButton = makeSprite(uiMenuBtnL());
+    this.menuButton.eventMode = "static";
+    this.menuButton.on("pointerdown", () => {
+      this.menu.show();
+      this.menuButton.eventMode = "none";
+    });
+    this.addChild(this.menuButton);
+  }
+
+  private buildMenu(): void {
+    this.menu = new MenuTogglePortrait();
+    this.menu.visible = false;
+    this.menu.hide();
+
+    this.menu.on("menuClosed", () => {
+      if (!this.menu.visible) {
+        this.menu.visible = true;
+      }
+
+      this.menuButton.eventMode = "static";
+    });
+
+    this.menu.on("menuOpened", () => {
+      this.menuButton.eventMode = "none";
+    });
+    this.addChild(this.menu);
+  }
+}
 
 class UIPortraitWrapper extends Container {
   private bkg!: Sprite;
@@ -24,7 +138,6 @@ class UIPortraitWrapper extends Container {
   constructor() {
     super();
     this.build();
-    // drawBounds(this);
   }
 
   public getBounds(skipUpdate?: boolean, rect?: Rectangle): Rectangle {
@@ -33,7 +146,6 @@ class UIPortraitWrapper extends Container {
 
   private build() {
     this.buildBkg();
-    // this.buildMenu();
     this.buildBuyBonusButton();
     this.buildSpinButton();
     this.buildBalance();
@@ -45,12 +157,6 @@ class UIPortraitWrapper extends Container {
     this.bkg = makeSprite(uiPortraitBkg("p"));
     this.addChild(this.bkg);
   }
-
-  // private buildMenu(): void {
-  //   this.menu = new MenuLandscapeView();
-  //   this.menu.position.set(-1228, 12);
-  //   this.addChild(this.menu);
-  // }
 
   private buildBuyBonusButton(): void {
     this.buyBonusBtn = makeSprite(uiButBonusBtnL());
@@ -107,6 +213,7 @@ class UIPortraitWrapper extends Container {
 }
 export class UIPortraitView extends PixiGrid {
   private wrapper = new UIPortraitWrapper();
+  private menu = new MenuPortraitView();
 
   constructor() {
     super();
@@ -123,5 +230,6 @@ export class UIPortraitView extends PixiGrid {
 
   private build() {
     this.setChild("ui_bar", this.wrapper);
+    this.setChild("menu", this.menu);
   }
 }

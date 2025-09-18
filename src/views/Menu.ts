@@ -6,14 +6,14 @@ import { menuButtonTextConfig } from "../configs/textConfig";
 import { UIEvents } from "../events/MainEvents";
 import { drawBounds, makeSprite, makeText } from "../utils/Utils";
 
-type MenuButtonConfig = {
+export type MenuButtonConfig = {
   title: string;
   icon: string;
   event: string;
   type: "toggle" | "button";
 };
 
-const buttonsConfig: MenuButtonConfig[] = [
+export const buttonsConfig: MenuButtonConfig[] = [
   {
     title: "Sound",
     icon: "sound_icon.png",
@@ -46,7 +46,7 @@ const buttonsConfig: MenuButtonConfig[] = [
   },
 ];
 
-class MenuButton extends Container {
+export class MenuButton extends Container {
   private iconBkg!: Sprite;
   private icon!: Sprite;
   private title!: Text;
@@ -55,7 +55,12 @@ class MenuButton extends Container {
 
   private isSelected = false;
 
-  constructor(private config: MenuButtonConfig) {
+  constructor(
+    private config: MenuButtonConfig,
+    private w: number,
+    private h: number,
+    private fontSize = 100
+  ) {
     super();
 
     this.build();
@@ -75,7 +80,7 @@ class MenuButton extends Container {
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(0, 0, 600, 124);
+    return new Rectangle(0, 0, this.w, this.h);
   }
 
   private build(): void {
@@ -85,7 +90,7 @@ class MenuButton extends Container {
     this.icon = makeSprite(uiMenuButtonL(this.config.icon));
     this.addChild(this.icon);
 
-    this.title = makeText(menuButtonTextConfig(this.config.title));
+    this.title = makeText(menuButtonTextConfig(this.config.title, this.fontSize));
     this.addChild(this.title);
   }
 }
@@ -130,7 +135,7 @@ class MenuToggle extends Container {
     this.addChild(this.bkg);
 
     buttonsConfig.forEach((c, i) => {
-      const button = new MenuButton(c);
+      const button = new MenuButton(c, 600, 124);
       button.on("close", () => this.hide());
       button.y = -this.bkg.height * 1.2 + 60 + i * button.height;
       button.x = -this.bkg.width / 2 + 20;
