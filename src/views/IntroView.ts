@@ -153,9 +153,9 @@ export class IntroViewWrapper extends PixiGrid {
 
     this.rebuild();
 
-    setTimeout(() => {
-      lego.event.emit(MainGameEvents.ShowGame);
-    });
+    // setTimeout(() => {
+    //   lego.event.emit(MainGameEvents.ShowGame);
+    // });
   }
 
   public getGridConfig(): ICellConfig {

@@ -20,8 +20,15 @@ export const dockSpriteConfig = (): SpriteConfig => ({
   anchor: { x: 0.5, y: 0 },
 });
 
+export const leafConfig = (): SpriteConfig => ({
+  frame: "leaf.png",
+  name: "leaf",
+  anchor: { x: 1, y: 0 },
+});
+
 export const dockLeftShadowConfig = (): SpriteConfig => ({
   frame: "shadow_left.png",
+  name: "leftShadow",
   x: -1175,
   y: 1085,
   scaleX: 1.5,
@@ -31,6 +38,7 @@ export const dockLeftShadowConfig = (): SpriteConfig => ({
 
 export const dockRightShadowConfig = (): SpriteConfig => ({
   frame: "shadow_right.png",
+  name: "rightShadow",
   x: 1635,
   y: 979,
   scaleX: 1.5,

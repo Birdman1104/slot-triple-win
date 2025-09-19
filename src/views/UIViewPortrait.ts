@@ -15,7 +15,7 @@ import { UIEvents } from "../events/MainEvents";
 import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
 import { GameType } from "../models/GameModel";
 import { SoundState } from "../models/SoundModel";
-import { drawBounds, makeSprite } from "../utils/Utils";
+import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
 import { buttonsConfig, MenuButton } from "./Menu";
@@ -168,7 +168,6 @@ class UIPortraitWrapper extends Container {
   constructor() {
     super();
     this.build();
-    drawBounds(this);
   }
 
   public getBounds(): Rectangle {
