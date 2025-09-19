@@ -93,3 +93,15 @@ export const setBlockActivityCommand = (isBlocked: boolean): void => {
 export const errorPopupHideCompleteCommand = (): void => {
   Head.gameModel?.slotMachine?.setState(SlotMachineState.Idle);
 };
+
+export const onSoundButtonClickCommand = () => {
+  Head.soundModel?.toggleSoundState();
+};
+
+export const onMusicButtonClickCommand = () => {
+  Head.soundModel?.toggleMusicState();
+};
+
+export const onFlashButtonClickCommand = () => {
+  Head.gameModel?.toggleFlash();
+};

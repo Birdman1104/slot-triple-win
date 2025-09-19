@@ -111,8 +111,12 @@ class MenuPortraitView extends Container {
     this.build();
   }
 
-  public getBounds(skipUpdate?: boolean, rect?: Rectangle): Rectangle {
+  public getBounds(): Rectangle {
     return this.menuButton.getBounds();
+  }
+
+  public hideToggle(): void {
+    this.menu.hide();
   }
 
   private build(): void {
@@ -181,6 +185,11 @@ class UIPortraitWrapper extends Container {
 
   private buildBkg(): void {
     this.bkg = makeSprite(uiPortraitBkg("p"));
+    this.bkg.eventMode = "static";
+    this.bkg.on("pointerdown", () => {
+      this.emit("closeMenu");
+      this.multipleSpins.hideToggle();
+    });
     this.addChild(this.bkg);
   }
 
@@ -193,6 +202,10 @@ class UIPortraitWrapper extends Container {
 
   private buildSpinButton(): void {
     this.spinBtn = new SpinButton();
+    this.spinBtn.on("clicked", () => {
+      this.emit("closeMenu");
+      this.multipleSpins.hideToggle();
+    });
     this.spinBtn.scale.set(0.6);
     this.spinBtn.position.set(-1, -43);
     this.addChild(this.spinBtn);
@@ -216,6 +229,8 @@ class UIPortraitWrapper extends Container {
     this.upArrow.x = 146;
     this.upArrow.eventMode = "static";
     this.upArrow.on("pointerdown", () => {
+      this.emit("closeMenu");
+      this.multipleSpins.hideToggle();
       lego.event.emit(UIEvents.PlusButtonClick);
     });
     this.addChild(this.upArrow);
@@ -225,6 +240,8 @@ class UIPortraitWrapper extends Container {
     this.downArrow.position.set(-162, -30);
     this.downArrow.eventMode = "static";
     this.downArrow.on("pointerdown", () => {
+      this.emit("closeMenu");
+      this.multipleSpins.hideToggle();
       lego.event.emit(UIEvents.MinusButtonClick);
     });
     this.addChild(this.downArrow);
@@ -232,6 +249,9 @@ class UIPortraitWrapper extends Container {
 
   private buildMultipleSpins(): void {
     this.multipleSpins = new MultipleSpins();
+    this.multipleSpins.on("clicked", () => {
+      this.emit("closeMenu");
+    });
     this.multipleSpins.position.set(-273, -37);
     this.multipleSpins.scale.set(0.6);
     this.addChild(this.multipleSpins);
@@ -255,6 +275,7 @@ export class UIPortraitView extends PixiGrid {
   }
 
   private build() {
+    this.wrapper.on("closeMenu", () => this.menu.hideToggle());
     this.setChild("ui_bar", this.wrapper);
     this.setChild("menu", this.menu);
   }
