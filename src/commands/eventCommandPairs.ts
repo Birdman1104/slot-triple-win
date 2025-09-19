@@ -1,6 +1,7 @@
 import { lego } from "@armathai/lego";
 import { ForegroundViewEvents, MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
+import Head from "../models/Head";
 import {
   errorPopupHideCompleteCommand,
   initModelsCommand,
@@ -24,6 +25,20 @@ export const unmapCommands = (): void => {
 
 export const mapCommands = (): void => {
   eventCommandPairs.forEach((pair) => lego.command.on(pair.event, pair.command));
+};
+
+export const onSoundButtonClickCommand = () => {
+  console.warn(13243);
+
+  Head.soundModel?.toggleSoundState();
+};
+
+export const onMusicButtonClickCommand = () => {
+  Head.soundModel?.toggleMusicState();
+};
+
+export const onFlashButtonClickCommand = () => {
+  Head.gameModel?.toggleFlash();
 };
 
 export const eventCommandPairs: { event: any; command: any }[] = [
@@ -82,5 +97,20 @@ export const eventCommandPairs: { event: any; command: any }[] = [
   {
     event: ForegroundViewEvents.ErrorPopupHideComplete,
     command: errorPopupHideCompleteCommand,
+  },
+
+  {
+    event: UIEvents.SoundButtonClick,
+    command: onSoundButtonClickCommand,
+  },
+
+  {
+    event: UIEvents.MusicButtonClick,
+    command: onMusicButtonClickCommand,
+  },
+
+  {
+    event: UIEvents.TurboButtonClick,
+    command: onFlashButtonClickCommand,
   },
 ];

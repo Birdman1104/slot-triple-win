@@ -4,6 +4,8 @@ import { Container, Graphics, Rectangle, Sprite, Text, Texture } from "pixi.js";
 import { uiMenuBkgL, uiMenuBtnL, uiMenuButtonBkgL, uiMenuButtonL, uiMenuCloseBtnL } from "../configs/spritesConfig";
 import { menuButtonTextConfig } from "../configs/textConfig";
 import { UIEvents } from "../events/MainEvents";
+import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
+import { SoundState } from "../models/SoundModel";
 import { drawBounds, makeSprite, makeText } from "../utils/Utils";
 
 export type MenuButtonConfig = {
@@ -49,7 +51,7 @@ export const buttonsConfig: MenuButtonConfig[] = [
 export class MenuButton extends Container {
   private iconBkg!: Sprite;
   private icon!: Sprite;
-  private title!: Text;
+  private titleText!: Text;
 
   private hitAreaGr!: Graphics;
 
@@ -71,16 +73,25 @@ export class MenuButton extends Container {
     this.hitAreaGr.on("pointerdown", () => {
       lego.event.emit(this.config.event);
       if (this.config.type === "toggle") {
-        this.isSelected = !this.isSelected;
-        this.iconBkg.texture = Texture.from(this.isSelected ? "icon_bkg_green.png" : "icon_bkg.png");
+        //
       } else {
         this.emit("close");
       }
     });
   }
 
+  get title(): string {
+    return this.config.title;
+  }
+
   public getBounds(): Rectangle {
     return new Rectangle(0, 0, this.w, this.h);
+  }
+
+  public toggleButton(selected: boolean): void {
+    if (this.config.type !== "toggle") return;
+    this.isSelected = selected;
+    this.iconBkg.texture = Texture.from(this.isSelected ? "icon_bkg_green.png" : "icon_bkg.png");
   }
 
   private build(): void {
@@ -90,8 +101,8 @@ export class MenuButton extends Container {
     this.icon = makeSprite(uiMenuButtonL(this.config.icon));
     this.addChild(this.icon);
 
-    this.title = makeText(menuButtonTextConfig(this.config.title, this.fontSize));
-    this.addChild(this.title);
+    this.titleText = makeText(menuButtonTextConfig(this.config.title, this.fontSize));
+    this.addChild(this.titleText);
   }
 }
 
@@ -101,6 +112,11 @@ class MenuToggle extends Container {
 
   constructor() {
     super();
+
+    lego.event.on(SoundModelEvents.MusicStateUpdate, this.onMusicStateUpdate, this);
+    lego.event.on(SoundModelEvents.SoundStateUpdate, this.onSoundStateUpdate, this);
+    lego.event.on(GameModelEvents.GameTypeUpdate, this.onGameTypeUpdate, this);
+
     this.build();
   }
 
@@ -142,6 +158,27 @@ class MenuToggle extends Container {
       this.addChild(button);
       this.buttons.push(button);
     });
+  }
+
+  private onMusicStateUpdate(value: SoundState): void {
+    const button = this.buttons.find((b) => b.title === "Music");
+    if (button) {
+      button.toggleButton(value === SoundState.On);
+    }
+  }
+
+  private onSoundStateUpdate(value: SoundState): void {
+    const button = this.buttons.find((b) => b.title === "Sound");
+    if (button) {
+      button.toggleButton(value === SoundState.On);
+    }
+  }
+
+  private onGameTypeUpdate(value: GameType): void {
+    const button = this.buttons.find((b) => b.title === "Turbo");
+    if (button) {
+      button.toggleButton(value === GameType.Flash);
+    }
   }
 }
 

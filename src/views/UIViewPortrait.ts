@@ -12,6 +12,9 @@ import {
   uiPortraitBkg,
 } from "../configs/spritesConfig";
 import { UIEvents } from "../events/MainEvents";
+import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
+import { GameType } from "../models/GameModel";
+import { SoundState } from "../models/SoundModel";
 import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
@@ -26,7 +29,9 @@ class MenuTogglePortrait extends Container {
 
   constructor() {
     super();
-
+    lego.event.on(SoundModelEvents.MusicStateUpdate, this.onMusicStateUpdate, this);
+    lego.event.on(SoundModelEvents.SoundStateUpdate, this.onSoundStateUpdate, this);
+    lego.event.on(GameModelEvents.GameTypeUpdate, this.onGameTypeUpdate, this);
     this.build();
   }
 
@@ -56,6 +61,27 @@ class MenuTogglePortrait extends Container {
         this.closeBtn.eventMode = "static";
       },
     });
+  }
+
+  private onMusicStateUpdate(value: SoundState): void {
+    const button = this.buttons.find((b) => b.title === "Music");
+    if (button) {
+      button.toggleButton(value === SoundState.On);
+    }
+  }
+
+  private onSoundStateUpdate(value: SoundState): void {
+    const button = this.buttons.find((b) => b.title === "Sound");
+    if (button) {
+      button.toggleButton(value === SoundState.On);
+    }
+  }
+
+  private onGameTypeUpdate(value: GameType): void {
+    const button = this.buttons.find((b) => b.title === "Turbo");
+    if (button) {
+      button.toggleButton(value === GameType.Flash);
+    }
   }
 
   private build(): void {

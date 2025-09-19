@@ -7,6 +7,7 @@ export const GameModelEvents = {
   StateUpdate: "GameModelStateUpdate",
   SlotMachineUpdate: "GameModelSlotMachineUpdate",
   IsBlockedActionUpdate: "GameModelIsBlockedActionUpdate",
+  GameTypeUpdate: "GameModelGameTypeUpdate",
 };
 
 export const HeadEvents = {
@@ -35,4 +36,8 @@ export const SlotMachineModelEvents = {
 
 export const SlotModelEvents = { TypeUpdate: "SlotModelTypeUpdate" };
 
-export const SoundModelEvents = { StateUpdate: "SoundModelStateUpdate" };
+export const SoundModelEvents = {
+  MusicStateUpdate: "SoundModelMusicStateUpdate",
+  SoundStateUpdate: "SoundModelSoundStateUpdate",
+  StateUpdate: "SoundModelStateUpdate",
+};

@@ -8,10 +8,16 @@ export enum GameState {
   Game = "game",
 }
 
+export enum GameType {
+  Normal = "normal",
+  Flash = "flash",
+}
 export class GameModel extends ObservableModel {
   private _state: GameState = GameState.Undefined;
   private _slotMachine: SlotMachineModel | null = null;
   private _isBlockedAction: boolean = false;
+
+  private _gameType: GameType = GameType.Normal;
 
   constructor() {
     super("GameModel");
@@ -41,6 +47,18 @@ export class GameModel extends ObservableModel {
 
   set isBlockedAction(value: boolean) {
     this._isBlockedAction = value;
+  }
+
+  get gameType(): GameType {
+    return this._gameType;
+  }
+
+  set gameType(value: GameType) {
+    this._gameType = value;
+  }
+
+  public toggleFlash(): void {
+    this._gameType = this._gameType === GameType.Flash ? GameType.Normal : GameType.Flash;
   }
 
   public setState(newState: GameState): void {
