@@ -18,8 +18,6 @@ const getUIViewGridLandscapeConfig = () => {
       },
       {
         name: "menu",
-        // align: CellAlign.centerBottom,
-        // scale: CellScale.envelop,
         bounds: { x: 0.9, y: 0, width: 0.1, height: 0.1 },
       },
     ],
@@ -30,19 +28,17 @@ const getUIViewGridPortraitConfig = () => {
   const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
   return {
     name: "ui",
-    debug: { color: 0xff0027 },
+    // debug: { color: 0xff0027 },
     bounds,
     cells: [
       {
         name: "ui_bar",
         align: CellAlign.centerBottom,
-        scale: CellScale.envelop,
+        scale: CellScale.fit,
         bounds: { x: 0, y: 0.82, width: 1, height: 0.19 },
       },
       {
         name: "menu",
-        // align: CellAlign.centerBottom,
-        // scale: CellScale.envelop,
         bounds: { x: 0.85, y: 0, width: 0.15, height: 0.1 },
       },
     ],
