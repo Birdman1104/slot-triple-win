@@ -5,6 +5,7 @@ import { uiMenuBkgL, uiMenuBtnL, uiMenuButtonBkgL, uiMenuButtonL, uiMenuCloseBtn
 import { menuButtonTextConfig } from "../configs/textConfig";
 import { UIEvents } from "../events/MainEvents";
 import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
+import { GameType } from "../models/GameModel";
 import { SoundState } from "../models/SoundModel";
 import { drawBounds, makeSprite, makeText } from "../utils/Utils";
 
@@ -192,6 +193,10 @@ export class MenuLandscapeView extends Container {
     this.build();
   }
 
+  public hideToggle(): void {
+    this.menu.hide();
+  }
+
   private build(): void {
     this.buildMenuButton();
     this.buildCloseButton();
@@ -202,6 +207,7 @@ export class MenuLandscapeView extends Container {
     this.menuButton = makeSprite(uiMenuBtnL());
     this.menuButton.eventMode = "static";
     this.menuButton.on("pointerdown", () => {
+      this.emit("clicked");
       this.menu.show();
       this.menuButton.eventMode = "none";
       this.closeButton.eventMode = "none";

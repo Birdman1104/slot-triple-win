@@ -113,6 +113,10 @@ export class MultipleSpins extends Container {
     return this.bkg.getBounds();
   }
 
+  public hideToggle(): void {
+    this.toggle.hide();
+  }
+
   private updateNumberWidth(): void {
     this.number.scale.set(1);
     this.number.scale.set(Math.min(1, (this.bkg.width * 0.6) / this.number.width));
@@ -122,6 +126,7 @@ export class MultipleSpins extends Container {
     this.bkg = makeSprite(uiMultipleSpinsBkgL());
     this.bkg.eventMode = "static";
     this.bkg.on("pointerdown", () => {
+      this.emit("clicked");
       this.toggle.isHidden ? this.toggle.show() : this.toggle.hide();
       this.bkg.eventMode = "none";
     });

@@ -31,6 +31,7 @@ export class SpinButton extends Container {
     this.bkg = makeSprite(uiSpinBtnBkgL());
     this.bkg.eventMode = "static";
     this.bkg.on("pointerdown", () => {
+      this.emit("clicked");
       lego.event.emit(UIEvents.SpinButtonClick);
     });
     this.addChild(this.bkg);

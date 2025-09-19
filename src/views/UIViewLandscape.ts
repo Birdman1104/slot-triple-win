@@ -33,7 +33,7 @@ class UILandscapeWrapper extends Container {
     this.buildBkg();
     this.buildMenu();
     this.buildBuyBonusButton();
-    this.buildSpinButtonBkg();
+    this.buildSpinButton();
     this.buildBalance();
     this.buildBet();
     this.buildMultipleSpins();
@@ -42,12 +42,20 @@ class UILandscapeWrapper extends Container {
 
   private buildBkg(): void {
     this.bkg = makeSprite(uiPortraitBkg("l"));
+    this.bkg.eventMode = "static";
+    this.bkg.on("pointerdown", () => {
+      this.multipleSpins.hideToggle();
+      this.menu.hideToggle();
+    });
     this.addChild(this.bkg);
   }
 
   private buildMenu(): void {
     this.menu = new MenuLandscapeView();
     this.menu.position.set(-1228, 12);
+    this.menu.on("clicked", () => {
+      this.multipleSpins.hideToggle();
+    });
     this.addChild(this.menu);
   }
 
@@ -56,8 +64,12 @@ class UILandscapeWrapper extends Container {
     this.addChild(this.buyBonusBtn);
   }
 
-  private buildSpinButtonBkg(): void {
+  private buildSpinButton(): void {
     this.spinBtn = new SpinButton();
+    this.spinBtn.on("clicked", () => {
+      this.multipleSpins.hideToggle();
+      this.menu.hideToggle();
+    });
     this.addChild(this.spinBtn);
   }
 
@@ -69,12 +81,20 @@ class UILandscapeWrapper extends Container {
 
   private buildBet(): void {
     this.bet = new Bet();
+    this.bet.on("clicked", () => {
+      this.multipleSpins.hideToggle();
+      this.menu.hideToggle();
+    });
+
     this.bet.x = 657;
     this.addChild(this.bet);
   }
 
   private buildMultipleSpins(): void {
     this.multipleSpins = new MultipleSpins();
+    this.multipleSpins.on("clicked", () => {
+      this.menu.hideToggle();
+    });
     this.multipleSpins.position.set(208, 11);
     this.addChild(this.multipleSpins);
   }

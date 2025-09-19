@@ -37,6 +37,7 @@ export class Bet extends Container {
       this.upArrow = makeSprite(betArrowBtnL("up"));
       this.upArrow.eventMode = "static";
       this.upArrow.on("pointerdown", () => {
+        this.emit("clicked");
         lego.event.emit(UIEvents.PlusButtonClick);
       });
       this.addChild(this.upArrow);
@@ -44,6 +45,7 @@ export class Bet extends Container {
       this.downArrow = makeSprite(betArrowBtnL("down"));
       this.downArrow.eventMode = "static";
       this.downArrow.on("pointerdown", () => {
+        this.emit("clicked");
         lego.event.emit(UIEvents.MinusButtonClick);
       });
       this.addChild(this.downArrow);
