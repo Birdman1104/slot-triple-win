@@ -210,6 +210,23 @@ export const uiMultipleSpinsBkgL = (): SpriteConfig => ({
   name: "multiple_spins_bkg",
 });
 
+export const uiMultipleSpinsBkgPortrait = (): SpriteConfig => ({
+  frame: "multiple_spins_bkg.png",
+  atlas: "ui_l",
+  name: "multiple_spins_bkg",
+  scaleX: 0.6,
+  scaleY: 0.6,
+});
+
+export const uiMultipleSpinsIconPortrait = (): SpriteConfig => ({
+  frame: "multiple_spins_icon.png",
+  atlas: "ui_l",
+  name: "multiple_spins_icon",
+  y: -6,
+  scaleX: 0.6,
+  scaleY: 0.6,
+});
+
 export const uiMultipleSpinsIconL = (): SpriteConfig => ({
   frame: "multiple_spins_icon.png",
   atlas: "ui_l",
@@ -222,4 +239,11 @@ export const uiMultipleNumbersBkgL = (): SpriteConfig => ({
   atlas: "ui_l",
   name: "multiple_numbers_bkg",
   anchor: { x: 0.5, y: 1.2 },
+});
+
+export const uiMultipleNumbersBkgPortrait = (): SpriteConfig => ({
+  frame: "multiple_numbers_bkg_p.png",
+  atlas: "ui_p",
+  name: "multiple_numbers_bkg_p",
+  anchor: { x: 0.2, y: 1.2 },
 });

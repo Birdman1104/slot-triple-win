@@ -6,7 +6,7 @@ import { IMAGES } from "./assets/assetsNames/images.ts";
 import { SPRITESHEET } from "./assets/assetsNames/spritesheets.ts";
 import { mapCommands } from "./commands/eventCommandPairs.ts";
 import { ScreenSizeConfig } from "./config.ts";
-import { WindowEvent } from "./events/MainEvents.ts";
+import { MainGameEvents, WindowEvent } from "./events/MainEvents.ts";
 import { GameModelEvents } from "./events/ModelEvents.ts";
 import PixiStage from "./MainStage.ts";
 import { GameState } from "./models/GameModel.ts";
@@ -50,6 +50,7 @@ class App extends Application {
   public appResize(): void {
     const { clientWidth: w, clientHeight: h } = document.body;
     if (w === 0 || h === 0) return;
+    lego.event.emit(MainGameEvents.Resize);
     const { min, max } = ScreenSizeConfig.size.ratio;
     const { width, height } = fitDimension({ width: w, height: h }, min, max);
     this.resizeCanvas(width, height);

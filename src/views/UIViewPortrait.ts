@@ -19,7 +19,7 @@ import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
 import { buttonsConfig, MenuButton } from "./Menu";
-import { MultipleSpins } from "./MultipleSpinsL";
+import { MultipleSpinsPortrait } from "./MultipleSpinsP";
 import { SpinButton } from "./SpinButton";
 
 class MenuTogglePortrait extends Container {
@@ -159,7 +159,7 @@ class UIPortraitWrapper extends Container {
   private buyBonusBtn!: Sprite;
   private spinBtn!: SpinButton;
   private balance!: Balance;
-  private multipleSpins!: MultipleSpins;
+  private multipleSpins!: MultipleSpinsPortrait;
   private bet!: Bet;
 
   private upArrow!: Sprite;
@@ -248,12 +248,12 @@ class UIPortraitWrapper extends Container {
   }
 
   private buildMultipleSpins(): void {
-    this.multipleSpins = new MultipleSpins();
+    this.multipleSpins = new MultipleSpinsPortrait();
     this.multipleSpins.on("clicked", () => {
       this.emit("closeMenu");
     });
     this.multipleSpins.position.set(-273, -37);
-    this.multipleSpins.scale.set(0.6);
+    // this.multipleSpins.scale.set(0.6);
     this.addChild(this.multipleSpins);
   }
 }
