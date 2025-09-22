@@ -85,6 +85,10 @@ export class SlotMachineModel extends ObservableModel {
     this._errorResult = value;
   }
 
+  public isIdle(): boolean {
+    return this.state === SlotMachineState.Idle;
+  }
+
   public init(): void {
     //
   }

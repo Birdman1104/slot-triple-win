@@ -4,7 +4,6 @@ import { SlotMachineModelEvents } from "../events/ModelEvents";
 import {
   errorPopupHideCompleteCommand,
   initModelsCommand,
-  maxBetButtonClickCommand,
   minusButtonClickCommand,
   onFlashButtonClickCommand,
   onMusicButtonClickCommand,
@@ -49,10 +48,6 @@ export const eventCommandPairs: { event: any; command: any }[] = [
   {
     event: UIEvents.MinusButtonClick,
     command: minusButtonClickCommand,
-  },
-  {
-    event: UIEvents.MaxBetButtonClick,
-    command: maxBetButtonClickCommand,
   },
   {
     event: SlotMachineModelEvents.StateUpdate,

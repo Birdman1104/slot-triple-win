@@ -47,15 +47,13 @@ export const onSpinButtonClickCommand = () => {
 };
 
 export const plusButtonClickCommand = (): void => {
+  if (!Head.gameModel?.slotMachine?.isIdle()) return;
   Head.playerModel?.increaseBet();
 };
 
 export const minusButtonClickCommand = (): void => {
+  if (!Head.gameModel?.slotMachine?.isIdle()) return;
   Head.playerModel?.decreaseBet();
-};
-
-export const maxBetButtonClickCommand = (): void => {
-  Head.playerModel?.setMaxBet();
 };
 
 export const winLinesShowCompleteCommand = (): void => {
@@ -70,7 +68,7 @@ export const spinResultUpdateCommand = (result: SpinResult): void => {
   Head.playerModel?.updateBalance(result.totalWin);
 };
 
-export const slotMachineStateUpdateCommand = (newState: SlotMachineState, oldState: SlotMachineState): void => {
+export const slotMachineStateUpdateCommand = (newState: SlotMachineState): void => {
   if (newState === SlotMachineState.WaitingForResult) {
     Head.gameModel?.slotMachine?.checkForResult();
   }
