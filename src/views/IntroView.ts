@@ -86,7 +86,7 @@ class IntroPortrait extends Container {
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(-275, -200, 550, 500);
+    return new Rectangle(-275, -200, 550, 650);
   }
 
   public processClick(): void {

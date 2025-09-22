@@ -3,9 +3,9 @@ import { lp } from "../utils/Utils";
 export const clickToContinueTextConfig = (x: number, y: number): TextConfig => ({
   text: "Click to continue",
   x,
-  y: 404,
+  y: 460,
   anchor: { x: 0.5, y: 0.5 },
-  style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
+  style: { fontSize: 100, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
 });
 
 export const clickToProceedTextConfig = (x: number, y: number): TextConfig => ({
@@ -196,7 +196,7 @@ export const multipleSpinsTextConfigPortrait = (x = 0, y = -9, text = ""): TextC
   x,
   anchor: { x: 0.5, y: 0.5 },
   style: {
-    fontSize: 75,
+    fontSize: 60,
     fill: "#ffffff",
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,
