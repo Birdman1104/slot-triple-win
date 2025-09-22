@@ -1,7 +1,15 @@
 import { lego } from "@armathai/lego";
 import anime from "animejs";
 import { Container, Graphics, Rectangle, Sprite, Text, Texture } from "pixi.js";
-import { uiMenuBkgL, uiMenuBtnL, uiMenuButtonBkgL, uiMenuButtonL, uiMenuCloseBtnL } from "../configs/spritesConfig";
+import {
+  portraitMenuCloseButtonConfig,
+  uiMenuBkgL,
+  uiMenuBkgP,
+  uiMenuBtnL,
+  uiMenuButtonBkgL,
+  uiMenuButtonL,
+  uiMenuCloseBtnL,
+} from "../configs/spritesConfig";
 import { menuButtonTextConfig } from "../configs/textConfig";
 import { UIEvents } from "../events/MainEvents";
 import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
@@ -58,13 +66,18 @@ export class MenuButton extends Container {
 
   private isSelected = false;
 
-  constructor(
-    private config: MenuButtonConfig,
-    private w: number,
-    private h: number,
-    private fontSize = 100
-  ) {
+  private config: MenuButtonConfig;
+  private w: number;
+  private h: number;
+  private fontSize: number;
+
+  constructor(buttonConfig: { config: MenuButtonConfig; w: number; h: number; fontSize: number }) {
     super();
+    const { config, w, h, fontSize } = buttonConfig;
+    this.config = config;
+    this.w = w;
+    this.h = h;
+    this.fontSize = fontSize;
 
     this.build();
 
@@ -73,9 +86,7 @@ export class MenuButton extends Container {
     this.hitAreaGr.eventMode = "static";
     this.hitAreaGr.on("pointerdown", () => {
       lego.event.emit(this.config.event);
-      if (this.config.type === "toggle") {
-        //
-      } else {
+      if (this.config.type !== "toggle") {
         this.emit("close");
       }
     });
@@ -107,11 +118,12 @@ export class MenuButton extends Container {
   }
 }
 
-class MenuToggle extends Container {
+export class MenuToggle extends Container {
   private bkg!: Sprite;
   private buttons: MenuButton[] = [];
+  private closeBtn!: Sprite;
 
-  constructor() {
+  constructor(private isLandscape: boolean) {
     super();
 
     lego.event.on(SoundModelEvents.MusicStateUpdate, this.onMusicStateUpdate, this);
@@ -143,22 +155,40 @@ class MenuToggle extends Container {
       easing: "easeInOutSine",
       complete: () => {
         this.emit("menuOpened");
+        if (!this.isLandscape) {
+          this.closeBtn.eventMode = "static";
+        }
       },
     });
   }
 
   private build(): void {
-    this.bkg = makeSprite(uiMenuBkgL());
+    this.bkg = makeSprite(this.isLandscape ? uiMenuBkgL() : uiMenuBkgP());
     this.addChild(this.bkg);
 
     buttonsConfig.forEach((c, i) => {
-      const button = new MenuButton(c, 600, 124);
+      let config = { config: c, w: 600, h: 124, fontSize: 100 };
+      if (!this.isLandscape) {
+        config = { config: c, w: 400, h: 110, fontSize: 70 };
+      }
+      const button = new MenuButton(config);
       button.on("close", () => this.hide());
-      button.y = -this.bkg.height * 1.2 + 60 + i * button.height;
-      button.x = -this.bkg.width / 2 + 20;
+      if (this.isLandscape) {
+        button.y = -this.bkg.height * 1.2 + 60 + i * button.height;
+        button.x = -this.bkg.width / 2 + 20;
+      } else {
+        button.y = i * button.height - this.height * 0.07;
+        button.x = -this.bkg.width + 50;
+      }
       this.addChild(button);
       this.buttons.push(button);
     });
+
+    if (!this.isLandscape) {
+      this.closeBtn = makeSprite(portraitMenuCloseButtonConfig());
+      this.closeBtn.on("pointerdown", () => this.hide());
+      this.addChild(this.closeBtn);
+    }
   }
 
   private onMusicStateUpdate(value: SoundState): void {
@@ -228,7 +258,7 @@ export class MenuLandscapeView extends Container {
   }
 
   private buildMenu(): void {
-    this.menu = new MenuToggle();
+    this.menu = new MenuToggle(true);
     this.menu.visible = false;
     this.menu.hide();
 

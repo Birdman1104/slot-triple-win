@@ -1,110 +1,19 @@
 import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
-import anime from "animejs";
 import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import {
-  betArrowBtnL,
-  portraitMenuCloseButtonConfig,
-  uiButBonusBtnL,
-  uiMenuBkgP,
-  uiMenuBtnL,
-  uiPortraitBkg,
-} from "../configs/spritesConfig";
+import { betArrowBtnL, uiButBonusBtnL, uiMenuBtnL, uiPortraitBkg } from "../configs/spritesConfig";
 import { UIEvents } from "../events/MainEvents";
-import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
-import { GameType } from "../models/GameModel";
-import { SoundState } from "../models/SoundModel";
 import { makeSprite } from "../utils/Utils";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
-import { buttonsConfig, MenuButton } from "./Menu";
+import { MenuToggle } from "./Menu";
 import { MultipleSpinsPortrait } from "./MultipleSpinsP";
 import { SpinButton } from "./SpinButton";
 
-class MenuTogglePortrait extends Container {
-  private bkg!: Sprite;
-  private buttons: MenuButton[] = [];
-  private closeBtn!: Sprite;
-
-  constructor() {
-    super();
-    lego.event.on(SoundModelEvents.MusicStateUpdate, this.onMusicStateUpdate, this);
-    lego.event.on(SoundModelEvents.SoundStateUpdate, this.onSoundStateUpdate, this);
-    lego.event.on(GameModelEvents.GameTypeUpdate, this.onGameTypeUpdate, this);
-    this.build();
-  }
-
-  public hide(): void {
-    this.closeBtn.eventMode = "none";
-    anime({
-      targets: this.scale,
-      x: 0,
-      y: 0,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("menuClosed");
-      },
-    });
-  }
-
-  public show(): void {
-    anime({
-      targets: this.scale,
-      x: 1,
-      y: 1,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("menuOpened");
-        this.closeBtn.eventMode = "static";
-      },
-    });
-  }
-
-  private onMusicStateUpdate(value: SoundState): void {
-    const button = this.buttons.find((b) => b.title === "Music");
-    if (button) {
-      button.toggleButton(value === SoundState.On);
-    }
-  }
-
-  private onSoundStateUpdate(value: SoundState): void {
-    const button = this.buttons.find((b) => b.title === "Sound");
-    if (button) {
-      button.toggleButton(value === SoundState.On);
-    }
-  }
-
-  private onGameTypeUpdate(value: GameType): void {
-    const button = this.buttons.find((b) => b.title === "Turbo");
-    if (button) {
-      button.toggleButton(value === GameType.Flash);
-    }
-  }
-
-  private build(): void {
-    this.bkg = makeSprite(uiMenuBkgP());
-    this.addChild(this.bkg);
-
-    buttonsConfig.forEach((c, i) => {
-      const button = new MenuButton(c, 400, 110, 70);
-      button.on("close", () => this.hide());
-      button.y = i * button.height - this.height * 0.07;
-      button.x = -this.bkg.width + 50;
-      this.addChild(button);
-      this.buttons.push(button);
-    });
-
-    this.closeBtn = makeSprite(portraitMenuCloseButtonConfig());
-    this.closeBtn.on("pointerdown", () => this.hide());
-    this.addChild(this.closeBtn);
-  }
-}
 class MenuPortraitView extends Container {
   private menuButton!: Sprite;
-  private menu!: MenuTogglePortrait;
+  private menu!: MenuToggle;
 
   constructor() {
     super();
@@ -135,7 +44,7 @@ class MenuPortraitView extends Container {
   }
 
   private buildMenu(): void {
-    this.menu = new MenuTogglePortrait();
+    this.menu = new MenuToggle(false);
     this.menu.visible = false;
     this.menu.hide();
 
