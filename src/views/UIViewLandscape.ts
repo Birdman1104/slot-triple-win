@@ -124,11 +124,6 @@ export class UILandscapeView extends PixiGrid {
     super.rebuild(this.getGridConfig());
   }
 
-  public resize(): void {
-    // const { width } = getGameBounds();
-    // this.wrapper.scale.set(width / this.wrapper.width);
-  }
-
   private build() {
     this.setChild("ui_bar", this.wrapper);
   }

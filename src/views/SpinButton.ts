@@ -11,8 +11,6 @@ export class SpinButton extends Container {
   private spinArrow!: Sprite;
   private stopSign!: Sprite;
 
-  private slotState = SlotMachineState.Unknown;
-
   constructor() {
     super();
 
