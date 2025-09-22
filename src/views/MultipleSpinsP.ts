@@ -1,46 +1,12 @@
-import { lego } from "@armathai/lego";
-import anime from "animejs";
-import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
+import { Container, Rectangle, Sprite, Text } from "pixi.js";
 import {
   uiMultipleNumbersBkgPortrait,
   uiMultipleSpinsBkgPortrait,
   uiMultipleSpinsIconPortrait,
 } from "../configs/spritesConfig";
 import { multipleSpinsTextConfigPortrait } from "../configs/textConfig";
-import { UIEvents } from "../events/MainEvents";
-import { drawBounds, makeSprite, makeText } from "../utils/Utils";
-
-const values: number[] = [200, 100, 50, 20, 10];
-
-class MultipleSpinButton extends Container {
-  private valueText!: Text;
-  private hitAreaGr!: Graphics;
-
-  constructor(
-    private value: number,
-    private w: number,
-    private h: number
-  ) {
-    super();
-
-    this.build();
-    this.hitAreaGr = drawBounds(this);
-    this.hitAreaGr.eventMode = "static";
-    this.hitAreaGr.on("pointerdown", () => {
-      lego.event.emit(UIEvents.MultipleSpinNumberClick, this.value);
-      this.emit("numberClicked", this.value);
-    });
-    this.hitAreaGr.alpha = 0;
-  }
-
-  public getBounds(): Rectangle {
-    return new Rectangle(0, 0, this.w, this.h);
-  }
-  private build(): void {
-    this.valueText = makeText(multipleSpinsTextConfigPortrait(50, 33, this.value.toString()));
-    this.addChild(this.valueText);
-  }
-}
+import { hideToggle, makeSprite, makeText, showToggle } from "../utils/Utils";
+import { MultipleSpinButton, values } from "./MultipleSpinsL";
 
 class MultipleSpinsToggle extends Container {
   private bkg!: Sprite;
@@ -57,31 +23,19 @@ class MultipleSpinsToggle extends Container {
   }
 
   public hide(): void {
-    anime({
-      targets: this.scale,
-      x: 0,
-      y: 0,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("toggleClosed");
-        this._isHidden = true;
-      },
-    });
+    const cb = () => {
+      this.emit("toggleClosed");
+      this._isHidden = true;
+    };
+    hideToggle(this, cb);
   }
 
   public show(): void {
-    anime({
-      targets: this.scale,
-      x: 1,
-      y: 1,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("toggleOpened");
-        this._isHidden = false;
-      },
-    });
+    const cb = () => {
+      this.emit("toggleOpened");
+      this._isHidden = false;
+    };
+    showToggle(this, cb);
   }
 
   private build(): void {
@@ -89,7 +43,7 @@ class MultipleSpinsToggle extends Container {
     this.addChild(this.bkg);
 
     values.forEach((v, i) => {
-      const button = new MultipleSpinButton(v, 100, 75);
+      const button = new MultipleSpinButton(false, v, 100, 75);
       button.y = -this.bkg.height * 1.2 + 30 + button.height * i;
       button.x = -7;
       button.on("numberClicked", (value: number) => {

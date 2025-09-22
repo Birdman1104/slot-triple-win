@@ -1,18 +1,18 @@
 import { lego } from "@armathai/lego";
-import anime from "animejs";
 import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
 import { uiMultipleNumbersBkgL, uiMultipleSpinsBkgL, uiMultipleSpinsIconL } from "../configs/spritesConfig";
 import { multipleSpinsButtonTextConfig, multipleSpinsTextConfig } from "../configs/textConfig";
 import { UIEvents } from "../events/MainEvents";
-import { drawBounds, makeSprite, makeText } from "../utils/Utils";
+import { drawBounds, hideToggle, makeSprite, makeText, showToggle } from "../utils/Utils";
 
-const values: number[] = [200, 100, 50, 20, 10];
+export const values: number[] = [200, 100, 50, 20, 10];
 
-class MultipleSpinButton extends Container {
+export class MultipleSpinButton extends Container {
   private valueText!: Text;
   private hitAreaGr!: Graphics;
 
   constructor(
+    private isLandscape: boolean,
     private value: number,
     private w: number,
     private h: number
@@ -33,7 +33,14 @@ class MultipleSpinButton extends Container {
     return new Rectangle(0, 0, this.w, this.h);
   }
   private build(): void {
-    this.valueText = makeText(multipleSpinsButtonTextConfig(this.value.toString()));
+    this.valueText = makeText(
+      multipleSpinsButtonTextConfig(
+        this.isLandscape ? 122 : 50,
+        this.isLandscape ? 62 : 33,
+        this.isLandscape ? 100 : 60,
+        this.value.toString()
+      )
+    );
     this.addChild(this.valueText);
   }
 }
@@ -53,31 +60,19 @@ class MultipleSpinsToggle extends Container {
   }
 
   public hide(): void {
-    anime({
-      targets: this.scale,
-      x: 0,
-      y: 0,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("toggleClosed");
-        this._isHidden = true;
-      },
-    });
+    const cb = () => {
+      this.emit("toggleClosed");
+      this._isHidden = true;
+    };
+    hideToggle(this, cb);
   }
 
   public show(): void {
-    anime({
-      targets: this.scale,
-      x: 1,
-      y: 1,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("toggleOpened");
-        this._isHidden = false;
-      },
-    });
+    const cb = () => {
+      this.emit("toggleOpened");
+      this._isHidden = false;
+    };
+    showToggle(this, cb);
   }
 
   private build(): void {
@@ -85,7 +80,7 @@ class MultipleSpinsToggle extends Container {
     this.addChild(this.bkg);
 
     values.forEach((v, i) => {
-      const button = new MultipleSpinButton(v, 244, 127);
+      const button = new MultipleSpinButton(true, v, 244, 127);
       button.y = -this.bkg.height * 1.2 + 50 + button.height * i;
       button.x = -this.bkg.width / 2;
       button.on("numberClicked", (value: number) => {

@@ -2,7 +2,7 @@ import anime from "animejs";
 import { Container, Sprite, Text, Texture } from "pixi.js";
 import { popupBkgConfig, popupCloseButtonConfig, redIconConfig } from "../configs/spritesConfig";
 import { errorTextTextConfig, errorTitleTextConfig } from "../configs/textConfig";
-import { makeSprite, makeText } from "../utils/Utils";
+import { hideToggle, makeSprite, makeText, showToggle } from "../utils/Utils";
 
 export class ErrorPopup extends Container {
   private errorMessage!: Text;
@@ -30,16 +30,11 @@ export class ErrorPopup extends Container {
       duration: 300,
       easing: "easeInOutQuad",
     });
-    anime({
-      targets: this.scale,
-      x: 1,
-      y: 1,
-      duration: 300,
-      easing: "easeInOutQuad",
-      complete: () => {
-        this.closeButton.eventMode = "static";
-      },
-    });
+
+    const cb = () => {
+      this.closeButton.eventMode = "static";
+    };
+    showToggle(this, cb);
   }
 
   public hide(force = false): void {
@@ -48,12 +43,7 @@ export class ErrorPopup extends Container {
       this.alpha = 0;
       return;
     }
-    anime({
-      targets: this,
-      alpha: 0,
-      duration: 300,
-      easing: "easeInOutQuad",
-    });
+    hideToggle(this);
   }
 
   public rebuild(): void {

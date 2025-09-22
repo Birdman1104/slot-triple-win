@@ -1,5 +1,4 @@
 import { lego } from "@armathai/lego";
-import anime from "animejs";
 import { Container, Graphics, Rectangle, Sprite, Text, Texture } from "pixi.js";
 import {
   portraitMenuCloseButtonConfig,
@@ -15,7 +14,7 @@ import { UIEvents } from "../events/MainEvents";
 import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
 import { GameType } from "../models/GameModel";
 import { SoundState } from "../models/SoundModel";
-import { drawBounds, makeSprite, makeText } from "../utils/Utils";
+import { drawBounds, hideToggle, makeSprite, makeText, showToggle } from "../utils/Utils";
 
 export type MenuButtonConfig = {
   title: string;
@@ -134,32 +133,18 @@ export class MenuToggle extends Container {
   }
 
   public hide(): void {
-    anime({
-      targets: this.scale,
-      x: 0,
-      y: 0,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("menuClosed");
-      },
-    });
+    const cb = () => this.emit("menuClosed");
+    hideToggle(this, cb);
   }
 
   public show(): void {
-    anime({
-      targets: this.scale,
-      x: 1,
-      y: 1,
-      duration: 300,
-      easing: "easeInOutSine",
-      complete: () => {
-        this.emit("menuOpened");
-        if (!this.isLandscape) {
-          this.closeBtn.eventMode = "static";
-        }
-      },
-    });
+    const cb = () => {
+      this.emit("menuOpened");
+      if (!this.isLandscape) {
+        this.closeBtn.eventMode = "static";
+      }
+    };
+    showToggle(this, cb);
   }
 
   private build(): void {

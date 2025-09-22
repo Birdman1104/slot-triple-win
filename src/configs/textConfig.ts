@@ -203,13 +203,13 @@ export const multipleSpinsTextConfigPortrait = (x = 0, y = -9, text = ""): TextC
   },
 });
 
-export const multipleSpinsButtonTextConfig = (text = ""): TextConfig => ({
+export const multipleSpinsButtonTextConfig = (x: number, y: number, fontSize: number, text = ""): TextConfig => ({
   text,
-  x: 122,
-  y: 62,
+  x,
+  y,
   anchor: { x: 0.5, y: 0.5 },
   style: {
-    fontSize: 100,
+    fontSize,
     fill: "#ffffff",
     fontFamily: "JomhuriaRegular",
     letterSpacing: 1,

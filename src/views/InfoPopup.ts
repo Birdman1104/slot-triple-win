@@ -2,7 +2,7 @@ import anime from "animejs";
 import { Container, Sprite, Text, Texture } from "pixi.js";
 import { popupBkgConfig, popupCloseButtonConfig } from "../configs/spritesConfig";
 import { infoTextTextConfig, infoTitleTextConfig } from "../configs/textConfig";
-import { makeSprite, makeText } from "../utils/Utils";
+import { hideToggle, makeSprite, makeText } from "../utils/Utils";
 
 export class InfoPopup extends Container {
   private infoMessage!: Text;
@@ -23,16 +23,8 @@ export class InfoPopup extends Container {
       duration: 300,
       easing: "easeInOutQuad",
     });
-    anime({
-      targets: this.scale,
-      x: 1,
-      y: 1,
-      duration: 300,
-      easing: "easeInOutQuad",
-      complete: () => {
-        this.closeButton.eventMode = "static";
-      },
-    });
+    const cb = () => (this.closeButton.eventMode = "static");
+    hideToggle(this, cb);
   }
 
   public hide(force = false): void {
@@ -41,12 +33,7 @@ export class InfoPopup extends Container {
       this.alpha = 0;
       return;
     }
-    anime({
-      targets: this,
-      alpha: 0,
-      duration: 300,
-      easing: "easeInOutQuad",
-    });
+    hideToggle(this);
   }
 
   public rebuild(): void {

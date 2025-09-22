@@ -1,3 +1,4 @@
+import anime from "animejs";
 import { DisplayObject, Graphics, Point, Rectangle, Sprite, Text, Texture } from "pixi.js";
 import { SPRITESHEET } from "../assets/assetsNames/spritesheets";
 
@@ -213,4 +214,30 @@ export const difference = (arrA: any[], arrB: any[]): any[] => {
 
 export const last = (arr: any[]): any => {
   return arr.slice(-1)[0];
+};
+
+export const showToggle = (obj: DisplayObject, cb?: () => void) => {
+  return anime({
+    targets: obj.scale,
+    x: 1,
+    y: 1,
+    duration: 300,
+    easing: "easeInOutSine",
+    complete: () => {
+      callIfExists(cb);
+    },
+  });
+};
+
+export const hideToggle = (obj: DisplayObject, cb?: () => void) => {
+  return anime({
+    targets: obj.scale,
+    x: 0,
+    y: 0,
+    duration: 300,
+    easing: "easeInOutSine",
+    complete: () => {
+      callIfExists(cb);
+    },
+  });
 };
