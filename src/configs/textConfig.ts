@@ -178,7 +178,7 @@ export const menuButtonTextConfig = (text: string, fontSize = 100): TextConfig =
   },
 });
 
-export const multipleSpinsTextConfig = (text = ""): TextConfig => ({
+export const autoSpinsTextConfig = (text = ""): TextConfig => ({
   text,
   y: -14,
   anchor: { x: 0.5, y: 0.5 },
@@ -190,7 +190,7 @@ export const multipleSpinsTextConfig = (text = ""): TextConfig => ({
   },
 });
 
-export const multipleSpinsTextConfigPortrait = (x = 0, y = -9, text = ""): TextConfig => ({
+export const autoSpinsTextConfigPortrait = (x = 0, y = -9, text = ""): TextConfig => ({
   text,
   y,
   x,
@@ -203,7 +203,7 @@ export const multipleSpinsTextConfigPortrait = (x = 0, y = -9, text = ""): TextC
   },
 });
 
-export const multipleSpinsButtonTextConfig = (x: number, y: number, fontSize: number, text = ""): TextConfig => ({
+export const autoSpinsButtonTextConfig = (x: number, y: number, fontSize: number, text = ""): TextConfig => ({
   text,
   x,
   y,

@@ -34,6 +34,9 @@ export class SlotMachineModel extends ObservableModel {
   private tempSpinResult!: SpinResult;
   private isResultReady = false;
 
+  private _isAutoSpin = false;
+  private _autoSpinCount = 0;
+
   private _errorResult: ErrorResult | null = null;
 
   public constructor(config: any) {
@@ -85,12 +88,34 @@ export class SlotMachineModel extends ObservableModel {
     this._errorResult = value;
   }
 
+  get isAutoSpin(): boolean {
+    return this._isAutoSpin;
+  }
+
+  set isAutoSpin(value: boolean) {
+    this._isAutoSpin = value;
+  }
+
+  get autoSpinCount(): number {
+    return this._autoSpinCount;
+  }
+
+  set autoSpinCount(value: number) {
+    this._autoSpinCount = value;
+  }
+
   public isIdle(): boolean {
     return this.state === SlotMachineState.Idle;
   }
 
   public init(): void {
     //
+  }
+
+  public setAutoSpin(value: number): void {
+    if (this.state !== SlotMachineState.Idle) return;
+    this.isAutoSpin = true;
+    this.autoSpinCount = value;
   }
 
   public setState(state: SlotMachineState): void {
@@ -125,7 +150,7 @@ export class SlotMachineModel extends ObservableModel {
       this.setNewElementsToReels(this.tempSpinResult.reels);
       this.setResult(this.tempSpinResult);
       setTimeout(() => {
-        // TODO FIX THIS SHIT, needs to skip a frame then seet to new state
+        // TODO FIX THIS SHIT, needs to skip a frame then set to new state
         this.state = SlotMachineState.DropNew;
       }, 0);
     } else {

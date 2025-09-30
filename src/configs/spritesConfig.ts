@@ -205,13 +205,13 @@ export const uiLineL = (x: number): SpriteConfig => ({
   x,
 });
 
-export const uiMultipleSpinsBkgL = (): SpriteConfig => ({
+export const uiAutoSpinsBkgL = (): SpriteConfig => ({
   frame: "multiple_spins_bkg.png",
   atlas: "ui_l",
   name: "multiple_spins_bkg",
 });
 
-export const uiMultipleSpinsBkgPortrait = (): SpriteConfig => ({
+export const uiAutoSpinsBkgPortrait = (): SpriteConfig => ({
   frame: "multiple_spins_bkg.png",
   atlas: "ui_l",
   name: "multiple_spins_bkg",
@@ -219,7 +219,7 @@ export const uiMultipleSpinsBkgPortrait = (): SpriteConfig => ({
   scaleY: 0.6,
 });
 
-export const uiMultipleSpinsIconPortrait = (): SpriteConfig => ({
+export const uiAutoSpinsIconPortrait = (): SpriteConfig => ({
   frame: "multiple_spins_icon.png",
   atlas: "ui_l",
   name: "multiple_spins_icon",
@@ -228,7 +228,7 @@ export const uiMultipleSpinsIconPortrait = (): SpriteConfig => ({
   scaleY: 0.6,
 });
 
-export const uiMultipleSpinsIconL = (): SpriteConfig => ({
+export const uiAutoSpinsIconL = (): SpriteConfig => ({
   frame: "multiple_spins_icon.png",
   atlas: "ui_l",
   name: "multiple_spins_icon",

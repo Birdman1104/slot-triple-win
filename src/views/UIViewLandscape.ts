@@ -3,10 +3,10 @@ import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
 import { uiButBonusBtnL, uiLineL, uiPortraitBkg } from "../configs/spritesConfig";
 import { makeSprite } from "../utils/Utils";
+import { AutoSpinsLandscape } from "./AutoSpinsL";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
 import { MenuLandscapeView } from "./Menu";
-import { MultipleSpins } from "./MultipleSpinsL";
 import { SpinButton } from "./SpinButton";
 
 class UILandscapeWrapper extends Container {
@@ -15,7 +15,7 @@ class UILandscapeWrapper extends Container {
   private buyBonusBtn!: Sprite;
   private spinBtn!: SpinButton;
   private balance!: Balance;
-  private multipleSpins!: MultipleSpins;
+  private autoSpins!: AutoSpinsLandscape;
   private bet!: Bet;
 
   private lines: Sprite[] = [];
@@ -36,7 +36,7 @@ class UILandscapeWrapper extends Container {
     this.buildSpinButton();
     this.buildBalance();
     this.buildBet();
-    this.buildMultipleSpins();
+    this.buildAutoSpins();
     this.buildLines();
   }
 
@@ -44,7 +44,7 @@ class UILandscapeWrapper extends Container {
     this.bkg = makeSprite(uiPortraitBkg("l"));
     this.bkg.eventMode = "static";
     this.bkg.on("pointerdown", () => {
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
       this.menu.hideToggle();
     });
     this.addChild(this.bkg);
@@ -54,7 +54,7 @@ class UILandscapeWrapper extends Container {
     this.menu = new MenuLandscapeView();
     this.menu.position.set(-1228, 12);
     this.menu.on("clicked", () => {
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
     });
     this.addChild(this.menu);
   }
@@ -67,7 +67,7 @@ class UILandscapeWrapper extends Container {
   private buildSpinButton(): void {
     this.spinBtn = new SpinButton();
     this.spinBtn.on("clicked", () => {
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
       this.menu.hideToggle();
     });
     this.addChild(this.spinBtn);
@@ -82,7 +82,7 @@ class UILandscapeWrapper extends Container {
   private buildBet(): void {
     this.bet = new Bet();
     this.bet.on("clicked", () => {
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
       this.menu.hideToggle();
     });
 
@@ -90,13 +90,13 @@ class UILandscapeWrapper extends Container {
     this.addChild(this.bet);
   }
 
-  private buildMultipleSpins(): void {
-    this.multipleSpins = new MultipleSpins();
-    this.multipleSpins.on("clicked", () => {
+  private buildAutoSpins(): void {
+    this.autoSpins = new AutoSpinsLandscape();
+    this.autoSpins.on("clicked", () => {
       this.menu.hideToggle();
     });
-    this.multipleSpins.position.set(208, 11);
-    this.addChild(this.multipleSpins);
+    this.autoSpins.position.set(208, 11);
+    this.addChild(this.autoSpins);
   }
 
   private buildLines(): void {

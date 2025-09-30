@@ -5,10 +5,10 @@ import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
 import { betArrowBtnL, uiButBonusBtnL, uiMenuBtnL, uiPortraitBkg } from "../configs/spritesConfig";
 import { UIEvents } from "../events/MainEvents";
 import { makeSprite } from "../utils/Utils";
+import { AutoSpinsPortrait } from "./AutoSpinsP";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
 import { MenuToggle } from "./Menu";
-import { MultipleSpinsPortrait } from "./MultipleSpinsP";
 import { SpinButton } from "./SpinButton";
 
 class MenuPortraitView extends Container {
@@ -68,7 +68,7 @@ class UIPortraitWrapper extends Container {
   private buyBonusBtn!: Sprite;
   private spinBtn!: SpinButton;
   private balance!: Balance;
-  private multipleSpins!: MultipleSpinsPortrait;
+  private autoSpins!: AutoSpinsPortrait;
   private bet!: Bet;
 
   private upArrow!: Sprite;
@@ -89,7 +89,7 @@ class UIPortraitWrapper extends Container {
     this.buildSpinButton();
     this.buildBalance();
     this.buildBet();
-    this.buildMultipleSpins();
+    this.buildAutoSpins();
   }
 
   private buildBkg(): void {
@@ -97,7 +97,7 @@ class UIPortraitWrapper extends Container {
     this.bkg.eventMode = "static";
     this.bkg.on("pointerdown", () => {
       this.emit("closeMenu");
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
     });
     this.addChild(this.bkg);
   }
@@ -113,7 +113,7 @@ class UIPortraitWrapper extends Container {
     this.spinBtn = new SpinButton();
     this.spinBtn.on("clicked", () => {
       this.emit("closeMenu");
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
     });
     this.spinBtn.scale.set(0.6);
     this.spinBtn.position.set(-1, -43);
@@ -139,7 +139,7 @@ class UIPortraitWrapper extends Container {
     this.upArrow.eventMode = "static";
     this.upArrow.on("pointerdown", () => {
       this.emit("closeMenu");
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
       lego.event.emit(UIEvents.PlusButtonClick);
     });
     this.addChild(this.upArrow);
@@ -150,20 +150,19 @@ class UIPortraitWrapper extends Container {
     this.downArrow.eventMode = "static";
     this.downArrow.on("pointerdown", () => {
       this.emit("closeMenu");
-      this.multipleSpins.hideToggle();
+      this.autoSpins.hideToggle();
       lego.event.emit(UIEvents.MinusButtonClick);
     });
     this.addChild(this.downArrow);
   }
 
-  private buildMultipleSpins(): void {
-    this.multipleSpins = new MultipleSpinsPortrait();
-    this.multipleSpins.on("clicked", () => {
+  private buildAutoSpins(): void {
+    this.autoSpins = new AutoSpinsPortrait();
+    this.autoSpins.on("clicked", () => {
       this.emit("closeMenu");
     });
-    this.multipleSpins.position.set(-273, -37);
-    // this.multipleSpins.scale.set(0.6);
-    this.addChild(this.multipleSpins);
+    this.autoSpins.position.set(-273, -37);
+    this.addChild(this.autoSpins);
   }
 }
 export class UIPortraitView extends PixiGrid {

@@ -1,6 +1,7 @@
 import { lego } from "@armathai/lego";
 import { ForegroundViewEvents, MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
+import Head from "../models/Head";
 import {
   errorPopupHideCompleteCommand,
   initModelsCommand,
@@ -26,6 +27,10 @@ export const unmapCommands = (): void => {
 
 export const mapCommands = (): void => {
   eventCommandPairs.forEach((pair) => lego.command.on(pair.event, pair.command));
+};
+
+export const onAutoSpinNumberClickCommand = (value: number): void => {
+  Head.gameModel?.slotMachine?.setAutoSpin(value);
 };
 
 export const eventCommandPairs: { event: any; command: any }[] = [
@@ -95,5 +100,10 @@ export const eventCommandPairs: { event: any; command: any }[] = [
   {
     event: UIEvents.TurboButtonClick,
     command: onFlashButtonClickCommand,
+  },
+
+  {
+    event: UIEvents.AutoSpinNumberClick,
+    command: onAutoSpinNumberClickCommand,
   },
 ];

@@ -33,7 +33,7 @@ export const UIEvents = {
   TurboButtonClick: "UIEventsTurboButtonClick",
   HistoryButtonClick: "UIEventsHistoryButtonClick",
 
-  MultipleSpinNumberClick: "UIEventsMultipleSpinNumberClick",
+  AutoSpinNumberClick: "UIEventsAutoSpinNumberClick",
 };
 
 export const ReelViewEvents = {
