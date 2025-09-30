@@ -75,7 +75,7 @@ const getIntroViewGridPortraitConfig = () => {
   const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
   return {
     name: "intro",
-    debug: { color: 0xd9ff27 },
+    // debug: { color: 0xd9ff27 },
     bounds,
     cells: [
       {

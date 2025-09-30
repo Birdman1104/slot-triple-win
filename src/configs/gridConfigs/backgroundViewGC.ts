@@ -63,19 +63,19 @@ const getBackgroundGridPortraitConfig = () => {
       },
       {
         name: "leaf",
-        bounds: { x: 0.5, y: 0, width: 0.5, height: 0.3 },
+        bounds: { x: 0.7, y: 0, width: 0.3, height: 0.175 },
         align: CellAlign.rightTop,
-        scale: CellScale.showAll,
+        scale: CellScale.envelop,
       },
       {
         name: "left_shadow",
-        bounds: { x: 0, y: 0.7, width: 0.5, height: 0.3 },
+        bounds: { x: 0, y: 0.6, width: 1, height: 0.4 },
         align: CellAlign.leftBottom,
         scale: CellScale.showAll,
       },
       {
         name: "right_shadow",
-        bounds: { x: 0.5, y: 0.7, width: 0.5, height: 0.3 },
+        bounds: { x: 1, y: 0.7, width: 0.5, height: 0.3 },
         align: CellAlign.rightBottom,
         scale: CellScale.showAll,
       },
