@@ -2,18 +2,20 @@ import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
 import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
-import { getIntroViewGridConfig } from "../configs/gridConfigs/introViewGC";
-import { introIceCubeConfig } from "../configs/spritesConfig";
+import { getIntroViewGridConfig, introLandscapeGridConfig } from "../configs/gridConfigs/introViewGC";
+import { introIceCubeConfig, reelShadowConfig } from "../configs/spritesConfig";
 import { clickToContinueTextConfig } from "../configs/textConfig";
 import { MainGameEvents } from "../events/MainEvents";
 import { getGameBounds, lp, makeSprite, makeText } from "../utils/Utils";
 import { IntroCard } from "./IntroCard";
 
-class IntroLandscape extends Container {
+class IntroLandscape extends PixiGrid {
   private card1: IntroCard | null = null;
   private card2: IntroCard | null = null;
   private card3: IntroCard | null = null;
   private clickToContinue: Text | null = null;
+  private cardWrapper = new Container();
+  private shadowWrapper = new Container();
 
   constructor() {
     super();
@@ -21,14 +23,33 @@ class IntroLandscape extends Container {
     this.card2 = new IntroCard(2);
     this.card3 = new IntroCard(3);
 
-    this.card1.position.set(0, 54);
-    this.card2.position.set(this.card1.width * 1.1 + 56, 54);
-    this.card3.position.set(this.card2.width * 2.2 + 112, 54);
+    this.card1.position.set(0, 0);
+    this.card2.position.set(this.card1.width * 1.05, 0);
+    this.card3.position.set(this.card2.width * 2.1, 0);
 
-    this.addChild(this.card1, this.card2, this.card3);
+    this.cardWrapper.addChild(this.card1, this.card2, this.card3);
+    this.setChild("cards", this.cardWrapper);
+
+    for (let i = 0; i < 3; i++) {
+      const shadow = makeSprite(reelShadowConfig(0));
+      shadow.scale.set(2, 1.25);
+      shadow.x = i === 0 ? -35 : i === 1 ? this.card2.x : this.card3.x + 15;
+      shadow.alpha = 0.9;
+      this.shadowWrapper.addChild(shadow);
+    }
+
+    this.setChild("shadows", this.shadowWrapper);
 
     this.clickToContinue = makeText(clickToContinueTextConfig(this.card2.x, this.height - 24));
-    this.addChild(this.clickToContinue);
+    this.setChild("text", this.clickToContinue);
+  }
+
+  public getGridConfig(): ICellConfig {
+    return introLandscapeGridConfig();
+  }
+
+  public rebuild(): void {
+    super.rebuild(this.getGridConfig());
   }
 
   public processClick(): void {
@@ -45,7 +66,6 @@ class IntroPortrait extends Container {
   private ice2!: Sprite;
   private ice3!: Sprite;
   private clickToContinue!: Text;
-  private clickToProceed!: Text;
 
   private currentCardIndex = 0;
   private isSwitchingCards = false;
@@ -72,9 +92,6 @@ class IntroPortrait extends Container {
     this.clickToContinue = makeText(clickToContinueTextConfig(0, this.height - 50));
     this.clickToContinue.visible = false;
     this.addChild(this.clickToContinue);
-
-    // this.clickToProceed = makeText(clickToProceedTextConfig(0, this.height - 50));
-    // this.addChild(this.clickToProceed);
   }
 
   get cards(): IntroCard[] {

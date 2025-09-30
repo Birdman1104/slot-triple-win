@@ -24,7 +24,7 @@ const getBackgroundGridLandscapeConfig = () => {
       },
       {
         name: "leaf",
-        bounds: { x: 0.7, y: 0, width: 0.3, height: 0.3 },
+        bounds: { x: 0.6, y: 0, width: 0.4, height: 0.3 },
         align: CellAlign.rightTop,
         scale: CellScale.envelop,
       },
