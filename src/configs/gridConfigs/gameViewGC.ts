@@ -1,5 +1,5 @@
 import { CellAlign, CellScale } from "@armathai/pixi-grid";
-import { lp } from "../../utils/Utils";
+import { isSquareLikeScreen, lp } from "../../utils/Utils";
 
 export const getGameViewGridConfig = () => {
   return lp(getGameViewGridLandscapeConfig, getGameViewGridPortraitConfig).call(null);
@@ -51,11 +51,12 @@ const getGameViewGridPortraitConfig = () => {
     cells: [
       {
         name: "slot_machine",
-        bounds: { x: 0.1, y: 0.1, width: 0.8, height: 0.7 },
+        bounds: { x: 0.1, y: isSquareLikeScreen() ? 0.1 : 0.15, width: 0.8, height: 0.7 },
       },
       {
         name: "dock",
-        bounds: { x: 0.1, y: 0.1, width: 0.8, height: 0.7 },
+        bounds: { x: 0.3, y: 0.1, width: 0.4, height: 0.6 },
+        scale: CellScale.envelop,
       },
       {
         name: "leaf",
@@ -67,7 +68,7 @@ const getGameViewGridPortraitConfig = () => {
         name: "left_shadow",
         bounds: { x: 0, y: 0.7, width: 0.5, height: 0.3 },
         align: CellAlign.leftBottom,
-        scale: CellScale.showAll,
+        scale: CellScale.envelop,
       },
       {
         name: "right_shadow",

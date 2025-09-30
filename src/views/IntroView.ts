@@ -133,7 +133,6 @@ class IntroPortrait extends Container {
       this.ice.forEach((ice) => {
         ice.visible = false;
       });
-      // this.clickToProceed.visible = false;
     }
 
     anime({
