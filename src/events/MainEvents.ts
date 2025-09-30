@@ -34,6 +34,8 @@ export const UIEvents = {
   HistoryButtonClick: "UIEventsHistoryButtonClick",
 
   AutoSpinNumberClick: "UIEventsAutoSpinNumberClick",
+
+  ErrorPopupClose: "UIEventsErrorPopupClose",
 };
 
 export const ReelViewEvents = {

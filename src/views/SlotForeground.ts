@@ -5,6 +5,8 @@ import { winTextConfig } from "../configs/textConfig";
 import Head from "../models/Head";
 import { makeSprite, makeText } from "../utils/Utils";
 
+const STOP_DURATION = 1500;
+
 export class SlotForeground extends Container {
   private iceCrack: Sprite = new Sprite();
   private winType: Sprite = new Sprite();
@@ -61,7 +63,7 @@ export class SlotForeground extends Container {
         y: 0.2,
         duration: 400,
       },
-      3000
+      STOP_DURATION
     );
 
     timeline.add(
@@ -70,7 +72,7 @@ export class SlotForeground extends Container {
         alpha: 0,
         duration: 400,
       },
-      3000
+      STOP_DURATION
     );
   }
 

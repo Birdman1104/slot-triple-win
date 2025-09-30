@@ -3,6 +3,7 @@ import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
 import { autoSpinsButtonTextConfig } from "../configs/textConfig";
 import { UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
+import { SlotMachineState } from "../models/SlotMachineModel";
 import { drawBounds, hideToggle, makeText, showToggle } from "../utils/Utils";
 
 export const values: number[] = [200, 100, 50, 20, 10];
@@ -81,9 +82,13 @@ export class AutoSpinsBase extends Container {
   protected number!: Text;
   protected toggle!: AutoSpinsToggleBase;
 
+  private slotMachineState = SlotMachineState.Unknown;
+
   constructor() {
     super();
-    lego.event.on(SlotMachineModelEvents.AutoSpinCountUpdate, this.onAutoSpinCountUpdate, this);
+    lego.event
+      .on(SlotMachineModelEvents.AutoSpinCountUpdate, this.onAutoSpinCountUpdate, this)
+      .on(SlotMachineModelEvents.StateUpdate, this.onSlotMachineStateUpdate, this);
   }
 
   public getBounds(): Rectangle {
@@ -115,19 +120,29 @@ export class AutoSpinsBase extends Container {
   }
 
   protected onBkgClick(): void {
+    if (this.slotMachineState !== SlotMachineState.Idle) return;
     this.emit("clicked");
     this.toggle.isHidden ? this.toggle.show() : this.toggle.hide();
     this.bkg.eventMode = "none";
   }
 
   private onAutoSpinCountUpdate(value: number): void {
-    this.icon.visible = false;
-    this.number.text = value.toString();
+    if (value === 0) {
+      this.number.text = "";
+      this.icon.visible = true;
+    } else {
+      this.icon.visible = false;
+      this.number.text = value.toString();
+    }
     this.updateNumberWidth();
   }
 
   private updateNumberWidth(): void {
     this.number.scale.set(1);
     this.number.scale.set(Math.min(1, (this.bkg.width * 0.6) / this.number.width));
+  }
+
+  private onSlotMachineStateUpdate(state: SlotMachineState): void {
+    this.slotMachineState = state;
   }
 }

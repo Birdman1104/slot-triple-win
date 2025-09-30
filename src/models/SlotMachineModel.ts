@@ -1,3 +1,5 @@
+import { lego } from "@armathai/lego";
+import { UIEvents } from "../events/MainEvents";
 import { getError, spin } from "../slotLogic";
 import { last } from "../utils/Utils";
 import { ObservableModel } from "./ObservableModel";
@@ -136,6 +138,22 @@ export class SlotMachineModel extends ObservableModel {
 
   public getReelByUUID(uuid: string): ReelModel | undefined {
     return this._reels.find((r) => r.uuid === uuid);
+  }
+
+  public onWinLinesShowComplete(): void {
+    this.state = SlotMachineState.ShowWinnings;
+  }
+
+  public onWinningsShowComplete(): void {
+    this.state = SlotMachineState.Idle;
+
+    if (this.isAutoSpin && this.autoSpinCount > 0) {
+      this.autoSpinCount--;
+      if (this.autoSpinCount === 0) {
+        this.isAutoSpin = false;
+      }
+      lego.event.emit(UIEvents.SpinButtonClick);
+    }
   }
 
   public spin(bet: number): void {

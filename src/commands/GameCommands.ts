@@ -1,5 +1,5 @@
 import { lego } from "@armathai/lego";
-import { SlotMachineViewEvents } from "../events/MainEvents";
+import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { GameState } from "../models/GameModel";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
@@ -30,7 +30,7 @@ export const onSpinButtonClickCommand = () => {
   if (Head.gameModel?.state !== GameState.Game) return;
 
   if (Head.gameModel.slotMachine && Head.gameModel.slotMachine.state === SlotMachineState.Error) {
-    lego.event.emit("closeErrorPopup");
+    lego.event.emit(UIEvents.ErrorPopupClose);
     Head.gameModel.slotMachine.setState(SlotMachineState.Idle);
     return;
   }
@@ -57,11 +57,11 @@ export const minusButtonClickCommand = (): void => {
 };
 
 export const winLinesShowCompleteCommand = (): void => {
-  Head.gameModel?.slotMachine?.setState(SlotMachineState.ShowWinnings);
+  Head.gameModel?.slotMachine?.onWinLinesShowComplete();
 };
 
 export const winningsShowCompleteCommand = (): void => {
-  Head.gameModel?.slotMachine?.setState(SlotMachineState.Idle);
+  Head.gameModel?.slotMachine?.onWinningsShowComplete();
 };
 
 export const spinResultUpdateCommand = (result: SpinResult): void => {

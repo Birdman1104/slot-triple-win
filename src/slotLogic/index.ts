@@ -81,7 +81,7 @@ export const getError = (): Promise<ErrorResult> => {
         errorText: "An error occurred, please reload the page or contact support",
         errorCode: Math.ceil(Math.random() * 150 + 400),
       });
-    }, 500)
+    }, 50)
   );
 };
 

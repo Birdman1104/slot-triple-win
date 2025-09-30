@@ -1,19 +1,20 @@
 import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
-import { Container, Graphics } from "pixi.js";
+import { Graphics } from "pixi.js";
 import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
 import { ForegroundViewEvents, MainGameEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import { ErrorPopup } from "./ErrorPopup";
 import { InfoPopup } from "./InfoPopup";
+import type { PopupBase } from "./PopupBase";
 
 export class ForegroundView extends PixiGrid {
   private errorPopup!: ErrorPopup;
   private infoPopup!: InfoPopup;
   private blocker!: Graphics;
 
-  private popups: Container[] = [];
+  private popups: PopupBase[] = [];
 
   constructor() {
     super();
@@ -21,7 +22,7 @@ export class ForegroundView extends PixiGrid {
     lego.event
       .on(UIEvents.InfoButtonClick, this.onMenuItemClick, this)
       .on(SlotMachineModelEvents.ErrorResultUpdate, this.onErrorResultUpdate, this)
-      .on("closeErrorPopup", this.onCloseErrorPopup, this);
+      .on(UIEvents.ErrorPopupClose, this.onCloseErrorPopup, this);
     this.build();
   }
 
@@ -35,27 +36,17 @@ export class ForegroundView extends PixiGrid {
     super.rebuild(this.getGridConfig());
   }
 
-  public showPopup(popup: Container): void {
+  public showPopup(popup: PopupBase): void {
     this.hidePopup();
     this.showBlocker();
-    anime({
-      targets: popup,
-      alpha: 1,
-      duration: 200,
-      easing: "easeInOutQuad",
-    });
+    popup.show();
   }
 
   public hidePopup(): void {
     this.hideBlocker();
     this.popups.forEach((popup) => {
       if (popup.alpha === 0) return;
-      anime({
-        targets: popup,
-        alpha: 0,
-        duration: 200,
-        easing: "easeInOutQuad",
-      });
+      popup.hide();
     });
   }
 
