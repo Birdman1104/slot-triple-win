@@ -35,7 +35,11 @@ export const onSpinButtonClickCommand = () => {
     return;
   }
 
-  if (Head.gameModel?.slotMachine?.state !== SlotMachineState.Idle) return;
+  if (Head.gameModel?.slotMachine?.state !== SlotMachineState.Idle) {
+    Head.gameModel?.slotMachine?.removeAutoSpin();
+    return;
+  }
+
   if (Head.gameModel?.isBlockedAction) return;
 
   if (Head.playerModel?.spin()) {

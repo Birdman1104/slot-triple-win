@@ -120,6 +120,11 @@ export class SlotMachineModel extends ObservableModel {
     this.autoSpinCount = value;
   }
 
+  public removeAutoSpin(): void {
+    this.isAutoSpin = false;
+    this.autoSpinCount = 0;
+  }
+
   public setState(state: SlotMachineState): void {
     this.state = state;
   }
