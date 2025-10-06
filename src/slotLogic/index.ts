@@ -151,7 +151,7 @@ export const spin = async (bet: number): Promise<SpinResult> => {
     return {
       symbol: elementType,
       line,
-      winAmount: Math.random() > 0.5 ? winAmount * 3 : winAmount,
+      winAmount: winAmount,
       id: `${elementType}-${line.join("-")}`,
     };
   });

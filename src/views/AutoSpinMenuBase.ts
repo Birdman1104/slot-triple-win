@@ -67,7 +67,7 @@ export class AutoSpinsToggleBase extends Container {
       this.emit("toggleOpened");
       this._isHidden = false;
     };
-    showToggle(this, cb);
+    showToggle(this, 1, cb);
   }
 
   protected onNumberClicked(value: number): void {

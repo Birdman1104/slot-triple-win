@@ -216,11 +216,11 @@ export const last = (arr: any[]): any => {
   return arr.slice(-1)[0];
 };
 
-export const showToggle = (obj: DisplayObject, cb?: () => void) => {
+export const showToggle = (obj: DisplayObject, scale = 1, cb?: () => void) => {
   return anime({
     targets: obj.scale,
-    x: 1,
-    y: 1,
+    x: scale,
+    y: scale,
     duration: 300,
     easing: "easeInOutSine",
     complete: () => {

@@ -1,7 +1,6 @@
 import { lego } from "@armathai/lego";
 import { Container, Graphics, Rectangle, Sprite, Text, Texture } from "pixi.js";
 import {
-  portraitMenuCloseButtonConfig,
   uiMenuBkgL,
   uiMenuBkgP,
   uiMenuBtnL,
@@ -141,10 +140,10 @@ export class MenuToggle extends Container {
     const cb = () => {
       this.emit("menuOpened");
       if (!this.isLandscape) {
-        this.closeBtn.eventMode = "static";
+        // this.closeBtn.eventMode = "static";
       }
     };
-    showToggle(this, cb);
+    showToggle(this, 1, cb);
   }
 
   private build(): void {
@@ -170,9 +169,9 @@ export class MenuToggle extends Container {
     });
 
     if (!this.isLandscape) {
-      this.closeBtn = makeSprite(portraitMenuCloseButtonConfig());
-      this.closeBtn.on("pointerdown", () => this.hide());
-      this.addChild(this.closeBtn);
+      // this.closeBtn = makeSprite(portraitMenuCloseButtonConfig());
+      // this.closeBtn.on("pointerdown", () => this.hide());
+      // this.addChild(this.closeBtn);
     }
   }
 

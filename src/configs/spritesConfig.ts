@@ -168,6 +168,15 @@ export const uiMenuCloseBtnL = (): SpriteConfig => ({
   name: "menu_close_button",
 });
 
+export const uiMenuCloseBtnP = (): SpriteConfig => ({
+  frame: "close_button.png",
+  atlas: "ui",
+  scaleX: 1.2,
+  scaleY: 1.2,
+  y: -9,
+  name: "menu_close_button",
+});
+
 export const uiMenuBkgL = (): SpriteConfig => ({
   frame: "menu_bkg.png",
   atlas: "ui_l",
