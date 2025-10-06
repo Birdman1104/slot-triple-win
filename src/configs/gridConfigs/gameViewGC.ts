@@ -1,5 +1,5 @@
 import { CellAlign, CellScale } from "@armathai/pixi-grid";
-import { isSquareLikeScreen, lp } from "../../utils/Utils";
+import { isNarrowScreen, isSquareLikeScreen, lp } from "../../utils/Utils";
 
 export const getGameViewGridConfig = () => {
   return lp(getGameViewGridLandscapeConfig, getGameViewGridPortraitConfig).call(null);
@@ -51,7 +51,12 @@ const getGameViewGridPortraitConfig = () => {
     cells: [
       {
         name: "slot_machine",
-        bounds: { x: 0.1, y: isSquareLikeScreen() ? 0.1 : 0.15, width: 0.8, height: 0.7 },
+        bounds: {
+          x: isNarrowScreen() ? 0.01 : 0.1,
+          y: isSquareLikeScreen() ? 0.1 : 0.15,
+          width: isNarrowScreen() ? 0.98 : 0.8,
+          height: 0.7,
+        },
       },
       {
         name: "dock",
