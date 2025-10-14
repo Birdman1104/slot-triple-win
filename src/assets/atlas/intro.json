@@ -4,20 +4,20 @@
       "frame": {
         "x": 3,
         "y": 3,
-        "w": 733,
-        "h": 720
+        "w": 480,
+        "h": 470
       },
       "rotated": false,
-      "trimmed": false,
+      "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 733,
-        "h": 720
+        "w": 480,
+        "h": 470
       },
       "sourceSize": {
-        "w": 733,
-        "h": 720
+        "w": 480,
+        "h": 471
       },
       "pivot": {
         "x": 0.5,
@@ -27,21 +27,21 @@
     "intro_2.png": {
       "frame": {
         "x": 3,
-        "y": 729,
-        "w": 733,
-        "h": 720
+        "y": 479,
+        "w": 480,
+        "h": 470
       },
       "rotated": false,
-      "trimmed": false,
+      "trimmed": true,
       "spriteSourceSize": {
-        "x": 0,
+        "x": 1,
         "y": 0,
-        "w": 733,
-        "h": 720
+        "w": 480,
+        "h": 470
       },
       "sourceSize": {
-        "w": 733,
-        "h": 720
+        "w": 481,
+        "h": 471
       },
       "pivot": {
         "x": 0.5,
@@ -50,22 +50,22 @@
     },
     "intro_3.png": {
       "frame": {
-        "x": 742,
+        "x": 489,
         "y": 3,
-        "w": 733,
-        "h": 720
+        "w": 480,
+        "h": 470
       },
       "rotated": true,
-      "trimmed": false,
+      "trimmed": true,
       "spriteSourceSize": {
-        "x": 0,
+        "x": 1,
         "y": 0,
-        "w": 733,
-        "h": 720
+        "w": 480,
+        "h": 470
       },
       "sourceSize": {
-        "w": 733,
-        "h": 720
+        "w": 481,
+        "h": 471
       },
       "pivot": {
         "x": 0.5,
@@ -79,8 +79,8 @@
     "image": "intro.png",
     "format": "RGBA8888",
     "size": {
-      "w": 1465,
-      "h": 1452
+      "w": 962,
+      "h": 952
     },
     "scale": 1
   }

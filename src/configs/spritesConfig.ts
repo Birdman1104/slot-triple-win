@@ -108,8 +108,6 @@ export const introIceCubeConfig = (x: number, isActive: boolean): SpriteConfig =
 export const introCardConfig = (frame: string, atlas: string): SpriteConfig => ({
   frame,
   atlas,
-  scaleX: 0.666666,
-  scaleY: 0.666666,
 });
 
 export const uiPortraitBkg = (type: "p" | "l"): SpriteConfig => ({
