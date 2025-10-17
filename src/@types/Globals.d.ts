@@ -83,3 +83,8 @@ type ErrorResult = {
   errorText: string;
   errorCode: number;
 };
+
+type InitResponse = {
+  session_id: string;
+  game_name: string;
+};

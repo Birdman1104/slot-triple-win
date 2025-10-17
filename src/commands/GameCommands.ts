@@ -3,9 +3,18 @@ import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { GameState } from "../models/GameModel";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
-import { getDefaultPlayerInfo } from "../slotLogic";
+import { getDefaultPlayerInfo, sendInitRequest } from "../slotLogic";
+
 let playerInfo: PlayerInfo;
+
 export const initModelsCommand = async (): Promise<void> => {
+  const ok = await sendInitRequest();
+
+  if (!ok) {
+    // show error popup
+    return;
+  }
+
   playerInfo = await getDefaultPlayerInfo();
 
   Head.initGameModel();

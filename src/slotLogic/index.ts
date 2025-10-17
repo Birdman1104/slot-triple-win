@@ -1,4 +1,6 @@
+import { GLOBALS } from "../configs/constants";
 import { SYMBOL_TYPE, SYMBOLS_MULTIPLIERS } from "../configs/SymbolsConfig";
+import { updatePageTitle } from "../utils/Utils";
 
 const spin_data = [
   // lose
@@ -181,16 +183,59 @@ export const getDefaultReelsConfig = (): SpinResult => {
   };
 };
 
+// TODO _ refactor this func
+export const sendInitRequest = async (): Promise<boolean> => {
+  const data = await initRequest();
+
+  if (!data) {
+    return false;
+  }
+  console.warn(data);
+
+  const { session_id, game_name } = data;
+
+  GLOBALS.sessionIdKey = `${game_name}_session_id`;
+  sessionStorage.setItem(GLOBALS.sessionIdKey, session_id);
+
+  const formattedGameName = game_name
+    .split("_")
+    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+  updatePageTitle(formattedGameName);
+
+  return true;
+};
+
 export const getDefaultPlayerInfo = async (): Promise<PlayerInfo> => {
-  return new Promise((resolve) =>
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         balance: Math.random() * 1000 - 500 + DEFAULT_BALANCE,
         bet: DEFAULT_BET,
         id: Math.random() * 1000,
       });
-    }, 100)
-  );
+    }, 100);
+  });
+};
+
+const initRequest = async (): Promise<InitResponse | undefined> => {
+  try {
+    const response = await fetch("http://20.121.53.139/api/play/init", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        player_id: "dummy",
+        game_id: "1",
+        currency: "amd",
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching initial data:", error);
+  }
 };
 
 export const getSlotMachineInitialConfig = () => {

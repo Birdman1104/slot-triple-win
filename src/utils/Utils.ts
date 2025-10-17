@@ -241,3 +241,7 @@ export const hideToggle = (obj: DisplayObject, cb?: () => void) => {
     },
   });
 };
+
+export const updatePageTitle = (title: string) => {
+  document.title = title;
+};
