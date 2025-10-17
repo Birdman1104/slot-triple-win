@@ -88,3 +88,15 @@ type InitResponse = {
   session_id: string;
   game_name: string;
 };
+
+type WinInfo = {
+  payline_index: number;
+  symbol: string;
+  payout: number;
+};
+
+type SpinResponse = {
+  spin_result: ReelsResult;
+  wins: WinInfo[];
+  payout: number;
+};

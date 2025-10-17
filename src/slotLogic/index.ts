@@ -1,57 +1,6 @@
 import { GLOBALS } from "../configs/constants";
-import { SYMBOL_TYPE, SYMBOLS_MULTIPLIERS } from "../configs/SymbolsConfig";
+import { SYMBOL_MAP, SYMBOL_TYPE } from "../configs/SymbolsConfig";
 import { updatePageTitle } from "../utils/Utils";
-
-const spin_data = [
-  // lose
-  [
-    [SYMBOL_TYPE.WATERMELON, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.BLUEBERRY],
-    [SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY],
-    [SYMBOL_TYPE.LEMON, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.STRAWBERRY],
-  ],
-  // lose
-  [
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.STRAWBERRY],
-    [SYMBOL_TYPE.LEMON, SYMBOL_TYPE.VODKA, SYMBOL_TYPE.BLUEBERRY],
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.WATERMELON],
-  ],
-  // normal win
-  [
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.GIN, SYMBOL_TYPE.APPLE],
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.VODKA, SYMBOL_TYPE.BLUEBERRY],
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.WATERMELON],
-  ],
-  // lose
-  [
-    [SYMBOL_TYPE.LEMON, SYMBOL_TYPE.VODKA, SYMBOL_TYPE.BLUEBERRY],
-    [SYMBOL_TYPE.LEMON, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.STRAWBERRY],
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.WATERMELON],
-  ],
-  // lose
-  [
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.STRAWBERRY],
-    [SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY],
-    [SYMBOL_TYPE.WATERMELON, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.BLUEBERRY],
-  ],
-  // Big win
-  [
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.GIN, SYMBOL_TYPE.BLUEBERRY],
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.VODKA],
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.BLUEBERRY],
-  ],
-  // lose
-  [
-    [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.VODKA],
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.STRAWBERRY],
-    [SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY],
-  ],
-  // lose
-  [
-    [SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY],
-    [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.WATERMELON],
-    [SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.APPLE, SYMBOL_TYPE.CHERRY],
-  ],
-];
 
 const LINES = [
   // STRAIGHT LINES
@@ -64,64 +13,6 @@ const LINES = [
   [2, 1, 0],
 ];
 
-const getReelsData = (): SYMBOL_TYPE[][] => {
-  const symbolTypes = Object.values(SYMBOL_TYPE);
-  const arr = generateRandomArray();
-  const grid = new Array(3).fill(null).map(() => new Array(3).fill(null));
-  arr.forEach((value, index) => {
-    const i = Math.floor(index / 3);
-    const j = index % 3;
-    grid[i][j] = symbolTypes[value];
-  });
-
-  return grid;
-};
-
-const generateRandomArray = (): number[] => {
-  const result: number[] = [];
-  const counts: { [key: number]: number } = {};
-  const length = Object.keys(SYMBOL_TYPE).length;
-
-  for (let i = 0; i < length; i++) {
-    counts[i] = 0;
-  }
-
-  while (result.length < 9) {
-    const randomInt = Math.floor(Math.random() * length);
-    if (counts[randomInt] < 3) {
-      result.push(randomInt);
-      counts[randomInt]++;
-    }
-  }
-
-  return result;
-};
-
-const winningItemsCount = (data: { elements: string[]; line: number[] }): WinningItemsCount => {
-  let count = 1;
-  const elementType = data.elements[0];
-  for (let i = 1; i < data.elements.length; i++) {
-    const e = data.elements[i];
-    if (e === elementType) {
-      count++;
-    } else {
-      break;
-    }
-  }
-  return { count, elementType, line: data.line };
-};
-
-const checkWinnings = (reelData: ReelsResult): WinningItemsCount[] => {
-  const lines = LINES.map((line) => {
-    return {
-      elements: line.map((r, c) => reelData[c][r]),
-      line,
-    };
-  });
-  const linesInfo = lines.map((l) => winningItemsCount(l));
-  return linesInfo.filter((l) => l.count >= 3);
-};
-
 export const getError = (): Promise<ErrorResult> => {
   return new Promise((resolve) =>
     setTimeout(() => {
@@ -133,42 +24,48 @@ export const getError = (): Promise<ErrorResult> => {
   );
 };
 
-let spinCount = 0;
-
-export const spin = async (bet: number): Promise<SpinResult> => {
-  const reels = spin_data[spinCount % spin_data.length];
-  //   spin % 3 === 0
-  //     ? [
-  //         [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.GIN, SYMBOL_TYPE.WHISKEY],
-  //         [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.VODKA],
-  //         [SYMBOL_TYPE.BLUEBERRY, SYMBOL_TYPE.STRAWBERRY, SYMBOL_TYPE.BLUEBERRY],
-  //       ]
-  //     : getReelsData();
-  // i++;
-  spinCount++;
-  const winningLines = checkWinnings(reels);
-
-  const winningInfo = winningLines.map(({ elementType, line }) => {
-    const winAmount = bet * SYMBOLS_MULTIPLIERS[elementType as keyof typeof SYMBOLS_MULTIPLIERS];
-    return {
-      symbol: elementType,
-      line,
-      winAmount: winAmount,
-      id: `${elementType}-${line.join("-")}`,
-    };
-  });
-
-  const totalWin = winningInfo.reduce((acc, curr) => acc + curr.winAmount, 0);
-
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve({
-        reels,
-        winningInfo,
-        totalWin,
+export const spin = async (bet: number): Promise<SpinResult | undefined> => {
+  try {
+    const response = await fetch("http://20.121.53.139/api/play/bet", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        session_id: sessionStorage.getItem(GLOBALS.sessionIdKey) || "",
+        game_name: GLOBALS.gameName,
+        amount: bet,
+      }),
+    });
+    const data = await response.json();
+    const { spin_result, wins, payout } = data;
+    const reels = new Array(3).fill(null).map(() => new Array(3).fill(null));
+    spin_result.forEach((col: string[], colIndex: number) => {
+      col.forEach((symbol: string, rowIndex: number) => {
+        reels[rowIndex][colIndex] = SYMBOL_MAP[symbol as keyof typeof SYMBOL_MAP];
       });
-    }, 10)
-  );
+    });
+
+    const winningInfo = wins.map((win: WinInfo) => {
+      const line = LINES[win.payline_index];
+      return {
+        symbol: SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP],
+        winAmount: win.payout,
+        line,
+        id: `${SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP]}-${line.join("-")}`,
+      };
+    });
+
+    const totalWin = payout;
+
+    return {
+      reels,
+      winningInfo,
+      totalWin,
+    };
+  } catch (error) {
+    console.error("Error fetching initial data:", error);
+  }
 };
 
 export const getDefaultReelsConfig = (): SpinResult => {
@@ -190,7 +87,6 @@ export const sendInitRequest = async (): Promise<boolean> => {
   if (!data) {
     return false;
   }
-  console.warn(data);
 
   const { session_id, game_name } = data;
 
@@ -202,6 +98,7 @@ export const sendInitRequest = async (): Promise<boolean> => {
     .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
   updatePageTitle(formattedGameName);
+  GLOBALS.gameName = game_name;
 
   return true;
 };
