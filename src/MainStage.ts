@@ -3,6 +3,7 @@ import { lp } from "./utils/Utils.ts";
 import { BackgroundView } from "./views/BackgroundView.ts";
 import { ForegroundView } from "./views/ForegroundView.ts";
 import { GameView } from "./views/GameView.ts";
+import { InitialErrorView } from "./views/InitialErrorView.ts";
 import { IntroViewWrapper } from "./views/IntroView.ts";
 import { UILandscapeView } from "./views/UIViewLandscape.ts";
 import { UIPortraitView } from "./views/UIViewPortrait.ts";
@@ -14,6 +15,7 @@ class PixiStage extends Container {
   private foregroundView: ForegroundView | null = null;
   private uiLandscape: UILandscapeView | null = null;
   private uiPortrait: UIPortraitView | null = null;
+  private initialError: InitialErrorView | null = null;
 
   public resize(): void {
     this.intro?.rebuild();
@@ -41,8 +43,6 @@ class PixiStage extends Container {
 
   public showIntro(): void {
     if (this.intro) return;
-    this.bgView = new BackgroundView();
-    this.addChild(this.bgView);
 
     this.intro = new IntroViewWrapper();
     this.addChild(this.intro);
@@ -61,6 +61,16 @@ class PixiStage extends Container {
     this.uiPortrait = new UIPortraitView();
     this.addChild(this.uiPortrait);
     this.resize();
+  }
+
+  public setBkg(): void {
+    this.bgView = new BackgroundView();
+    this.addChild(this.bgView);
+  }
+
+  public initInitialErrorView(): void {
+    this.initialError = new InitialErrorView();
+    this.addChild(this.initialError);
   }
 }
 

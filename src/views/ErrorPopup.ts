@@ -10,7 +10,7 @@ export class ErrorPopup extends PopupBase {
   private bkg!: Sprite;
   private redIcon!: Sprite;
 
-  constructor() {
+  constructor(private isClosable = true) {
     super();
 
     this.build();
@@ -34,13 +34,15 @@ export class ErrorPopup extends PopupBase {
     this.bkg = makeSprite(popupBkgConfig());
     this.addChild(this.bkg);
 
-    this.closeButton = makeSprite(popupCloseButtonConfig());
-    this.addChild(this.closeButton);
+    if (this.isClosable) {
+      this.closeButton = makeSprite(popupCloseButtonConfig());
+      this.addChild(this.closeButton);
 
-    this.closeButton.eventMode = "static";
-    this.closeButton.on("pointerdown", () => {
-      this.emit("closeErrorPopup");
-    });
+      this.closeButton.eventMode = "static";
+      this.closeButton.on("pointerdown", () => {
+        this.emit("closeErrorPopup");
+      });
+    }
 
     this.redIcon = makeSprite(redIconConfig());
     this.addChild(this.redIcon);

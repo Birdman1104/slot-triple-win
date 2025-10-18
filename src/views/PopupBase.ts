@@ -11,13 +11,13 @@ export class PopupBase extends Container {
       duration: 300,
       easing: "easeInOutQuad",
       complete: () => {
-        this.closeButton.eventMode = "static";
+        this.closeButton && (this.closeButton.eventMode = "static");
       },
     });
   }
 
   public hide(force = false): void {
-    this.closeButton.eventMode = "none";
+    this.closeButton && (this.closeButton.eventMode = "none");
     if (force) {
       this.alpha = 0;
       return;

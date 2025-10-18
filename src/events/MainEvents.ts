@@ -36,6 +36,8 @@ export const UIEvents = {
   AutoSpinNumberClick: "UIEventsAutoSpinNumberClick",
 
   ErrorPopupClose: "UIEventsErrorPopupClose",
+
+  ShowInitialError: "UIEventsShowInitialError",
 };
 
 export const ReelViewEvents = {

@@ -1,5 +1,7 @@
+import { lego } from "@armathai/lego";
 import { GLOBALS } from "../configs/constants";
 import { SYMBOL_MAP, SYMBOL_TYPE } from "../configs/SymbolsConfig";
+import { UIEvents } from "../events/MainEvents";
 import { updatePageTitle } from "../utils/Utils";
 
 const LINES = [
@@ -26,7 +28,7 @@ export const getError = (): Promise<ErrorResult> => {
 
 export const spin = async (bet: number): Promise<SpinResult | undefined> => {
   try {
-    const response = await fetch("https://20.121.53.139/api/play/bet", {
+    const response = await fetch("http://20.121.53.139/api/play/bet", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +119,7 @@ export const getDefaultPlayerInfo = async (): Promise<PlayerInfo> => {
 
 const initRequest = async (): Promise<InitResponse | undefined> => {
   try {
-    const response = await fetch("https://20.121.53.139/api/play/init", {
+    const response = await fetch("http://20.121.53.139/api/play/init", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -131,6 +133,7 @@ const initRequest = async (): Promise<InitResponse | undefined> => {
     const data = await response.json();
     return data;
   } catch (error) {
+    lego.event.emit(UIEvents.ShowInitialError, error);
     console.error("Error fetching initial data:", error);
   }
 };

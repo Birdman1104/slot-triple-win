@@ -40,6 +40,8 @@ class App extends Application {
       // this.initLego();
     }
     await this.loadAssets();
+    this.stage.setBkg();
+    this.stage.initInitialErrorView();
     this.onLoadComplete();
   }
 
