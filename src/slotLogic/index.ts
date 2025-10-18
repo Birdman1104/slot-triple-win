@@ -26,7 +26,7 @@ export const getError = (): Promise<ErrorResult> => {
 
 export const spin = async (bet: number): Promise<SpinResult | undefined> => {
   try {
-    const response = await fetch("http://20.121.53.139/api/play/bet", {
+    const response = await fetch("https://20.121.53.139/api/play/bet", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export const getDefaultPlayerInfo = async (): Promise<PlayerInfo> => {
 
 const initRequest = async (): Promise<InitResponse | undefined> => {
   try {
-    const response = await fetch("http://20.121.53.139/api/play/init", {
+    const response = await fetch("https://20.121.53.139/api/play/init", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
