@@ -12,9 +12,20 @@ export class SlotForeground extends Container {
   private winType: Sprite = new Sprite();
   private winAmount = makeText(winTextConfig());
 
+  private tl: any;
+
   constructor() {
     super();
     this.build();
+  }
+
+  public skipWinnings(): void {
+    this.tl.pause();
+    this.tl.remove();
+    [this.iceCrack, this.winAmount, this.winType].forEach((el) => (el.alpha = 0));
+    [this.winAmount, this.winType].forEach((el) => el.scale.set(0.2));
+
+    this.emit("winBoardShowComplete");
   }
 
   public showWin(winAmount: number): void {
@@ -26,26 +37,26 @@ export class SlotForeground extends Container {
     this.winType.alpha = 0;
     this.winType.scale.set(4);
 
-    const timeline = anime.timeline({
+    this.tl = anime.timeline({
       easing: "easeInOutQuad",
       complete: () => {
         this.emit("winBoardShowComplete");
       },
     });
 
-    timeline.add({
+    this.tl.add({
       targets: this.iceCrack,
       alpha: 1,
       duration: 10,
     });
 
-    timeline.add({
+    this.tl.add({
       targets: [this.winAmount, this.winType],
       alpha: 1,
       duration: 200,
     });
 
-    timeline.add(
+    this.tl.add(
       {
         targets: [this.winAmount.scale, this.winType.scale],
         x: 1,
@@ -56,7 +67,7 @@ export class SlotForeground extends Container {
       0
     );
 
-    timeline.add(
+    this.tl.add(
       {
         targets: [this.winAmount.scale, this.winType.scale],
         x: 0.2,
@@ -66,7 +77,7 @@ export class SlotForeground extends Container {
       STOP_DURATION
     );
 
-    timeline.add(
+    this.tl.add(
       {
         targets: [this.iceCrack, this.winAmount, this.winType],
         alpha: 0,

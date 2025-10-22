@@ -7,6 +7,7 @@ import { ReelViewEvents, SlotMachineViewEvents, UIEvents } from "../events/MainE
 import { ReelModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
 import { ElementModel } from "../models/ElementModel";
 import { SlotMachineModel, SlotMachineState } from "../models/SlotMachineModel";
+import { LINES } from "../slotLogic";
 import { makeSprite } from "../utils/Utils";
 import { Element } from "./ElementView";
 import { Reel } from "./ReelView";
@@ -20,6 +21,8 @@ export class SlotMachineView extends Container {
   private foreground!: SlotForeground;
 
   private slotState: SlotMachineState = SlotMachineState.Unknown;
+
+  private winAnimations: any[] = [];
 
   constructor(private config: SlotMachineModel) {
     super();
@@ -121,7 +124,11 @@ export class SlotMachineView extends Container {
 
   private onSpinButtonClick(): void {
     if (this.slotState === SlotMachineState.DropNew) {
-      this.reels.forEach((r) => r.forceShow());
+      this.reels.forEach((r) => r.forceStop());
+    } else if (this.slotState === SlotMachineState.ShowWinLines) {
+      this.removeWinAnimations();
+    } else if (this.slotState === SlotMachineState.ShowWinnings) {
+      this.foreground.skipWinnings();
     }
   }
 
@@ -179,15 +186,13 @@ export class SlotMachineView extends Container {
     const getElements = (line: WinningLine) => line.map((pos, i) => this.reels[i].getElementByIndex(pos));
     const getIce = (line: any) => line.map((pos: any, i: number) => this.reels[i].getIceByIndex(pos));
 
-    const animationConfig: { elements: Element[]; ice: Sprite[]; winningItemType: string }[] = lines.map(
-      ({ line, winningItemType }) => {
-        return { elements: getElements(line), ice: getIce(line), winningItemType };
-      }
-    );
+    const animationConfig: { elements: Element[]; ice: Sprite[] }[] = lines.map(({ line }) => {
+      return { elements: getElements(line), ice: getIce(line) };
+    });
 
     if (animationConfig.length === 0) return;
 
-    const animations: any[] = [];
+    this.winAnimations = [];
     const playNextAnimation = (index: number, animations: any[]): void => {
       if (!animations[index]) {
         lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
@@ -235,9 +240,38 @@ export class SlotMachineView extends Container {
           0
         );
       });
-      animations.push(timeline);
+      this.winAnimations.push(timeline);
     });
 
-    playNextAnimation(0, animations);
+    playNextAnimation(0, this.winAnimations);
+  }
+
+  private removeWinAnimations(): void {
+    this.winAnimations.forEach((a) => {
+      a.pause();
+      a.remove();
+    });
+
+    const getElements = (line: WinningLine) => line.map((pos, i) => this.reels[i].getElementByIndex(pos));
+    const getIce = (line: any) => line.map((pos: any, i: number) => this.reels[i].getIceByIndex(pos));
+
+    const animationConfig: { elements: Element[]; ice: Sprite[] }[] = LINES.map((line) => {
+      return { elements: getElements(line), ice: getIce(line) };
+    });
+
+    animationConfig.forEach(({ elements, ice }, lineNumber) => {
+      elements.forEach((e) => {
+        e.scale.set(1);
+      });
+
+      ice.forEach((e, i) => {
+        e.scale.set(1);
+        const isTwo = (LINES[lineNumber][i] + i) % 2 === 0;
+        const basicTexture = isTwo ? "ice_1.png" : "ice_2.png";
+        e.texture = Texture.from(basicTexture);
+      });
+    });
+
+    lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
   }
 }

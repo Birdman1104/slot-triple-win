@@ -33,6 +33,10 @@ export class Reel extends Container {
     return this._elements;
   }
 
+  get ice(): Sprite[] {
+    return this._ice;
+  }
+
   public getBounds(): Rectangle {
     return new Rectangle(0, 0, WIDTH, 2.9 * HEIGHT);
   }
@@ -53,7 +57,7 @@ export class Reel extends Container {
     return this.elements.indexOf(element);
   }
 
-  public forceShow(): void {
+  public forceStop(): void {
     this.elements.forEach((el) => {
       anime.remove(el);
     });
