@@ -1,6 +1,6 @@
 import { lego } from "@armathai/lego";
 import { Container, Sprite } from "pixi.js";
-import { uiSpinBtnArrowL, uiSpinBtnBkgL, uiSpinBtnStopL } from "../configs/spritesConfig";
+import { uiSpinBtnArrowL, uiSpinBtnBkgL, uiSpinBtnStopL, uiSpinDisabledBtnStopL } from "../configs/spritesConfig";
 import { UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
 import { SlotMachineState } from "../models/SlotMachineModel";
@@ -10,6 +10,7 @@ export class SpinButton extends Container {
   private bkg!: Sprite;
   private spinArrow!: Sprite;
   private stopSign!: Sprite;
+  private stopDisabled!: Sprite;
 
   constructor() {
     super();
@@ -42,17 +43,36 @@ export class SpinButton extends Container {
 
   private buildStopSign(): void {
     this.stopSign = makeSprite(uiSpinBtnStopL());
+    this.stopDisabled = makeSprite(uiSpinDisabledBtnStopL());
     this.stopSign.visible = false;
-    this.addChild(this.stopSign);
+    this.stopDisabled.visible = false;
+    this.addChild(this.stopSign, this.stopDisabled);
   }
 
   private onSlotStateUpdate(state: SlotMachineState): void {
-    if (state === SlotMachineState.Idle || state === SlotMachineState.Error) {
-      this.stopSign.visible = false;
-      this.spinArrow.visible = true;
-    } else {
-      this.stopSign.visible = true;
-      this.spinArrow.visible = false;
+    switch (state) {
+      case SlotMachineState.Idle:
+      case SlotMachineState.Error:
+        this.stopSign.visible = false;
+        this.stopDisabled.visible = false;
+        this.spinArrow.visible = true;
+        break;
+      case SlotMachineState.DropNew:
+      case SlotMachineState.ShowWinLines:
+      case SlotMachineState.ShowWinnings:
+        this.stopSign.visible = true;
+        this.stopDisabled.visible = false;
+        this.spinArrow.visible = false;
+        break;
+      case SlotMachineState.DropOld:
+      case SlotMachineState.WaitingForResult:
+        this.stopSign.visible = false;
+        this.stopDisabled.visible = true;
+        this.spinArrow.visible = false;
+        break;
+
+      default:
+        break;
     }
   }
 }

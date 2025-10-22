@@ -154,6 +154,14 @@ export const uiSpinBtnStopL = (): SpriteConfig => ({
   x: -12,
 });
 
+export const uiSpinDisabledBtnStopL = (): SpriteConfig => ({
+  frame: "spin_btn_stop_disabled.png",
+  atlas: "ui_l",
+  name: "spin_button_stop_disabled",
+  x: -9,
+  y: 2,
+});
+
 export const uiMenuBtnL = (): SpriteConfig => ({
   frame: "menu.png",
   atlas: "ui_l",
