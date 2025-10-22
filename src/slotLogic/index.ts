@@ -4,7 +4,7 @@ import { SYMBOL_MAP, SYMBOL_TYPE } from "../configs/SymbolsConfig";
 import { UIEvents } from "../events/MainEvents";
 import { updatePageTitle } from "../utils/Utils";
 
-const LINES = [
+export const LINES = [
   // STRAIGHT LINES
   [0, 0, 0],
   [1, 1, 1],
