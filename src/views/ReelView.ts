@@ -53,6 +53,15 @@ export class Reel extends Container {
     return this.elements.indexOf(element);
   }
 
+  public forceShow(): void {
+    this.elements.forEach((el) => {
+      anime.remove(el);
+    });
+
+    this.updateElementsPositions();
+    this.emit(ReelViewEvents.NewElementsDropComplete, this.uuid);
+  }
+
   public dropOldElements(delay: number): void {
     let count = 0;
     this.elements.forEach((el, i) => {

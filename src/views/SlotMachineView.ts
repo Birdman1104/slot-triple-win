@@ -3,7 +3,7 @@ import anime from "animejs";
 import { Container, Graphics, Rectangle, Sprite, Texture } from "pixi.js";
 import { HEIGHT, OFFSET_X, WIDTH } from "../config";
 import { reelShadowConfig } from "../configs/spritesConfig";
-import { ReelViewEvents, SlotMachineViewEvents } from "../events/MainEvents";
+import { ReelViewEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { ReelModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
 import { ElementModel } from "../models/ElementModel";
 import { SlotMachineModel, SlotMachineState } from "../models/SlotMachineModel";
@@ -19,6 +19,8 @@ export class SlotMachineView extends Container {
   private result!: SpinResult;
   private foreground!: SlotForeground;
 
+  private slotState: SlotMachineState = SlotMachineState.Unknown;
+
   constructor(private config: SlotMachineModel) {
     super();
 
@@ -26,6 +28,7 @@ export class SlotMachineView extends Container {
 
     lego.event
       .on(SlotMachineModelEvents.StateUpdate, this.onStateUpdate, this)
+      .on(UIEvents.SpinButtonClick, this.onSpinButtonClick, this)
       .on(SlotMachineModelEvents.SpinResultUpdate, this.onSpinResultUpdate, this)
       .on(ReelModelEvents.ElementsUpdate, this.onReelElementsUpdate, this);
   }
@@ -85,7 +88,7 @@ export class SlotMachineView extends Container {
 
   private onStateUpdate(newState: SlotMachineState): void {
     // console.warn("SlotMachineView: State update:", SlotMachineState[newState]);
-
+    this.slotState = newState;
     switch (newState) {
       case SlotMachineState.DropOld:
         this.dropOldElements();
@@ -114,6 +117,12 @@ export class SlotMachineView extends Container {
 
   private onSpinResultUpdate(result: SpinResult): void {
     this.result = result;
+  }
+
+  private onSpinButtonClick(): void {
+    if (this.slotState === SlotMachineState.DropNew) {
+      this.reels.forEach((r) => r.forceShow());
+    }
   }
 
   private dropOldElements(): void {
