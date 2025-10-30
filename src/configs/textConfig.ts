@@ -190,7 +190,7 @@ export const autoSpinsTextConfig = (text = ""): TextConfig => ({
   },
 });
 
-export const autoSpinsTextConfigPortrait = (x = 0, y = -9, text = ""): TextConfig => ({
+export const autoSpinsTextConfigPortrait = (x = 0, y = -6, text = ""): TextConfig => ({
   text,
   y,
   x,
