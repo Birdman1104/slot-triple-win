@@ -24,10 +24,202 @@
         "y": 0.5
       }
     },
-    "win.png": {
+    "strawberry_gin_smash_text.png": {
       "frame": {
         "x": 3,
         "y": 196,
+        "w": 489,
+        "h": 157
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 489,
+        "h": 157
+      },
+      "sourceSize": {
+        "w": 489,
+        "h": 157
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "strawberry_gin_smash.png": {
+      "frame": {
+        "x": 3,
+        "y": 359,
+        "w": 269,
+        "h": 365
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 173,
+        "y": 13,
+        "w": 269,
+        "h": 365
+      },
+      "sourceSize": {
+        "w": 614,
+        "h": 409
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "mojito.png": {
+      "frame": {
+        "x": 570,
+        "y": 3,
+        "w": 246,
+        "h": 347
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 158,
+        "y": 11,
+        "w": 246,
+        "h": 347
+      },
+      "sourceSize": {
+        "w": 596,
+        "h": 398
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "cherry_caipiroska_text.png": {
+      "frame": {
+        "x": 374,
+        "y": 359,
+        "w": 345,
+        "h": 169
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 345,
+        "h": 169
+      },
+      "sourceSize": {
+        "w": 345,
+        "h": 169
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "blueberry_gin_fizz.png": {
+      "frame": {
+        "x": 3,
+        "y": 634,
+        "w": 263,
+        "h": 340
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 171,
+        "y": 32,
+        "w": 263,
+        "h": 340
+      },
+      "sourceSize": {
+        "w": 614,
+        "h": 410
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "blueberry_gin_fizz_text.png": {
+      "frame": {
+        "x": 374,
+        "y": 534,
+        "w": 326,
+        "h": 157
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 326,
+        "h": 157
+      },
+      "sourceSize": {
+        "w": 326,
+        "h": 157
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "cherry_caipiroska.png": {
+      "frame": {
+        "x": 537,
+        "y": 534,
+        "w": 254,
+        "h": 316
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 29,
+        "y": 21,
+        "w": 254,
+        "h": 316
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 377
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "whiskey_sour.png": {
+      "frame": {
+        "x": 822,
+        "y": 3,
+        "w": 261,
+        "h": 314
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 142,
+        "y": 23,
+        "w": 261,
+        "h": 314
+      },
+      "sourceSize": {
+        "w": 536,
+        "h": 358
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "win.png": {
+      "frame": {
+        "x": 725,
+        "y": 356,
         "w": 295,
         "h": 151
       },
@@ -47,6 +239,54 @@
         "x": 0.5,
         "y": 0.5
       }
+    },
+    "whiskey_sour_text.png": {
+      "frame": {
+        "x": 797,
+        "y": 513,
+        "w": 283,
+        "h": 157
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 283,
+        "h": 157
+      },
+      "sourceSize": {
+        "w": 283,
+        "h": 157
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "mojito_text.png": {
+      "frame": {
+        "x": 797,
+        "y": 676,
+        "w": 223,
+        "h": 91
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 223,
+        "h": 91
+      },
+      "sourceSize": {
+        "w": 223,
+        "h": 91
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
     }
   },
   "meta": {
@@ -55,8 +295,8 @@
     "image": "wins.png",
     "format": "RGBA8888",
     "size": {
-      "w": 567,
-      "h": 350
+      "w": 1086,
+      "h": 900
     },
     "scale": 1
   }

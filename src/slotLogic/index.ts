@@ -1,6 +1,6 @@
 import { lego } from "@armathai/lego";
 import { BASE_URL, GLOBALS } from "../configs/constants";
-import { SYMBOL_MAP, SYMBOL_TYPE } from "../configs/SymbolsConfig";
+import { COCKTAILS_MAP, SYMBOL_MAP, SYMBOL_TYPE } from "../configs/SymbolsConfig";
 import { UIEvents } from "../events/MainEvents";
 import { updatePageTitle } from "../utils/Utils";
 
@@ -40,6 +40,74 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
       }),
     });
     const data = await response.json();
+    // const data = {
+    //   spin_result: [
+    //     ["ST", "ST", "ST"],
+    //     ["ST", "ST", "LE"],
+    //     ["ST", "ST", "ST"],
+    //   ],
+
+    //   wins: [
+    //     {
+    //       payline_index: 0,
+    //       symbol: "ST",
+    //       payout: 1,
+    //     },
+    //     {
+    //       payline_index: 2,
+    //       symbol: "ST",
+    //       payout: 1,
+    //     },
+    //     {
+    //       payline_index: 3,
+    //       symbol: "ST",
+    //       payout: 1,
+    //     },
+    //     {
+    //       payline_index: 4,
+    //       symbol: "ST",
+    //       payout: 1,
+    //     },
+    //   ],
+    //   payout: 50,
+    // };
+    // const data =
+    //   Math.random() > 0.5
+    //     ? {
+    //         spin_result: [
+    //           ["LE", "GI", "LE"],
+    //           ["LE", "GI", "LE"],
+    //           ["LE", "WH", "LE"],
+    //         ],
+    //         wins: [
+    //           {
+    //             payline_index: -1,
+    //             symbol: "Whiskey Gin Sour",
+    //             payout: 2000,
+    //           },
+    //         ],
+    //         payout: 2000,
+    //       }
+    //     : {
+    //         spin_result: [
+    //           ["BB", "BB", "BB"],
+    //           ["BB", "BB", "VO"],
+    //           ["BB", "VO", "VO"],
+    //         ],
+    //         wins: [
+    //           {
+    //             payline_index: 0,
+    //             symbol: "Blackberry",
+    //             payout: 10,
+    //           },
+    //           {
+    //             payline_index: 4,
+    //             symbol: "Blackberry",
+    //             payout: 10,
+    //           },
+    //         ],
+    //         payout: 20,
+    //       };
     const { spin_result, wins, payout } = data;
     const reels = new Array(3).fill(null).map(() => new Array(3).fill(null));
     spin_result.forEach((col: string[], colIndex: number) => {
@@ -49,13 +117,22 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
     });
 
     const winningInfo = wins.map((win: WinInfo) => {
-      const line = LINES[win.payline_index];
-      return {
-        symbol: SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP],
-        winAmount: win.payout,
-        line,
-        id: `${SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP]}-${line.join("-")}`,
-      };
+      const { payline_index } = win;
+      if (payline_index === -1) {
+        return {
+          symbol: COCKTAILS_MAP[win.symbol as keyof typeof COCKTAILS_MAP],
+          winAmount: win.payout,
+          id: `${COCKTAILS_MAP[win.symbol as keyof typeof COCKTAILS_MAP]}`,
+        };
+      } else {
+        const line = LINES[win.payline_index];
+        return {
+          symbol: SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP],
+          winAmount: win.payout,
+          line,
+          id: `${SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP]}-${line.join("-")}`,
+        };
+      }
     });
 
     const totalWin = payout;

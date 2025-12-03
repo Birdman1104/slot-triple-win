@@ -164,7 +164,7 @@ export class SlotMachineView extends Container {
       return;
     }
 
-    this.foreground.showWin(this.result.totalWin);
+    this.foreground.showWin(this.result);
   }
 
   private showWinLines(): void {
@@ -176,6 +176,9 @@ export class SlotMachineView extends Container {
     }
 
     const linesData: { line: WinningLine; winningItemType: string }[] = this.result.winningInfo.map((r) => {
+      if (!r.line) {
+        return { line: [], winningItemType: r.id };
+      }
       return { line: r.line, winningItemType: r.id };
     });
 

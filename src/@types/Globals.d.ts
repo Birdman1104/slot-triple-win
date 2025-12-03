@@ -63,7 +63,7 @@ type WinningItemsCount = {
 type WinningInfo = {
   symbol: string;
   winAmount: number;
-  line: WinningLine;
+  line?: WinningLine;
   id: string;
 };
 
