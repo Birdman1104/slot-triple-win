@@ -64,6 +64,7 @@ export class SpinButton extends Container {
         this.stopDisabled.visible = false;
         this.spinArrow.visible = false;
         break;
+      case SlotMachineState.Pending:
       case SlotMachineState.DropOld:
       case SlotMachineState.WaitingForResult:
         this.stopSign.visible = false;

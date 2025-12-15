@@ -90,7 +90,7 @@ export const winTypeConfig = (): SpriteConfig => ({
 export const cocktailConfig = (): SpriteConfig => ({
   frame: "mojito.png",
   x: 384,
-  y: 360,
+  y: 390,
   anchor: { x: 0.5, y: 0.5 },
 });
 

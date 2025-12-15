@@ -110,6 +110,21 @@ export const winTextConfig = (): TextConfig => ({
   },
 });
 
+export const multiplierTextConfig = (n: number, fill: string = "#00ffff"): TextConfig => ({
+  text: `${n}x`,
+  x: 512,
+  y: 600,
+  anchor: { x: 0.5, y: 0.5 },
+  style: {
+    fontSize: 200,
+    fill,
+    stroke: "#ffffff",
+    strokeThickness: 12,
+    fontFamily: "JomhuriaRegular",
+    letterSpacing: 1,
+  },
+});
+
 export const balanceTitleConfig = (): TextConfig => ({
   text: "Balance",
   x: 0,

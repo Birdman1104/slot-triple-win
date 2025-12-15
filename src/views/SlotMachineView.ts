@@ -168,14 +168,15 @@ export class SlotMachineView extends Container {
   }
 
   private showWinLines(): void {
-    if (this.result.winningInfo.length === 0) {
+    const lines = this.result.winningInfo.filter((info) => info.line);
+    if (lines.length === 0) {
       setTimeout(() => {
         lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
       });
       return;
     }
 
-    const linesData: { line: WinningLine; winningItemType: string }[] = this.result.winningInfo.map((r) => {
+    const linesData: { line: WinningLine; winningItemType: string }[] = lines.map((r) => {
       if (!r.line) {
         return { line: [], winningItemType: r.id };
       }

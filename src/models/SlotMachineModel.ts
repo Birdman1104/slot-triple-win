@@ -8,6 +8,7 @@ import { ReelModel } from "./ReelModel";
 export enum SlotMachineState {
   Unknown,
   Idle,
+  Pending,
   DropOld,
   WaitingForResult,
   DropNew,
@@ -164,6 +165,7 @@ export class SlotMachineModel extends ObservableModel {
   public spin(bet: number): void {
     // TODO check for NaN values
     if (isNaN(bet as number)) return;
+    this.state = SlotMachineState.Pending;
     this.getSpinResult(bet);
   }
 

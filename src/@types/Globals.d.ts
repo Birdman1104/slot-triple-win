@@ -63,8 +63,9 @@ type WinningItemsCount = {
 type WinningInfo = {
   symbol: string;
   winAmount: number;
-  line?: WinningLine;
   id: string;
+  line?: WinningLine;
+  multiplier?: number;
 };
 
 type ElementWeightRatio = {
@@ -93,6 +94,7 @@ type WinInfo = {
   payline_index: number;
   symbol: string;
   payout: number;
+  multiplier?: number;
 };
 
 type SpinResponse = {
