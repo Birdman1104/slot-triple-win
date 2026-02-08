@@ -1,5 +1,5 @@
 import { lego } from "@armathai/lego";
-import { SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
+import { MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { GameState } from "../models/GameModel";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
@@ -8,23 +8,24 @@ import { getDefaultPlayerInfo, sendInitRequest } from "../slotLogic";
 let playerInfo: PlayerInfo;
 
 export const initModelsCommand = async (): Promise<void> => {
-  const ok = await sendInitRequest();
-
-  if (!ok) {
-    // show error popup
-    return;
-  }
-
-  playerInfo = await getDefaultPlayerInfo();
-
   Head.initGameModel();
   Head.initSoundModel();
-  Head.initPlayerModel();
   Head.gameModel?.setState(GameState.Intro);
-};
 
-export const onShowIntroCommand = (): void => {
-  Head.gameModel?.setState(GameState.Intro);
+  try {
+    const initOk = await sendInitRequest();
+
+    if (!initOk) {
+      throw new Error("Initialization failed");
+    }
+    playerInfo = await getDefaultPlayerInfo();
+
+    Head.initPlayerModel();
+    lego.event.emit(MainGameEvents.IntroReadyToPlay);
+  } catch (error) {
+    console.error("Initialization error:", error);
+    lego.event.emit(UIEvents.ShowInitialError, error);
+  }
 };
 
 export const onShowGameCommand = (): void => {

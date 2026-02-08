@@ -37,11 +37,12 @@ class App extends Application {
     // @ts-ignore
     if (process.env.NODE_ENV !== "production") {
       this.initStats();
-      // this.initLego();
+      this.initLego();
     }
     await this.loadAssets();
     this.stage.setBkg();
     this.stage.initInitialErrorView();
+    this.stage.showIntro();
     this.onLoadComplete();
   }
 
@@ -93,7 +94,7 @@ class App extends Application {
   private onGameStateUpdate(newState: GameState): void {
     switch (newState) {
       case GameState.Intro:
-        this.stage.showIntro();
+        // this.stage.showIntro();
         break;
       case GameState.Game:
         this.stage.hideIntro();

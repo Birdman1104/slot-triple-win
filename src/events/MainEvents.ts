@@ -8,6 +8,7 @@ export const MainGameEvents = {
   ShowIntro: "MainGameEventsShowIntro",
   ShowGame: "MainGameEventsShowGame",
   BlockActivity: "MainGameEventsBlockActivity",
+  IntroReadyToPlay: "MainGameEventsIntroReadyToPlay",
 };
 
 export const SlotMachineViewEvents = {

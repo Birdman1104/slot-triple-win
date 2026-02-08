@@ -45,8 +45,6 @@ export class InitialErrorView extends PixiGrid {
   }
 
   private showErrorPopup(): void {
-    // console.warn(error);
-
     this.errorPopup.setErrorText({
       errorCode: 404,
       errorText: errorTextTextConfig().text,

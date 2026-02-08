@@ -1,4 +1,6 @@
+import { lego } from "@armathai/lego";
 import { Container } from "pixi.js";
+import { MainGameEvents } from "./events/MainEvents.ts";
 import { lp } from "./utils/Utils.ts";
 import { BackgroundView } from "./views/BackgroundView.ts";
 import { ForegroundView } from "./views/ForegroundView.ts";
@@ -17,11 +19,17 @@ class PixiStage extends Container {
   private uiPortrait: UIPortraitView | null = null;
   private initialError: InitialErrorView | null = null;
 
+  constructor() {
+    super();
+    lego.event.on(MainGameEvents.IntroReadyToPlay, this.onIntroReadyToPlay, this);
+  }
+
   public resize(): void {
     this.intro?.rebuild();
     this.bgView?.rebuild();
     this.gameView?.rebuild();
     this.foregroundView?.rebuild();
+    this.initialError?.rebuild();
 
     if (this.uiLandscape) {
       this.uiLandscape.visible = lp(true, false);
@@ -45,7 +53,7 @@ class PixiStage extends Container {
     if (this.intro) return;
 
     this.intro = new IntroViewWrapper();
-    this.addChild(this.intro);
+    this.addChildAt(this.intro, 1);
   }
 
   public showMainGame(): void {
@@ -71,6 +79,11 @@ class PixiStage extends Container {
   public initInitialErrorView(): void {
     this.initialError = new InitialErrorView();
     this.addChild(this.initialError);
+  }
+
+  private onIntroReadyToPlay(): void {
+    this.initialError?.destroy();
+    this.initialError = null;
   }
 }
 

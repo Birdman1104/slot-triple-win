@@ -41,7 +41,14 @@ class IntroLandscape extends PixiGrid {
     this.setChild("shadows", this.shadowWrapper);
 
     this.clickToContinue = makeText(clickToContinueTextConfig(this.card2.x, this.height - 24));
+    this.clickToContinue.visible = false;
     this.setChild("text", this.clickToContinue);
+  }
+
+  public showClickToContinue(): void {
+    if (this.clickToContinue) {
+      this.clickToContinue.visible = true;
+    }
   }
 
   public getGridConfig(): ICellConfig {
@@ -54,6 +61,10 @@ class IntroLandscape extends PixiGrid {
 
   public processClick(): void {
     lego.event.emit(MainGameEvents.ShowGame);
+  }
+
+  public setReadyToPlay(): void {
+    // Landscape is always ready once showClickToContinue is called
   }
 }
 
@@ -69,6 +80,7 @@ class IntroPortrait extends Container {
 
   private currentCardIndex = 0;
   private isSwitchingCards = false;
+  private isReadyToPlay = false;
 
   constructor() {
     super();
@@ -94,6 +106,10 @@ class IntroPortrait extends Container {
     this.addChild(this.clickToContinue);
   }
 
+  public setReadyToPlay(): void {
+    this.isReadyToPlay = true;
+  }
+
   get cards(): IntroCard[] {
     return [this.card1 as IntroCard, this.card2 as IntroCard, this.card3 as IntroCard];
   }
@@ -108,6 +124,7 @@ class IntroPortrait extends Container {
 
   public processClick(): void {
     if (this.isSwitchingCards) return;
+    if (!this.isReadyToPlay) return;
 
     if (this.currentCardIndex === this.cards.length - 1) {
       lego.event.emit(MainGameEvents.ShowGame);
@@ -159,6 +176,7 @@ export class IntroViewWrapper extends PixiGrid {
   private overlay: Graphics = new Graphics();
 
   private isPortrait!: boolean;
+  private isReadyToPlay = false;
 
   constructor() {
     super();
@@ -169,9 +187,7 @@ export class IntroViewWrapper extends PixiGrid {
 
     this.rebuild();
 
-    // setTimeout(() => {
-    //   lego.event.emit(MainGameEvents.ShowGame);
-    // });
+    lego.event.on(MainGameEvents.IntroReadyToPlay, this.onReadyToPlay, this);
   }
 
   public getGridConfig(): ICellConfig {
@@ -189,14 +205,22 @@ export class IntroViewWrapper extends PixiGrid {
     super.rebuild(this.getGridConfig());
   }
 
+  private onReadyToPlay(): void {
+    this.isReadyToPlay = true;
+    this.overlay.eventMode = "static";
+    this.landscapeView.showClickToContinue();
+    this.portraitView.setReadyToPlay();
+  }
+
   private buildOverlay(): void {
     this.overlay = new Graphics();
     this.overlay.beginFill(0x000000, 0.01);
     this.overlay.drawRect(0, 0, 10, 10);
     this.overlay.endFill();
     this.overlay.alpha = 0;
-    this.overlay.eventMode = "static";
+    this.overlay.eventMode = "none";
     this.overlay.on("pointerdown", () => {
+      if (!this.isReadyToPlay) return;
       this.isPortrait ? this.portraitView.processClick() : this.landscapeView.processClick();
     });
 

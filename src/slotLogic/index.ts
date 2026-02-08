@@ -1,7 +1,5 @@
-import { lego } from "@armathai/lego";
 import { BASE_URL, GLOBALS } from "../configs/constants";
 import { COCKTAILS_MAP, SYMBOL_MAP, SYMBOL_TYPE } from "../configs/SymbolsConfig";
-import { UIEvents } from "../events/MainEvents";
 import { updatePageTitle } from "../utils/Utils";
 
 export const LINES = [
@@ -22,7 +20,7 @@ export const getError = (): Promise<ErrorResult> => {
         errorText: "An error occurred, please reload the page or contact support",
         errorCode: Math.ceil(Math.random() * 150 + 400),
       });
-    }, 50)
+    }, 50),
   );
 };
 
@@ -39,7 +37,7 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
         amount: bet,
       }),
     });
-    const data = await response.json();
+    // const data = await response.json();
     // const data = {
     //   spin_result: [
     //     ["ST", "ST", "ST"],
@@ -71,46 +69,46 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
     //   ],
     //   payout: 50,
     // };
-    // const data = {
-    //   spin_result: [
-    //     ["LE", "GI", "LE"],
-    //     ["LE", "GI", "LE"],
-    //     ["LE", "WH", "LE"],
-    //   ],
-    //   wins: [
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Mojito",
-    //       payout: 200,
-    //       multiplier: 4,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Whiskey Gin Sour",
-    //       payout: 2000,
-    //       multiplier: 11,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Blueberry Gin Fizz",
-    //       payout: 2000,
-    //       multiplier: 3,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Strawberry Gin Smash",
-    //       payout: 2000,
-    //       multiplier: 14,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Cherry Caipiroska",
-    //       payout: 2000,
-    //       multiplier: 26,
-    //     },
-    //   ],
-    //   payout: 2000,
-    // };
+    const data = {
+      spin_result: [
+        ["LE", "GI", "LE"],
+        ["LE", "GI", "LE"],
+        ["LE", "WH", "LE"],
+      ],
+      wins: [
+        {
+          payline_index: -1,
+          symbol: "Mojito",
+          payout: 200,
+          multiplier: 4,
+        },
+        {
+          payline_index: -1,
+          symbol: "Whiskey Gin Sour",
+          payout: 2000,
+          multiplier: 11,
+        },
+        {
+          payline_index: -1,
+          symbol: "Blueberry Gin Fizz",
+          payout: 2000,
+          multiplier: 3,
+        },
+        {
+          payline_index: -1,
+          symbol: "Strawberry Gin Smash",
+          payout: 2000,
+          multiplier: 14,
+        },
+        {
+          payline_index: -1,
+          symbol: "Cherry Caipiroska",
+          payout: 2000,
+          multiplier: 26,
+        },
+      ],
+      payout: 2000,
+    };
     //     : {
     //         spin_result: [
     //           ["BB", "BB", "BB"],
@@ -183,13 +181,8 @@ export const getDefaultReelsConfig = (): SpinResult => {
   };
 };
 
-// TODO _ refactor this func
 export const sendInitRequest = async (): Promise<boolean> => {
   const data = await initRequest();
-
-  if (!data) {
-    return false;
-  }
 
   const { session_id, game_name } = data;
 
@@ -218,25 +211,25 @@ export const getDefaultPlayerInfo = async (): Promise<PlayerInfo> => {
   });
 };
 
-const initRequest = async (): Promise<InitResponse | undefined> => {
-  try {
-    const response = await fetch(BASE_URL + "api/play/init", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        player_id: "dummy",
-        game_id: "1",
-        currency: "amd",
-      }),
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    lego.event.emit(UIEvents.ShowInitialError, error);
-    console.error("Error fetching initial data:", error);
+const initRequest = async (): Promise<InitResponse> => {
+  const response = await fetch(BASE_URL + "api/play/init", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      player_id: "dummy",
+      game_id: "1",
+      currency: "amd",
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error: ${response.status}`);
   }
+
+  const data = await response.json();
+  return data;
 };
 
 export const getSlotMachineInitialConfig = () => {

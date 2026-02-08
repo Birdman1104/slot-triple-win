@@ -22,12 +22,12 @@ export class ErrorPopup extends PopupBase {
   }
 
   public rebuild(): void {
-    this.rebuildSprite(this.bkg, popupBkgConfig());
-    this.rebuildSprite(this.redIcon, redIconConfig());
-    this.rebuildSprite(this.closeButton, popupCloseButtonConfig());
+    this.bkg && this.rebuildSprite(this.bkg, popupBkgConfig());
+    this.redIcon && this.rebuildSprite(this.redIcon, redIconConfig());
+    this.closeButton && this.rebuildSprite(this.closeButton, popupCloseButtonConfig());
 
-    this.rebuildText(this.errorTitle, errorTitleTextConfig());
-    this.rebuildText(this.errorMessage, errorTextTextConfig());
+    this.errorTitle && this.rebuildText(this.errorTitle, errorTitleTextConfig());
+    this.errorMessage && this.rebuildText(this.errorMessage, errorTextTextConfig());
   }
 
   private build() {
