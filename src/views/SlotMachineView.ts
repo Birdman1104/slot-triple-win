@@ -82,7 +82,7 @@ export class SlotMachineView extends Container {
 
     this.reelsMask = new Graphics();
     this.reelsMask.beginFill(0xff0000, 0.0005);
-    this.reelsMask.drawRect(this.reelsContainer.x - 13, this.reelsContainer.y - 15, 3 * WIDTH, 2.9 * HEIGHT);
+    this.reelsMask.drawRect(this.reelsContainer.x - 13, this.reelsContainer.y, 3 * WIDTH, 2.9 * HEIGHT - 30);
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 
@@ -221,7 +221,7 @@ export class SlotMachineView extends Container {
             y: 1.35,
             complete: () => e.endAnimation(),
           },
-          0
+          0,
         );
       });
 
@@ -241,7 +241,7 @@ export class SlotMachineView extends Container {
               e.texture = Texture.from(basicTexture);
             },
           },
-          0
+          0,
         );
       });
       this.winAnimations.push(timeline);

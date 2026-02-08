@@ -37,7 +37,7 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
         amount: bet,
       }),
     });
-    // const data = await response.json();
+    const data = await response.json();
     // const data = {
     //   spin_result: [
     //     ["ST", "ST", "ST"],
@@ -69,46 +69,46 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
     //   ],
     //   payout: 50,
     // };
-    const data = {
-      spin_result: [
-        ["LE", "GI", "LE"],
-        ["LE", "GI", "LE"],
-        ["LE", "WH", "LE"],
-      ],
-      wins: [
-        {
-          payline_index: -1,
-          symbol: "Mojito",
-          payout: 200,
-          multiplier: 4,
-        },
-        {
-          payline_index: -1,
-          symbol: "Whiskey Gin Sour",
-          payout: 2000,
-          multiplier: 11,
-        },
-        {
-          payline_index: -1,
-          symbol: "Blueberry Gin Fizz",
-          payout: 2000,
-          multiplier: 3,
-        },
-        {
-          payline_index: -1,
-          symbol: "Strawberry Gin Smash",
-          payout: 2000,
-          multiplier: 14,
-        },
-        {
-          payline_index: -1,
-          symbol: "Cherry Caipiroska",
-          payout: 2000,
-          multiplier: 26,
-        },
-      ],
-      payout: 2000,
-    };
+    // const data = {
+    //   spin_result: [
+    //     ["LE", "GI", "LE"],
+    //     ["LE", "GI", "LE"],
+    //     ["LE", "WH", "LE"],
+    //   ],
+    //   wins: [
+    //     {
+    //       payline_index: -1,
+    //       symbol: "Mojito",
+    //       payout: 200,
+    //       multiplier: 4,
+    //     },
+    //     {
+    //       payline_index: -1,
+    //       symbol: "Whiskey Gin Sour",
+    //       payout: 2000,
+    //       multiplier: 11,
+    //     },
+    //     {
+    //       payline_index: -1,
+    //       symbol: "Blueberry Gin Fizz",
+    //       payout: 2000,
+    //       multiplier: 3,
+    //     },
+    //     {
+    //       payline_index: -1,
+    //       symbol: "Strawberry Gin Smash",
+    //       payout: 2000,
+    //       multiplier: 14,
+    //     },
+    //     {
+    //       payline_index: -1,
+    //       symbol: "Cherry Caipiroska",
+    //       payout: 2000,
+    //       multiplier: 26,
+    //     },
+    //   ],
+    //   payout: 2000,
+    // };
     //     : {
     //         spin_result: [
     //           ["BB", "BB", "BB"],
