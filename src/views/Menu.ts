@@ -153,7 +153,7 @@ export class MenuToggle extends Container {
     buttonsConfig.forEach((c, i) => {
       let config = { config: c, w: 600, h: 124, fontSize: 100 };
       if (!this.isLandscape) {
-        config = { config: c, w: 400, h: 110, fontSize: 70 };
+        config = { config: c, w: 400, h: 110, fontSize: 100 };
       }
       const button = new MenuButton(config);
       button.on("close", () => this.hide());
