@@ -34,8 +34,12 @@ export class SlotForeground extends Container {
   public skipWinnings(): void {
     this.tl.pause();
     this.tl.remove();
-    [this.iceCrack, this.winAmount, this.winType, this.cocktail, this.cocktailText].forEach((el) => (el.alpha = 0));
-    [this.winAmount, this.winType, this.cocktail, this.cocktailText].forEach((el) => el.scale.set(0.2));
+    [this.iceCrack, this.winAmount, this.winType, this.cocktail, this.cocktailText, this.multiplier].forEach(
+      (el) => (el.alpha = 0),
+    );
+    [this.winAmount, this.winType, this.cocktail, this.cocktailText, this.multiplier].forEach((el) =>
+      el.scale.set(0.2),
+    );
 
     this.emit("winBoardShowComplete");
   }
@@ -72,7 +76,7 @@ export class SlotForeground extends Container {
         alpha: 1,
         duration: 10,
       },
-      0
+      0,
     );
 
     let currentOffset = 10;
@@ -92,7 +96,7 @@ export class SlotForeground extends Container {
             this.multiplier.style.fill = COCKTAIL_COLOR_MAP[cocktail.symbol as keyof typeof COCKTAIL_COLOR_MAP];
           },
         },
-        cocktailStartOffset - 1
+        cocktailStartOffset - 1,
       );
       this.tl.add(
         // Fade in
@@ -105,7 +109,7 @@ export class SlotForeground extends Container {
             this.cocktailText.texture = Texture.from(cocktail.symbol + "_text.png");
           },
         },
-        cocktailStartOffset
+        cocktailStartOffset,
       );
       this.tl.add(
         // Scale in
@@ -115,7 +119,7 @@ export class SlotForeground extends Container {
           y: 1,
           duration: 200,
         },
-        cocktailStartOffset
+        cocktailStartOffset,
       );
 
       this.tl.add(
@@ -126,7 +130,7 @@ export class SlotForeground extends Container {
           y: 0.2,
           duration: 400,
         },
-        cocktailStartOffset + STOP_DURATION
+        cocktailStartOffset + STOP_DURATION,
       );
       this.tl.add(
         // Fade out
@@ -135,7 +139,7 @@ export class SlotForeground extends Container {
           alpha: 0,
           duration: 400,
         },
-        cocktailStartOffset + STOP_DURATION + 10
+        cocktailStartOffset + STOP_DURATION + 10,
       );
 
       currentOffset = cocktailStartOffset + STOP_DURATION + 400;
@@ -149,7 +153,7 @@ export class SlotForeground extends Container {
         alpha: 1,
         duration: 200,
       },
-      totalWinStartOffset
+      totalWinStartOffset,
     );
 
     this.tl.add(
@@ -159,7 +163,7 @@ export class SlotForeground extends Container {
         y: 1,
         duration: 200,
       },
-      totalWinStartOffset
+      totalWinStartOffset,
     );
 
     this.tl.add(
@@ -169,7 +173,7 @@ export class SlotForeground extends Container {
         y: 0.2,
         duration: 400,
       },
-      totalWinStartOffset + STOP_DURATION
+      totalWinStartOffset + STOP_DURATION,
     );
 
     this.tl.add(
@@ -178,7 +182,7 @@ export class SlotForeground extends Container {
         alpha: 0,
         duration: 400,
       },
-      totalWinStartOffset + STOP_DURATION
+      totalWinStartOffset + STOP_DURATION,
     );
   }
 
@@ -218,7 +222,7 @@ export class SlotForeground extends Container {
         ease: "easeOutBounce",
         duration: 200,
       },
-      0
+      0,
     );
 
     this.tl.add(
@@ -228,7 +232,7 @@ export class SlotForeground extends Container {
         y: 0.2,
         duration: 400,
       },
-      STOP_DURATION
+      STOP_DURATION,
     );
 
     this.tl.add(
@@ -237,7 +241,7 @@ export class SlotForeground extends Container {
         alpha: 0,
         duration: 400,
       },
-      STOP_DURATION
+      STOP_DURATION,
     );
   }
 
