@@ -1,10 +1,10 @@
 import { lego } from "@armathai/lego";
 import { Container, Text } from "pixi.js";
-import { balanceTextConfig, balanceTitleConfig } from "../configs/textConfig";
-import { SlotMachineViewEvents } from "../events/MainEvents";
-import { PlayerModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
-import { SlotMachineState } from "../models/SlotMachineModel";
-import { makeText } from "../utils/Utils";
+import { balanceTextConfig, balanceTitleConfig } from "../../configs/textConfig";
+import { SlotMachineViewEvents } from "../../events/MainEvents";
+import { PlayerModelEvents, SlotMachineModelEvents } from "../../events/ModelEvents";
+import { SlotMachineState } from "../../models/SlotMachineModel";
+import { makeText } from "../../utils/Utils";
 
 export class Balance extends Container {
   private text!: Text;

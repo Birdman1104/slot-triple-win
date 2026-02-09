@@ -2,9 +2,9 @@ import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
 import { Graphics } from "pixi.js";
-import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
-import { errorTextTextConfig } from "../configs/textConfig";
-import { MainGameEvents, UIEvents } from "../events/MainEvents";
+import { getForegroundViewGridConfig } from "../../configs/gridConfigs/foregroundViewGC";
+import { errorTextTextConfig } from "../../configs/textConfig";
+import { MainGameEvents, UIEvents } from "../../events/MainEvents";
 import { ErrorPopup } from "./ErrorPopup";
 import type { PopupBase } from "./PopupBase";
 

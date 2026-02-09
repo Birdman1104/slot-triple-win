@@ -1,6 +1,6 @@
-import { uiAutoSpinsBkgL, uiAutoSpinsIconL, uiMultipleNumbersBkgL } from "../configs/spritesConfig";
-import { autoSpinsTextConfig } from "../configs/textConfig";
-import { makeSprite, makeText } from "../utils/Utils";
+import { uiAutoSpinsBkgL, uiAutoSpinsIconL, uiMultipleNumbersBkgL } from "../../configs/spritesConfig";
+import { autoSpinsTextConfig } from "../../configs/textConfig";
+import { makeSprite, makeText } from "../../utils/Utils";
 import { AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase, values } from "./AutoSpinMenuBase";
 
 class AutoSpinsToggleLandscape extends AutoSpinsToggleBase {

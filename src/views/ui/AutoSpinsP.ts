@@ -2,9 +2,9 @@ import {
   uiAutoSpinsBkgPortrait,
   uiAutoSpinsIconPortrait,
   uiMultipleNumbersBkgPortrait,
-} from "../configs/spritesConfig";
-import { autoSpinsTextConfigPortrait } from "../configs/textConfig";
-import { makeSprite, makeText } from "../utils/Utils";
+} from "../../configs/spritesConfig";
+import { autoSpinsTextConfigPortrait } from "../../configs/textConfig";
+import { makeSprite, makeText } from "../../utils/Utils";
 import { AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase, values } from "./AutoSpinMenuBase";
 
 class AutoSpinsTogglePortrait extends AutoSpinsToggleBase {

@@ -1,10 +1,10 @@
 import { lego } from "@armathai/lego";
 import { Container, Sprite } from "pixi.js";
-import { uiSpinBtnArrowL, uiSpinBtnBkgL, uiSpinBtnStopL, uiSpinDisabledBtnStopL } from "../configs/spritesConfig";
-import { UIEvents } from "../events/MainEvents";
-import { SlotMachineModelEvents } from "../events/ModelEvents";
-import { SlotMachineState } from "../models/SlotMachineModel";
-import { makeSprite } from "../utils/Utils";
+import { uiSpinBtnArrowL, uiSpinBtnBkgL, uiSpinBtnStopL, uiSpinDisabledBtnStopL } from "../../configs/spritesConfig";
+import { UIEvents } from "../../events/MainEvents";
+import { SlotMachineModelEvents } from "../../events/ModelEvents";
+import { SlotMachineState } from "../../models/SlotMachineModel";
+import { makeSprite } from "../../utils/Utils";
 
 export class SpinButton extends Container {
   private bkg!: Sprite;

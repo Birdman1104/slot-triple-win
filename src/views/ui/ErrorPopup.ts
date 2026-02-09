@@ -1,7 +1,7 @@
 import { Sprite, Text } from "pixi.js";
-import { popupBkgConfig, popupCloseButtonConfig, redIconConfig } from "../configs/spritesConfig";
-import { errorTextTextConfig, errorTitleTextConfig } from "../configs/textConfig";
-import { makeSprite, makeText } from "../utils/Utils";
+import { popupBkgConfig, popupCloseButtonConfig, redIconConfig } from "../../configs/spritesConfig";
+import { errorTextTextConfig, errorTitleTextConfig } from "../../configs/textConfig";
+import { makeSprite, makeText } from "../../utils/Utils";
 import { PopupBase } from "./PopupBase";
 
 export class ErrorPopup extends PopupBase {

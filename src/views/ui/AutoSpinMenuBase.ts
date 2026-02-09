@@ -1,10 +1,10 @@
 import { lego } from "@armathai/lego";
 import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
-import { autoSpinsButtonTextConfig } from "../configs/textConfig";
-import { UIEvents } from "../events/MainEvents";
-import { SlotMachineModelEvents } from "../events/ModelEvents";
-import { SlotMachineState } from "../models/SlotMachineModel";
-import { drawBounds, hideToggle, makeText, showToggle } from "../utils/Utils";
+import { autoSpinsButtonTextConfig } from "../../configs/textConfig";
+import { UIEvents } from "../../events/MainEvents";
+import { SlotMachineModelEvents } from "../../events/ModelEvents";
+import { SlotMachineState } from "../../models/SlotMachineModel";
+import { drawBounds, hideToggle, makeText, showToggle } from "../../utils/Utils";
 
 export const values: number[] = [200, 100, 50, 20, 10];
 
@@ -16,7 +16,7 @@ export class AutoSpinButton extends Container {
     private isLandscape: boolean,
     private value: number,
     private w: number,
-    private h: number
+    private h: number,
   ) {
     super();
 
@@ -39,8 +39,8 @@ export class AutoSpinButton extends Container {
         this.isLandscape ? 122 : 50,
         this.isLandscape ? 62 : 33,
         this.isLandscape ? 100 : 60,
-        this.value.toString()
-      )
+        this.value.toString(),
+      ),
     );
     this.addChild(this.valueText);
   }

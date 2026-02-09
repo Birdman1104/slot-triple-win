@@ -1,8 +1,8 @@
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { Container, Rectangle, type Sprite } from "pixi.js";
-import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import { uiButBonusBtnL, uiLineL, uiPortraitBkg } from "../configs/spritesConfig";
-import { makeSprite } from "../utils/Utils";
+import { getUIViewGridConfig } from "../../configs/gridConfigs/uiViewGC";
+import { uiButBonusBtnL, uiLineL, uiPortraitBkg } from "../../configs/spritesConfig";
+import { makeSprite } from "../../utils/Utils";
 import { AutoSpinsLandscape } from "./AutoSpinsL";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";

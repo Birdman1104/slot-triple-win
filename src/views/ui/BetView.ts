@@ -1,10 +1,10 @@
 import { lego } from "@armathai/lego";
 import { Container, Sprite, Text } from "pixi.js";
-import { betArrowBtnL } from "../configs/spritesConfig";
-import { betTextConfig, betTitleConfig } from "../configs/textConfig";
-import { UIEvents } from "../events/MainEvents";
-import { PlayerModelEvents } from "../events/ModelEvents";
-import { makeSprite, makeText } from "../utils/Utils";
+import { betArrowBtnL } from "../../configs/spritesConfig";
+import { betTextConfig, betTitleConfig } from "../../configs/textConfig";
+import { UIEvents } from "../../events/MainEvents";
+import { PlayerModelEvents } from "../../events/ModelEvents";
+import { makeSprite, makeText } from "../../utils/Utils";
 
 export class Bet extends Container {
   private text!: Text;

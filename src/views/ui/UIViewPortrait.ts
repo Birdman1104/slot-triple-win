@@ -1,10 +1,10 @@
 import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { Container, Rectangle, type Sprite } from "pixi.js";
-import { getUIViewGridConfig } from "../configs/gridConfigs/uiViewGC";
-import { betArrowBtnL, uiButBonusBtnL, uiMenuBtnL, uiMenuCloseBtnP, uiPortraitBkg } from "../configs/spritesConfig";
-import { UIEvents } from "../events/MainEvents";
-import { hideToggle, makeSprite, showToggle } from "../utils/Utils";
+import { getUIViewGridConfig } from "../../configs/gridConfigs/uiViewGC";
+import { betArrowBtnL, uiButBonusBtnL, uiMenuBtnL, uiMenuCloseBtnP, uiPortraitBkg } from "../../configs/spritesConfig";
+import { UIEvents } from "../../events/MainEvents";
+import { hideToggle, makeSprite, showToggle } from "../../utils/Utils";
 import { AutoSpinsPortrait } from "./AutoSpinsP";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";

@@ -5,10 +5,10 @@ import { lp } from "./utils/Utils.ts";
 import { BackgroundView } from "./views/BackgroundView.ts";
 import { ForegroundView } from "./views/ForegroundView.ts";
 import { GameView } from "./views/GameView.ts";
-import { InitialErrorView } from "./views/InitialErrorView.ts";
 import { IntroViewWrapper } from "./views/IntroView.ts";
-import { UILandscapeView } from "./views/UIViewLandscape.ts";
-import { UIPortraitView } from "./views/UIViewPortrait.ts";
+import { InitialErrorView } from "./views/ui/InitialErrorView.ts";
+import { UILandscapeView } from "./views/ui/UIViewLandscape.ts";
+import { UIPortraitView } from "./views/ui/UIViewPortrait.ts";
 
 class PixiStage extends Container {
   private intro: IntroViewWrapper | null = null;

@@ -5,9 +5,9 @@ import { Graphics } from "pixi.js";
 import { getForegroundViewGridConfig } from "../configs/gridConfigs/foregroundViewGC";
 import { ForegroundViewEvents, MainGameEvents, UIEvents } from "../events/MainEvents";
 import { SlotMachineModelEvents } from "../events/ModelEvents";
-import { ErrorPopup } from "./ErrorPopup";
-import { InfoPopup } from "./InfoPopup";
-import type { PopupBase } from "./PopupBase";
+import { ErrorPopup } from "./ui/ErrorPopup";
+import { InfoPopup } from "./ui/InfoPopup";
+import type { PopupBase } from "./ui/PopupBase";
 
 export class ForegroundView extends PixiGrid {
   private errorPopup!: ErrorPopup;

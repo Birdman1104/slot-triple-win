@@ -7,13 +7,13 @@ import {
   uiMenuButtonBkgL,
   uiMenuButtonL,
   uiMenuCloseBtnL,
-} from "../configs/spritesConfig";
-import { menuButtonTextConfig } from "../configs/textConfig";
-import { UIEvents } from "../events/MainEvents";
-import { GameModelEvents, SoundModelEvents } from "../events/ModelEvents";
-import { GameType } from "../models/GameModel";
-import { SoundState } from "../models/SoundModel";
-import { drawBounds, hideToggle, makeSprite, makeText, showToggle } from "../utils/Utils";
+} from "../../configs/spritesConfig";
+import { menuButtonTextConfig } from "../../configs/textConfig";
+import { UIEvents } from "../../events/MainEvents";
+import { GameModelEvents, SoundModelEvents } from "../../events/ModelEvents";
+import { GameType } from "../../models/GameModel";
+import { SoundState } from "../../models/SoundModel";
+import { drawBounds, hideToggle, makeSprite, makeText, showToggle } from "../../utils/Utils";
 
 export type MenuButtonConfig = {
   title: string;

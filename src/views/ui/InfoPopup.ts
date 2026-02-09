@@ -1,7 +1,7 @@
 import { Sprite, Text } from "pixi.js";
-import { popupBkgConfig, popupCloseButtonConfig } from "../configs/spritesConfig";
-import { infoTextTextConfig, infoTitleTextConfig } from "../configs/textConfig";
-import { makeSprite, makeText } from "../utils/Utils";
+import { popupBkgConfig, popupCloseButtonConfig } from "../../configs/spritesConfig";
+import { infoTextTextConfig, infoTitleTextConfig } from "../../configs/textConfig";
+import { makeSprite, makeText } from "../../utils/Utils";
 import { PopupBase } from "./PopupBase";
 
 export class InfoPopup extends PopupBase {
