@@ -69,10 +69,6 @@ export class InitialErrorView extends PixiGrid {
 
   private buildErrorPopup(): void {
     this.errorPopup = new ErrorPopup(false);
-    // this.errorPopup.on("closeErrorPopup", () => {
-    //   lego.event.emit(ForegroundViewEvents.ErrorPopupHideComplete);
-    //   this.hidePopup();
-    // });
     this.setChild("popup", this.errorPopup);
     this.errorPopup.hide(true);
     this.popups.push(this.errorPopup);

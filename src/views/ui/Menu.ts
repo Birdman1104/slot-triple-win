@@ -7,6 +7,7 @@ import {
   uiMenuButtonBkgL,
   uiMenuButtonL,
   uiMenuCloseBtnL,
+  uiMenuCloseBtnP,
 } from "../../configs/spritesConfig";
 import { menuButtonTextConfig } from "../../configs/textConfig";
 import { UIEvents } from "../../events/MainEvents";
@@ -137,12 +138,7 @@ export class MenuToggle extends Container {
   }
 
   public show(): void {
-    const cb = () => {
-      this.emit("menuOpened");
-      if (!this.isLandscape) {
-        // this.closeBtn.eventMode = "static";
-      }
-    };
+    const cb = () => this.emit("menuOpened");
     showToggle(this, 1, cb);
   }
 
@@ -168,11 +164,6 @@ export class MenuToggle extends Container {
       this.buttons.push(button);
     });
 
-    if (!this.isLandscape) {
-      // this.closeBtn = makeSprite(portraitMenuCloseButtonConfig());
-      // this.closeBtn.on("pointerdown", () => this.hide());
-      // this.addChild(this.closeBtn);
-    }
   }
 
   private onMusicStateUpdate(value: SoundState): void {
@@ -261,6 +252,83 @@ export class MenuLandscapeView extends Container {
     this.menu.on("menuOpened", () => {
       this.closeButton.visible = true;
       this.menuButton.visible = false;
+
+      this.menuButton.eventMode = "none";
+      this.closeButton.eventMode = "static";
+    });
+    this.addChild(this.menu);
+  }
+}
+
+export class MenuPortraitView extends Container {
+  private menuButton!: Sprite;
+  private closeButton!: Sprite;
+  private menu!: MenuToggle;
+
+  constructor() {
+    super();
+    this.build();
+  }
+
+  public getBounds(): Rectangle {
+    return new Rectangle(-80, -80, 171, 171);
+  }
+
+  public hideToggle(): void {
+    this.menu.hide();
+  }
+
+  private build(): void {
+    this.buildMenu();
+    this.buildCloseButton();
+    this.buildMenuButton();
+  }
+
+  private buildMenuButton(): void {
+    this.menuButton = makeSprite(uiMenuBtnL());
+    this.menuButton.eventMode = "static";
+    this.menuButton.on("pointerdown", () => {
+      this.emit("clicked");
+      this.menu.show();
+      this.menuButton.eventMode = "none";
+      this.closeButton.eventMode = "none";
+      hideToggle(this.menuButton);
+    });
+    this.addChild(this.menuButton);
+  }
+
+  private buildCloseButton(): void {
+    this.closeButton = makeSprite(uiMenuCloseBtnP());
+    this.closeButton.scale.set(0);
+
+    this.closeButton.on("pointerdown", () => {
+      this.menu.hide();
+      this.menuButton.eventMode = "none";
+      this.closeButton.eventMode = "none";
+      hideToggle(this.closeButton);
+    });
+    this.addChild(this.closeButton);
+  }
+
+  private buildMenu(): void {
+    this.menu = new MenuToggle(false);
+    this.menu.visible = false;
+    this.menu.hide();
+
+    this.menu.on("menuClosed", () => {
+      if (!this.menu.visible) {
+        this.menu.visible = true;
+      }
+      showToggle(this.menuButton);
+      hideToggle(this.closeButton);
+
+      this.menuButton.eventMode = "static";
+      this.closeButton.eventMode = "none";
+    });
+
+    this.menu.on("menuOpened", () => {
+      hideToggle(this.menuButton);
+      showToggle(this.closeButton, 1.2);
 
       this.menuButton.eventMode = "none";
       this.closeButton.eventMode = "static";

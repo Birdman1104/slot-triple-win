@@ -53,6 +53,6 @@ export class Bet extends Container {
   }
 
   private betUpdate(bet: number): void {
-    this.betText.text = `$ ${bet}`;
+    this.betText.text = `$${bet}`;
   }
 }

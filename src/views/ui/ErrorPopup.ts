@@ -7,41 +7,33 @@ import { PopupBase } from "./PopupBase";
 export class ErrorPopup extends PopupBase {
   private errorMessage!: Text;
   private errorTitle!: Text;
-  private bkg!: Sprite;
   private redIcon!: Sprite;
 
   constructor(private isClosable = true) {
     super();
-
     this.build();
   }
 
   public setErrorText(error: ErrorResult): void {
     this.errorMessage.text = error.errorText;
-    this.errorTitle.text = "Error " + error.errorCode;
+    this.errorTitle.text = `Error ${error.errorCode}`;
   }
 
   public rebuild(): void {
-    this.bkg && this.rebuildSprite(this.bkg, popupBkgConfig());
-    this.redIcon && this.rebuildSprite(this.redIcon, redIconConfig());
-    this.closeButton && this.rebuildSprite(this.closeButton, popupCloseButtonConfig());
-
-    this.errorTitle && this.rebuildText(this.errorTitle, errorTitleTextConfig());
-    this.errorMessage && this.rebuildText(this.errorMessage, errorTextTextConfig());
+    this.rebuildSprite(this.bkg, popupBkgConfig());
+    this.rebuildSprite(this.redIcon, redIconConfig());
+    if (this.closeButton) {
+      this.rebuildSprite(this.closeButton, popupCloseButtonConfig());
+    }
+    this.rebuildText(this.errorTitle, errorTitleTextConfig());
+    this.rebuildText(this.errorMessage, errorTextTextConfig());
   }
 
-  private build() {
-    this.bkg = makeSprite(popupBkgConfig());
-    this.addChild(this.bkg);
+  private build(): void {
+    this.buildBkg();
 
     if (this.isClosable) {
-      this.closeButton = makeSprite(popupCloseButtonConfig());
-      this.addChild(this.closeButton);
-
-      this.closeButton.eventMode = "static";
-      this.closeButton.on("pointerdown", () => {
-        this.emit("closeErrorPopup");
-      });
+      this.buildCloseButton("closeErrorPopup");
     }
 
     this.redIcon = makeSprite(redIconConfig());

@@ -3,7 +3,7 @@ import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../../configs/gridConfigs/uiViewGC";
 import { uiButBonusBtnL, uiLineL, uiPortraitBkg } from "../../configs/spritesConfig";
 import { makeSprite } from "../../utils/Utils";
-import { AutoSpinsLandscape } from "./AutoSpinsL";
+import { AutoSpinsLandscape } from "./AutoSpinsLandscape";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
 import { MenuLandscapeView } from "./Menu";

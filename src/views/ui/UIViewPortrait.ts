@@ -2,98 +2,14 @@ import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import { Container, Rectangle, type Sprite } from "pixi.js";
 import { getUIViewGridConfig } from "../../configs/gridConfigs/uiViewGC";
-import { betArrowBtnL, uiButBonusBtnL, uiMenuBtnL, uiMenuCloseBtnP, uiPortraitBkg } from "../../configs/spritesConfig";
+import { betArrowBtnL, uiButBonusBtnL, uiPortraitBkg } from "../../configs/spritesConfig";
 import { UIEvents } from "../../events/MainEvents";
-import { hideToggle, makeSprite, showToggle } from "../../utils/Utils";
-import { AutoSpinsPortrait } from "./AutoSpinsP";
+import { makeSprite } from "../../utils/Utils";
+import { AutoSpinsPortrait } from "./AutoSpinsPortrait";
 import { Balance } from "./BalanceView";
 import { Bet } from "./BetView";
-import { MenuToggle } from "./Menu";
+import { MenuPortraitView } from "./Menu";
 import { SpinButton } from "./SpinButton";
-
-class MenuPortraitView extends Container {
-  private menuButton!: Sprite;
-  private closeButton!: Sprite;
-  private menu!: MenuToggle;
-
-  constructor() {
-    super();
-    this.build();
-  }
-
-  public getBounds(): Rectangle {
-    return new Rectangle(-80, -80, 171, 171);
-  }
-
-  public hideToggle(): void {
-    this.menu.hide();
-  }
-
-  private build(): void {
-    this.buildMenu();
-    this.buildCloseButton();
-
-    this.buildMenuButton();
-  }
-
-  private buildMenuButton(): void {
-    this.menuButton = makeSprite(uiMenuBtnL());
-    this.menuButton.eventMode = "static";
-    this.menuButton.on("pointerdown", () => {
-      this.emit("clicked");
-      this.menu.show();
-      this.menuButton.eventMode = "none";
-      this.closeButton.eventMode = "none";
-      hideToggle(this.menuButton);
-      // showToggle(this.closeButton, 1.2);
-    });
-    this.addChild(this.menuButton);
-  }
-
-  private buildCloseButton(): void {
-    this.closeButton = makeSprite(uiMenuCloseBtnP());
-    this.closeButton.scale.set(0);
-
-    this.closeButton.on("pointerdown", () => {
-      this.menu.hide();
-      this.menuButton.eventMode = "none";
-      this.closeButton.eventMode = "none";
-      // showToggle(this.menuButton);
-      hideToggle(this.closeButton);
-    });
-    this.addChild(this.closeButton);
-  }
-
-  private buildMenu(): void {
-    this.menu = new MenuToggle(false);
-    this.menu.visible = false;
-    this.menu.hide();
-
-    this.menu.on("menuClosed", () => {
-      if (!this.menu.visible) {
-        this.menu.visible = true;
-      }
-      showToggle(this.menuButton);
-      hideToggle(this.closeButton);
-      // this.closeButton.visible = false;
-      // this.menuButton.visible = true;
-
-      this.menuButton.eventMode = "static";
-      this.closeButton.eventMode = "none";
-    });
-
-    this.menu.on("menuOpened", () => {
-      hideToggle(this.menuButton);
-      showToggle(this.closeButton, 1.2);
-      // this.closeButton.visible = true;
-      // this.menuButton.visible = false;
-
-      this.menuButton.eventMode = "none";
-      this.closeButton.eventMode = "static";
-    });
-    this.addChild(this.menu);
-  }
-}
 
 class UIPortraitWrapper extends Container {
   private bkg!: Sprite;

@@ -41,20 +41,20 @@ export class Balance extends Container {
   private updateTempBalance(newBalance: number): void {
     if (this.tempBalance === -1) {
       this.tempBalance = newBalance;
-      this.balanceText.text = `$ ${this.tempBalance}`;
+      this.balanceText.text = `$${this.tempBalance}`;
       return;
     }
 
     if (this.slotState === SlotMachineState.Idle) {
       this.tempBalance = newBalance;
-      this.balanceText.text = `$ ${this.tempBalance}`;
+      this.balanceText.text = `$${this.tempBalance}`;
     } else if (this.slotState === SlotMachineState.DropOld) {
       this.tempBalance = newBalance;
     }
   }
 
   private updateBalance(): void {
-    this.balanceText.text = ` $ ${this.tempBalance} `;
+    this.balanceText.text = `$${this.tempBalance}`;
   }
 
   private onSlotStateUpdate(state: SlotMachineState): void {

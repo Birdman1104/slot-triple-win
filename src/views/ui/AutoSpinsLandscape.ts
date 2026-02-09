@@ -1,7 +1,7 @@
 import { uiAutoSpinsBkgL, uiAutoSpinsIconL, uiMultipleNumbersBkgL } from "../../configs/spritesConfig";
 import { autoSpinsTextConfig } from "../../configs/textConfig";
 import { makeSprite, makeText } from "../../utils/Utils";
-import { AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase, values } from "./AutoSpinMenuBase";
+import { AUTO_SPIN_VALUES, AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase } from "./AutoSpinMenuBase";
 
 class AutoSpinsToggleLandscape extends AutoSpinsToggleBase {
   constructor() {
@@ -13,13 +13,12 @@ class AutoSpinsToggleLandscape extends AutoSpinsToggleBase {
     this.bkg = makeSprite(uiMultipleNumbersBkgL());
     this.addChild(this.bkg);
 
-    values.forEach((v, i) => {
+    AUTO_SPIN_VALUES.forEach((v, i) => {
       const button = new AutoSpinButton(true, v, 244, 127);
       button.y = -this.bkg.height * 1.2 + 50 + button.height * i;
       button.x = -this.bkg.width / 2;
       button.on("numberClicked", (value: number) => this.onNumberClicked(value));
       this.addChild(button);
-      return button;
     });
   }
 }

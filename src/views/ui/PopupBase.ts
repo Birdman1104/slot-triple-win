@@ -1,14 +1,19 @@
 import anime from "animejs";
 import { Container, Sprite, Text, Texture } from "pixi.js";
+import { popupBkgConfig, popupCloseButtonConfig } from "../../configs/spritesConfig";
+import { makeSprite } from "../../utils/Utils";
+
+const ANIMATION_DURATION = 300;
 
 export class PopupBase extends Container {
+  protected bkg!: Sprite;
   protected closeButton!: Sprite;
 
   public show(): void {
     anime({
       targets: this,
       alpha: 1,
-      duration: 300,
+      duration: ANIMATION_DURATION,
       easing: "easeInOutQuad",
       complete: () => {
         this.closeButton && (this.closeButton.eventMode = "static");
@@ -26,9 +31,21 @@ export class PopupBase extends Container {
     anime({
       targets: this,
       alpha: 0,
-      duration: 300,
+      duration: ANIMATION_DURATION,
       easing: "easeInOutQuad",
     });
+  }
+
+  protected buildBkg(): void {
+    this.bkg = makeSprite(popupBkgConfig());
+    this.addChild(this.bkg);
+  }
+
+  protected buildCloseButton(eventName: string): void {
+    this.closeButton = makeSprite(popupCloseButtonConfig());
+    this.closeButton.eventMode = "static";
+    this.closeButton.on("pointerdown", () => this.emit(eventName));
+    this.addChild(this.closeButton);
   }
 
   protected rebuildSprite(sprite: Sprite, config: SpriteConfig): void {

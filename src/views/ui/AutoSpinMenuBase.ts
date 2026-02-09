@@ -6,7 +6,8 @@ import { SlotMachineModelEvents } from "../../events/ModelEvents";
 import { SlotMachineState } from "../../models/SlotMachineModel";
 import { drawBounds, hideToggle, makeText, showToggle } from "../../utils/Utils";
 
-export const values: number[] = [200, 100, 50, 20, 10];
+export const AUTO_SPIN_VALUES: number[] = [200, 100, 50, 20, 10];
+export const BUTTON_MAX_WIDTH_RATIO = 0.6;
 
 export class AutoSpinButton extends Container {
   private valueText!: Text;
@@ -139,7 +140,7 @@ export class AutoSpinsBase extends Container {
 
   private updateNumberWidth(): void {
     this.number.scale.set(1);
-    this.number.scale.set(Math.min(1, (this.bkg.width * 0.6) / this.number.width));
+    this.number.scale.set(Math.min(1, (this.bkg.width * BUTTON_MAX_WIDTH_RATIO) / this.number.width));
   }
 
   private onSlotMachineStateUpdate(state: SlotMachineState): void {

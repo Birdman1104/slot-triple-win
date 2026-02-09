@@ -5,7 +5,7 @@ import {
 } from "../../configs/spritesConfig";
 import { autoSpinsTextConfigPortrait } from "../../configs/textConfig";
 import { makeSprite, makeText } from "../../utils/Utils";
-import { AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase, values } from "./AutoSpinMenuBase";
+import { AUTO_SPIN_VALUES, AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase } from "./AutoSpinMenuBase";
 
 class AutoSpinsTogglePortrait extends AutoSpinsToggleBase {
   constructor() {
@@ -17,15 +17,12 @@ class AutoSpinsTogglePortrait extends AutoSpinsToggleBase {
     this.bkg = makeSprite(uiMultipleNumbersBkgPortrait());
     this.addChild(this.bkg);
 
-    values.forEach((v, i) => {
+    AUTO_SPIN_VALUES.forEach((v, i) => {
       const button = new AutoSpinButton(false, v, 100, 75);
       button.y = -this.bkg.height * 1.2 + 30 + button.height * i;
       button.x = -7;
-      button.on("numberClicked", (value: number) => {
-        this.onNumberClicked(value);
-      });
+      button.on("numberClicked", (value: number) => this.onNumberClicked(value));
       this.addChild(button);
-      return button;
     });
   }
 }
@@ -39,11 +36,7 @@ export class AutoSpinsPortrait extends AutoSpinsBase {
   private build(): void {
     this.bkg = makeSprite(uiAutoSpinsBkgPortrait());
     this.bkg.eventMode = "static";
-    this.bkg.on("pointerdown", () => {
-      this.emit("clicked");
-      this.toggle.isHidden ? this.toggle.show() : this.toggle.hide();
-      this.bkg.eventMode = "none";
-    });
+    this.bkg.on("pointerdown", () => this.onBkgClick());
     this.addChild(this.bkg);
 
     this.icon = makeSprite(uiAutoSpinsIconPortrait());
