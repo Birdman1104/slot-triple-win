@@ -13,6 +13,7 @@ import { Element } from "./ElementView";
 import { Reel } from "./ReelView";
 import { SlotForeground } from "./SlotForeground";
 
+const SHADOWS_X = [131, 375, 630];
 export class SlotMachineView extends Container {
   private reels!: Reel[];
   private reelsContainer!: Container;
@@ -46,11 +47,8 @@ export class SlotMachineView extends Container {
 
   private build(): void {
     this.buildReels();
-
-    [131, 375, 630].forEach((x) => {
-      const shadow = makeSprite(reelShadowConfig(x));
-      this.addChild(shadow);
-    });
+    this.addMask();
+    this.addShadows();
 
     this.buildForeground();
   }
@@ -79,10 +77,20 @@ export class SlotMachineView extends Container {
     this.reelsContainer.scale.set(0.95);
 
     this.addChild(this.reelsContainer);
+  }
 
+  private addShadows(): void {
+    SHADOWS_X.forEach((x) => {
+      const shadow = makeSprite(reelShadowConfig(x));
+      this.addChild(shadow);
+    });
+  }
+
+  private addMask(): void {
     this.reelsMask = new Graphics();
-    this.reelsMask.beginFill(0xff0000, 0.0005);
-    this.reelsMask.drawRect(this.reelsContainer.x - 13, this.reelsContainer.y, 3 * WIDTH, 2.9 * HEIGHT - 30);
+    this.reelsMask.beginFill(0xff0000, 0.5);
+    this.reelsMask.alpha = 0;
+    this.reelsMask.drawRect(this.reelsContainer.x - 13, this.reelsContainer.y - 6, 3 * WIDTH, 2.9 * HEIGHT - 20);
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 
@@ -90,7 +98,6 @@ export class SlotMachineView extends Container {
   }
 
   private onStateUpdate(newState: SlotMachineState): void {
-    // console.warn("SlotMachineView: State update:", SlotMachineState[newState]);
     this.slotState = newState;
     switch (newState) {
       case SlotMachineState.DropOld:
@@ -123,12 +130,18 @@ export class SlotMachineView extends Container {
   }
 
   private onSpinButtonClick(): void {
-    if (this.slotState === SlotMachineState.DropNew) {
-      this.reels.forEach((r) => r.forceStop());
-    } else if (this.slotState === SlotMachineState.ShowWinLines) {
-      this.removeWinAnimations();
-    } else if (this.slotState === SlotMachineState.ShowWinnings) {
-      this.foreground.skipWinnings();
+    switch (this.slotState) {
+      case SlotMachineState.DropNew:
+        this.reels.forEach((r) => r.forceStop());
+        break;
+      case SlotMachineState.ShowWinLines:
+        this.removeWinAnimations();
+        break;
+      case SlotMachineState.ShowWinnings:
+        this.foreground.skipWinnings();
+        break;
+      default:
+        break;
     }
   }
 

@@ -17,7 +17,7 @@ class App extends Application {
 
   public constructor() {
     super({
-      backgroundColor: 0x0044aa,
+      backgroundColor: 0xffffff,
       backgroundAlpha: 1,
       powerPreference: "high-performance",
       antialias: true,
@@ -37,7 +37,7 @@ class App extends Application {
     // @ts-ignore
     if (process.env.NODE_ENV !== "production") {
       this.initStats();
-      this.initLego();
+      // this.initLego();
     }
     await this.loadAssets();
     this.stage.setBkg();

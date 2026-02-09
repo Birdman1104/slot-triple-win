@@ -12,11 +12,12 @@ export class Reel extends Container {
   private _uuid: String;
   private _ice: Sprite[] = [];
   private _elements: Element[] = [];
+  private _oldElements: Element[] = [];
   private rHeight = 0;
 
   constructor(
     model: ReelModel,
-    private index: number
+    private index: number,
   ) {
     super();
     const { elements, uuid } = model;
@@ -58,6 +59,9 @@ export class Reel extends Container {
   }
 
   public forceStop(): void {
+    this._oldElements.forEach((el) => {
+      el && (el.alpha = 0);
+    });
     this.elements.forEach((el) => {
       anime.remove(el);
     });
@@ -68,11 +72,13 @@ export class Reel extends Container {
 
   public dropOldElements(delay: number): void {
     let count = 0;
-    this.elements.forEach((el, i) => {
+    this._oldElements = this.elements.map((el) => el);
+    this._elements = [];
+    this._oldElements.forEach((el, i) => {
       anime({
         targets: el,
         y: this.rHeight + el.height / 2,
-        duration: 100 * (this.elements.length - i + 1),
+        duration: 100 * (this._oldElements.length - i + 1),
         delay,
         easing: () => {
           return (x: number): number => {
@@ -86,7 +92,7 @@ export class Reel extends Container {
           el.destroy();
           count++;
 
-          if (count === this.elements.length) {
+          if (count === this._oldElements.length) {
             this.emit(ReelViewEvents.OldElementsDropComplete, this.uuid);
           }
         },
