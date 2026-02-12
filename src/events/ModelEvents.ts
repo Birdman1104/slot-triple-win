@@ -36,8 +36,6 @@ export const SlotMachineModelEvents = {
   AutoSpinCountUpdate: "SlotMachineModelAutoSpinCountUpdate",
 };
 
-export const SlotModelEvents = { TypeUpdate: "SlotModelTypeUpdate" };
-
 export const SoundModelEvents = {
   MusicStateUpdate: "SoundModelMusicStateUpdate",
   SoundStateUpdate: "SoundModelSoundStateUpdate",

@@ -74,7 +74,7 @@ type ElementWeightRatio = {
   to: number;
 };
 
-type PlayerInfo = {
+type PlayerData = {
   balance: number;
   bet: number;
   id: number;

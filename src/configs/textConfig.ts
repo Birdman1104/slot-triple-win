@@ -1,6 +1,6 @@
 import { lp } from "../utils/Utils";
 
-export const clickToContinueTextConfig = (x: number, y: number): TextConfig => ({
+export const clickToContinueTextConfig = (x: number): TextConfig => ({
   text: "Click to continue",
   x,
   y: 460,

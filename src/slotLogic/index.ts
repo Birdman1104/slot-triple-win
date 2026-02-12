@@ -127,7 +127,7 @@ export const sendInitRequest = async (): Promise<boolean> => {
   return true;
 };
 
-export const getDefaultPlayerInfo = async (): Promise<PlayerInfo> => {
+export const getDefaultPlayerData = async (): Promise<PlayerData> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({

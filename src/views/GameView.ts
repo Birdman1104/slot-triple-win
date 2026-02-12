@@ -19,6 +19,11 @@ export class GameView extends PixiGrid {
     this.build();
   }
 
+  public destroy(): void {
+    lego.event.off(GameModelEvents.SlotMachineUpdate, this.onSlotMachineUpdate, this);
+    super.destroy();
+  }
+
   public getGridConfig(): ICellConfig {
     return getGameViewGridConfig();
   }

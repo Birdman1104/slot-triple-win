@@ -40,7 +40,7 @@ class IntroLandscape extends PixiGrid {
 
     this.setChild("shadows", this.shadowWrapper);
 
-    this.clickToContinue = makeText(clickToContinueTextConfig(this.card2.x, this.height - 24));
+    this.clickToContinue = makeText(clickToContinueTextConfig(this.card2.x));
     this.clickToContinue.visible = false;
     this.setChild("text", this.clickToContinue);
   }
@@ -101,7 +101,7 @@ class IntroPortrait extends Container {
 
     this.addChild(this.card1, this.card2, this.card3);
 
-    this.clickToContinue = makeText(clickToContinueTextConfig(0, this.height - 50));
+    this.clickToContinue = makeText(clickToContinueTextConfig(0));
     this.clickToContinue.visible = false;
     this.addChild(this.clickToContinue);
   }
@@ -192,6 +192,11 @@ export class IntroViewWrapper extends PixiGrid {
 
   public getGridConfig(): ICellConfig {
     return getIntroViewGridConfig();
+  }
+
+  public destroy(): void {
+    lego.event.off(MainGameEvents.IntroReadyToPlay, this.onReadyToPlay, this);
+    super.destroy();
   }
 
   public rebuild(): void {

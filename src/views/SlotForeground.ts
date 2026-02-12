@@ -32,13 +32,15 @@ export class SlotForeground extends Container {
   }
 
   public skipWinnings(): void {
-    this.tl.pause();
-    this.tl.remove();
-    [this.iceCrack, this.winAmount, this.winType, this.cocktail, this.cocktailText, this.multiplier].forEach(
-      (el) => (el.alpha = 0),
-    );
-    [this.winAmount, this.winType, this.cocktail, this.cocktailText, this.multiplier].forEach((el) =>
-      el.scale.set(0.2),
+    if (this.tl) {
+      this.tl.pause();
+      this.tl.remove();
+    }
+    [this.iceCrack, this.winAmount, this.winType, this.cocktail, this.cocktailText, this.multiplier].forEach((el) => {
+      el && (el.alpha = 0);
+    });
+    [this.winAmount, this.winType, this.cocktail, this.cocktailText, this.multiplier].forEach(
+      (el) => el && el.scale.set(0.2),
     );
 
     this.emit("winBoardShowComplete");

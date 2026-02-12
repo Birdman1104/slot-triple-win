@@ -37,6 +37,13 @@ export class SlotMachineView extends Container {
       .on(ReelModelEvents.ElementsUpdate, this.onReelElementsUpdate, this);
   }
 
+  public destroy(): void {
+    lego.event.off(SlotMachineModelEvents.StateUpdate, this.onStateUpdate, this);
+    lego.event.off(UIEvents.SpinButtonClick, this.onSpinButtonClick, this);
+    lego.event.off(SlotMachineModelEvents.SpinResultUpdate, this.onSpinResultUpdate, this);
+    lego.event.off(ReelModelEvents.ElementsUpdate, this.onReelElementsUpdate, this);
+    super.destroy();
+  }
   public getBounds(): Rectangle {
     return new Rectangle(0, -10, 2.9 * WIDTH, 2.9 * HEIGHT);
   }
@@ -156,7 +163,7 @@ export class SlotMachineView extends Container {
   private onReelOldElementsDropComplete(uuid: string): void {
     const reel = this.getReelByUUID(uuid);
     const reelIndex = this.reels.indexOf(reel);
-    if (reelIndex === 0) {
+    if (reelIndex === this.reels.length - 1) {
       lego.event.emit(SlotMachineViewEvents.OldElementsDropComplete);
     }
   }

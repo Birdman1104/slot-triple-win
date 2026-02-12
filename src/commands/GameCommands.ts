@@ -3,9 +3,9 @@ import { MainGameEvents, SlotMachineViewEvents, UIEvents } from "../events/MainE
 import { GameState } from "../models/GameModel";
 import Head from "../models/Head";
 import { SlotMachineState } from "../models/SlotMachineModel";
-import { getDefaultPlayerInfo, sendInitRequest } from "../slotLogic";
+import { getDefaultPlayerData, sendInitRequest } from "../slotLogic";
 
-let playerInfo: PlayerInfo;
+let playerInfo: PlayerData;
 
 export const initModelsCommand = async (): Promise<void> => {
   Head.initGameModel();
@@ -18,9 +18,9 @@ export const initModelsCommand = async (): Promise<void> => {
     if (!initOk) {
       throw new Error("Initialization failed");
     }
-    playerInfo = await getDefaultPlayerInfo();
+    playerInfo = await getDefaultPlayerData();
 
-    Head.initPlayerModel();
+    Head.initPlayerModel(playerInfo);
     lego.event.emit(MainGameEvents.IntroReadyToPlay);
   } catch (error) {
     console.error("Initialization error:", error);
@@ -31,7 +31,7 @@ export const initModelsCommand = async (): Promise<void> => {
 export const onShowGameCommand = (): void => {
   Head.gameModel?.setState(GameState.Game);
   Head.gameModel?.initSlotMachine();
-  Head.playerModel?.setPlayerInfo(playerInfo);
+  Head.playerModel?.updatePlayerData();
   Head.gameModel?.idleSlotMachine();
 };
 

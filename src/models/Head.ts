@@ -46,8 +46,8 @@ class HeadModel extends ObservableModel {
     this._gameModel.init();
   }
 
-  public initPlayerModel(): void {
-    this._playerModel = new PlayerModel();
+  public initPlayerModel(playerInfo: PlayerData): void {
+    this._playerModel = new PlayerModel(playerInfo);
     this._playerModel.init();
   }
 

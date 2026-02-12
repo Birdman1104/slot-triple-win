@@ -18,6 +18,11 @@ export class BackgroundView extends PixiGrid {
     this.build();
   }
 
+  public destroy(): void {
+    lego.event.off(GameModelEvents.StateUpdate, this.onStateUpdate, this);
+    super.destroy();
+  }
+
   public getGridConfig(): ICellConfig {
     return getBackgroundGridConfig();
   }

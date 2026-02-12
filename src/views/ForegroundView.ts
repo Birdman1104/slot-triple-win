@@ -30,6 +30,13 @@ export class ForegroundView extends PixiGrid {
     return getForegroundViewGridConfig();
   }
 
+  public destroy(): void {
+    lego.event.off(UIEvents.InfoButtonClick, this.onMenuItemClick, this);
+    lego.event.off(SlotMachineModelEvents.ErrorResultUpdate, this.onErrorResultUpdate, this);
+    lego.event.off(UIEvents.ErrorPopupClose, this.onCloseErrorPopup, this);
+    super.destroy();
+  }
+
   public rebuild(): void {
     this.errorPopup.rebuild();
     this.infoPopup.rebuild();

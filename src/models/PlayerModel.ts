@@ -7,11 +7,14 @@ export class PlayerModel extends ObservableModel {
   private _bet: number = -1;
   private _playerID: number = -1;
   private _sessionID: string = "";
+  private data: PlayerData;
 
-  public constructor() {
+  public constructor(playerData: PlayerData) {
     super("PlayerModel");
     this._balance = 0;
     this._bet = 0;
+
+    this.data = playerData;
 
     this.makeObservable();
   }
@@ -60,13 +63,13 @@ export class PlayerModel extends ObservableModel {
 
   public increaseBet(): void {
     const index = BETS.findIndex((el) => el === this._bet);
-    if (index === BETS.length - 1) return; // TODO disable button
+    if (index === -1 || index === BETS.length - 1) return;
     this._bet = BETS[index + 1];
   }
 
   public decreaseBet(): void {
     const index = BETS.findIndex((el) => el === this._bet);
-    if (index === 0) return; // TODO disable button
+    if (index === -1 || index === 0) return;
     this._bet = BETS[index - 1];
   }
 
@@ -74,10 +77,14 @@ export class PlayerModel extends ObservableModel {
     this._bet = BETS[BETS.length - 1];
   }
 
-  public setPlayerInfo(playerInfo: PlayerInfo): void {
-    this._bet = playerInfo.bet;
-    this._balance = +playerInfo.balance.toFixed(1);
-    this._playerID = playerInfo.id;
+  public updatePlayerData(): void {
+    this.setPlayerData(this.data);
+  }
+
+  public setPlayerData(playerData: PlayerData): void {
+    this._bet = playerData.bet;
+    this._balance = +playerData.balance.toFixed(1);
+    this._playerID = playerData.id;
   }
 
   public updateBalance(winning: number): void {
