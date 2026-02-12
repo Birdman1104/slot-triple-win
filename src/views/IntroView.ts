@@ -1,7 +1,7 @@
 import { lego } from "@armathai/lego";
 import { PixiGrid, type ICellConfig } from "@armathai/pixi-grid";
 import anime from "animejs";
-import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
+import { Container, Graphics, Rectangle, Sprite, Text, Texture } from "pixi.js";
 import { getIntroViewGridConfig, introLandscapeGridConfig } from "../configs/gridConfigs/introViewGC";
 import { introIceCubeConfig, reelShadowConfig } from "../configs/spritesConfig";
 import { clickToContinueTextConfig } from "../configs/textConfig";
@@ -136,7 +136,7 @@ class IntroPortrait extends Container {
     const currentCard = this.cards[this.currentCardIndex];
     const nextCard = this.cards[this.currentCardIndex + 1];
     this.ice.forEach((ice, index) => {
-      ice.texture = makeSprite(introIceCubeConfig(ice.x, index === this.currentCardIndex + 1)).texture;
+      ice.texture = Texture.from(introIceCubeConfig(ice.x, index === this.currentCardIndex + 1).frame);
       if (index === this.currentCardIndex + 1) {
         ice.scale.set(0.275);
       } else {

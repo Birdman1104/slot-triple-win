@@ -108,6 +108,7 @@ export class ForegroundView extends PixiGrid {
   }
 
   private showBlocker(): void {
+    anime.remove(this.blocker);
     anime({
       targets: this.blocker,
       alpha: 0.7,
@@ -121,6 +122,7 @@ export class ForegroundView extends PixiGrid {
   }
 
   private hideBlocker(): void {
+    anime.remove(this.blocker);
     anime({
       targets: this.blocker,
       alpha: 0,

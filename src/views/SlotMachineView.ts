@@ -48,7 +48,7 @@ export class SlotMachineView extends Container {
     return new Rectangle(0, -10, 2.9 * WIDTH, 2.9 * HEIGHT);
   }
 
-  public getReelByUUID(uuid: string): Reel {
+  public getReelByUUID(uuid: string): Reel | undefined {
     return this.reels.find((reel) => reel.uuid === uuid) as Reel;
   }
 
@@ -129,6 +129,7 @@ export class SlotMachineView extends Container {
 
   private onReelElementsUpdate(newValue: ElementModel[], _oldValue: ElementModel[], uuid: string): void {
     const reel = this.getReelByUUID(uuid);
+    if (!reel) return;
     reel.setNewElements(newValue);
   }
 
@@ -162,6 +163,7 @@ export class SlotMachineView extends Container {
 
   private onReelOldElementsDropComplete(uuid: string): void {
     const reel = this.getReelByUUID(uuid);
+    if (!reel) return;
     const reelIndex = this.reels.indexOf(reel);
     if (reelIndex === this.reels.length - 1) {
       lego.event.emit(SlotMachineViewEvents.OldElementsDropComplete);
@@ -170,6 +172,7 @@ export class SlotMachineView extends Container {
 
   private onReelNewElementsDropComplete(uuid: string): void {
     const reel = this.getReelByUUID(uuid);
+    if (!reel) return;
     const reelIndex = this.reels.indexOf(reel);
     if (reelIndex === this.reels.length - 1) {
       lego.event.emit(SlotMachineViewEvents.NewElementsDropComplete);
@@ -207,11 +210,8 @@ export class SlotMachineView extends Container {
   }
 
   private animateLines(lines: { line: WinningLine; winningItemType: string }[]): void {
-    const getElements = (line: WinningLine) => line.map((pos, i) => this.reels[i].getElementByIndex(pos));
-    const getIce = (line: any) => line.map((pos: any, i: number) => this.reels[i].getIceByIndex(pos));
-
     const animationConfig: { elements: Element[]; ice: Sprite[] }[] = lines.map(({ line }) => {
-      return { elements: getElements(line), ice: getIce(line) };
+      return { elements: this.getElements(line), ice: this.getIce(line) };
     });
 
     if (animationConfig.length === 0) return;
@@ -276,11 +276,8 @@ export class SlotMachineView extends Container {
       a.remove();
     });
 
-    const getElements = (line: WinningLine) => line.map((pos, i) => this.reels[i].getElementByIndex(pos));
-    const getIce = (line: any) => line.map((pos: any, i: number) => this.reels[i].getIceByIndex(pos));
-
     const animationConfig: { elements: Element[]; ice: Sprite[] }[] = LINES.map((line) => {
-      return { elements: getElements(line), ice: getIce(line) };
+      return { elements: this.getElements(line), ice: this.getIce(line) };
     });
 
     animationConfig.forEach(({ elements, ice }, lineNumber) => {
@@ -297,5 +294,12 @@ export class SlotMachineView extends Container {
     });
 
     lego.event.emit(SlotMachineViewEvents.WinLinesShowComplete);
+  }
+
+  private getElements(line: WinningLine): Element[] {
+    return line.map((pos, i) => this.reels[i].getElementByIndex(pos));
+  }
+  private getIce(line: any): Sprite[] {
+    return line.map((pos: any, i: number) => this.reels[i].getIceByIndex(pos));
   }
 }
