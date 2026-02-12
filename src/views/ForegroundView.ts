@@ -75,7 +75,7 @@ export class ForegroundView extends PixiGrid {
     this.blocker.drawRect(0, 0, 100, 100);
     this.blocker.endFill();
     this.setChild("blocker", this.blocker);
-    this.blocker.eventMode = "static";
+    // this.blocker.eventMode = "static";
     this.blocker.alpha = 0;
   }
 
@@ -106,6 +106,9 @@ export class ForegroundView extends PixiGrid {
       alpha: 0.7,
       duration: 300,
       easing: "easeInOutQuad",
+      begin: () => {
+        this.blocker.eventMode = "static";
+      },
       complete: () => lego.event.emit(MainGameEvents.BlockActivity, true),
     });
   }
@@ -116,7 +119,10 @@ export class ForegroundView extends PixiGrid {
       alpha: 0,
       duration: 300,
       easing: "easeInOutQuad",
-      complete: () => lego.event.emit(MainGameEvents.BlockActivity, false),
+      complete: () => {
+        lego.event.emit(MainGameEvents.BlockActivity, false);
+        this.blocker.eventMode = "none";
+      },
     });
   }
 }

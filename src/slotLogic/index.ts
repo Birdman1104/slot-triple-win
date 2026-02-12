@@ -13,131 +13,59 @@ export const LINES = [
   [2, 1, 0],
 ];
 
-export const getError = (): Promise<ErrorResult> => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve({
-        errorText: "An error occurred, please reload the page or contact support",
-        errorCode: Math.ceil(Math.random() * 150 + 400),
-      });
-    }, 50),
-  );
-};
+export class SpinError extends Error {
+  public readonly errorCode: number;
+  public readonly errorText: string;
 
-export const spin = async (bet: number): Promise<SpinResult | undefined> => {
-  try {
-    const response = await fetch(BASE_URL + "api/play/bet", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        session_id: sessionStorage.getItem(GLOBALS.sessionIdKey) || "",
-        game_name: GLOBALS.gameName,
-        amount: bet,
-      }),
+  constructor(errorCode: number, errorText: string) {
+    super(errorText);
+    this.name = "SpinError";
+    this.errorCode = errorCode;
+    this.errorText = errorText;
+  }
+
+  toErrorResult(): ErrorResult {
+    return {
+      errorCode: this.errorCode,
+      errorText: this.errorText,
+    };
+  }
+}
+
+export const spin = async (bet: number): Promise<SpinResult> => {
+  const response = await fetch(BASE_URL + "api/play/bet", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      session_id: sessionStorage.getItem(GLOBALS.sessionIdKey) || "",
+      game_name: GLOBALS.gameName,
+      amount: bet,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new SpinError(response.status, `Server error: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+
+  if (!data.spin_result || !Array.isArray(data.wins)) {
+    throw new SpinError(500, "Invalid response from server");
+  }
+
+  const { spin_result, wins, payout } = data;
+
+  const reels = new Array(3).fill(null).map(() => new Array(3).fill(null));
+  spin_result.forEach((col: string[], colIndex: number) => {
+    col.forEach((symbol: string, rowIndex: number) => {
+      reels[rowIndex][colIndex] = SYMBOL_MAP[symbol as keyof typeof SYMBOL_MAP];
     });
-    const data = await response.json();
-    // const data = {
-    //   spin_result: [
-    //     ["ST", "ST", "ST"],
-    //     ["ST", "ST", "LE"],
-    //     ["ST", "ST", "ST"],
-    //   ],
+  });
 
-    //   wins: [
-    //     {
-    //       payline_index: 0,
-    //       symbol: "ST",
-    //       payout: 1,
-    //     },
-    //     {
-    //       payline_index: 2,
-    //       symbol: "ST",
-    //       payout: 1,
-    //     },
-    //     {
-    //       payline_index: 3,
-    //       symbol: "ST",
-    //       payout: 1,
-    //     },
-    //     {
-    //       payline_index: 4,
-    //       symbol: "ST",
-    //       payout: 1,
-    //     },
-    //   ],
-    //   payout: 50,
-    // };
-    // const data = {
-    //   spin_result: [
-    //     ["LE", "GI", "LE"],
-    //     ["LE", "GI", "LE"],
-    //     ["LE", "WH", "LE"],
-    //   ],
-    //   wins: [
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Mojito",
-    //       payout: 200,
-    //       multiplier: 4,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Whiskey Gin Sour",
-    //       payout: 2000,
-    //       multiplier: 11,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Blueberry Gin Fizz",
-    //       payout: 2000,
-    //       multiplier: 3,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Strawberry Gin Smash",
-    //       payout: 2000,
-    //       multiplier: 14,
-    //     },
-    //     {
-    //       payline_index: -1,
-    //       symbol: "Cherry Caipiroska",
-    //       payout: 2000,
-    //       multiplier: 26,
-    //     },
-    //   ],
-    //   payout: 2000,
-    // };
-    //     : {
-    //         spin_result: [
-    //           ["BB", "BB", "BB"],
-    //           ["BB", "BB", "VO"],
-    //           ["BB", "VO", "VO"],
-    //         ],
-    //         wins: [
-    //           {
-    //             payline_index: 0,
-    //             symbol: "Blackberry",
-    //             payout: 10,
-    //           },
-    //           {
-    //             payline_index: 4,
-    //             symbol: "Blackberry",
-    //             payout: 10,
-    //           },
-    //         ],
-    //         payout: 20,
-    //       };
-    const { spin_result, wins, payout } = data;
-    const reels = new Array(3).fill(null).map(() => new Array(3).fill(null));
-    spin_result.forEach((col: string[], colIndex: number) => {
-      col.forEach((symbol: string, rowIndex: number) => {
-        reels[rowIndex][colIndex] = SYMBOL_MAP[symbol as keyof typeof SYMBOL_MAP];
-      });
-    });
-
-    const winningInfo = wins.map((win: WinInfo) => {
+  const winningInfo = wins
+    .map((win: WinInfo) => {
       const { payline_index } = win;
       if (payline_index === -1) {
         return {
@@ -148,6 +76,10 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
         };
       } else {
         const line = LINES[win.payline_index];
+        if (!line) {
+          console.warn(`Invalid payline_index: ${win.payline_index}`);
+          return null;
+        }
         return {
           symbol: SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP],
           winAmount: win.payout,
@@ -155,18 +87,14 @@ export const spin = async (bet: number): Promise<SpinResult | undefined> => {
           id: `${SYMBOL_MAP[win.symbol as keyof typeof SYMBOL_MAP]}-${line.join("-")}`,
         };
       }
-    });
+    })
+    .filter(Boolean) as WinningInfo[];
 
-    const totalWin = payout;
-
-    return {
-      reels,
-      winningInfo,
-      totalWin,
-    };
-  } catch (error) {
-    console.error("Error fetching initial data:", error);
-  }
+  return {
+    reels,
+    winningInfo,
+    totalWin: payout,
+  };
 };
 
 export const getDefaultReelsConfig = (): SpinResult => {

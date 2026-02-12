@@ -60,14 +60,15 @@ class PixiStage extends Container {
     this.gameView = new GameView();
     this.addChild(this.gameView);
 
-    this.foregroundView = new ForegroundView();
-    this.addChild(this.foregroundView);
-
     this.uiLandscape = new UILandscapeView();
     this.addChild(this.uiLandscape);
 
     this.uiPortrait = new UIPortraitView();
     this.addChild(this.uiPortrait);
+
+    this.foregroundView = new ForegroundView();
+    this.addChild(this.foregroundView);
+
     this.resize();
   }
 

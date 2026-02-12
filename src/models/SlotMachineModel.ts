@@ -1,9 +1,14 @@
 import { lego } from "@armathai/lego";
 import { UIEvents } from "../events/MainEvents";
-import { getError, spin } from "../slotLogic";
+import { spin, SpinError } from "../slotLogic";
 import { last } from "../utils/Utils";
 import { ObservableModel } from "./ObservableModel";
 import { ReelModel } from "./ReelModel";
+
+const DEFAULT_ERROR: ErrorResult = {
+  errorCode: 500,
+  errorText: "An unexpected error occurred. Please try again.",
+};
 
 export enum SlotMachineState {
   Unknown,
@@ -194,19 +199,35 @@ export class SlotMachineModel extends ObservableModel {
     return config.reels.map((reelConfig: any, index: number) => new ReelModel(reelConfig, index));
   }
 
-  public async setError(): Promise<void> {
+  public setError(error: ErrorResult = DEFAULT_ERROR): void {
     this.state = SlotMachineState.Error;
-    this.errorResult = await getError();
+    this.errorResult = error;
   }
 
   private async getSpinResult(bet: number): Promise<void> {
-    const result = (await spin(bet as number)) as SpinResult;
-    this.state = SlotMachineState.DropOld;
-    this.isResultReady = false;
-    this.tempSpinResult = result as SpinResult;
+    try {
+      const result = await spin(bet);
 
-    this.isResultReady = true;
-    this.canCheck && this.checkForResult();
+      this.state = SlotMachineState.DropOld;
+      this.isResultReady = false;
+      this.tempSpinResult = result;
+
+      this.isResultReady = true;
+      this.canCheck && this.checkForResult();
+    } catch (error) {
+      console.error("Error getting spin result:", error);
+
+      if (error instanceof SpinError) {
+        this.setError(error.toErrorResult());
+      } else if (error instanceof Error) {
+        this.setError({
+          errorCode: 500,
+          errorText: error.message || DEFAULT_ERROR.errorText,
+        });
+      } else {
+        this.setError();
+      }
+    }
   }
 
   private setNewElementsToReels(result: ReelsResult): void {
