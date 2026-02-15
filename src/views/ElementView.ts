@@ -1,3 +1,4 @@
+import anime from "animejs";
 import { Container, Rectangle, Sprite } from "pixi.js";
 import { HEIGHT, WIDTH } from "../config";
 import { ElementModel } from "../models/ElementModel";
@@ -32,6 +33,12 @@ export class Element extends Container {
 
   public getBounds(): Rectangle {
     return new Rectangle(0, 0, WIDTH, HEIGHT);
+  }
+
+  public reset(): void {
+    this.scale.set(1);
+    anime.remove(this);
+    anime.remove(this.scale);
   }
 
   public endAnimation(): void {

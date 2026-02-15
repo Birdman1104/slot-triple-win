@@ -1,16 +1,16 @@
 import anime from "animejs";
-import { Container, Rectangle, Sprite } from "pixi.js";
+import { Container, Rectangle } from "pixi.js";
 import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
-import { iceCubeConfig } from "../configs/spritesConfig";
 import { ReelViewEvents } from "../events/MainEvents";
+import { CONFIGS } from "../GameConfig";
 import { ElementModel } from "../models/ElementModel";
 import { ReelModel } from "../models/ReelModel";
-import { makeSprite } from "../utils/Utils";
 import { Element } from "./ElementView";
+import { Ice } from "./IceView";
 
 export class Reel extends Container {
   private _uuid: String;
-  private _ice: Sprite[] = [];
+  private _ice: Ice[] = [];
   private _elements: Element[] = [];
   private _oldElements: Element[] = [];
   private rHeight = 0;
@@ -34,7 +34,7 @@ export class Reel extends Container {
     return this._elements;
   }
 
-  get ice(): Sprite[] {
+  get ice(): Ice[] {
     return this._ice;
   }
 
@@ -50,7 +50,7 @@ export class Reel extends Container {
     return this.elements[index];
   }
 
-  public getIceByIndex(index: number): Sprite {
+  public getIceByIndex(index: number): Ice {
     return this._ice[index];
   }
 
@@ -59,18 +59,15 @@ export class Reel extends Container {
   }
 
   public forceStop(): void {
-    this._oldElements.forEach((el) => {
-      el && (el.alpha = 0);
-    });
-    this.elements.forEach((el) => {
-      anime.remove(el);
-    });
+    this._oldElements.forEach((el) => el && (el.alpha = 0));
+    this.elements.forEach((el) => anime.remove(el));
 
     this.updateElementsPositions();
     this.emit(ReelViewEvents.NewElementsDropComplete, this.uuid);
   }
 
   public dropOldElements(delay: number): void {
+    const { dropOldElementsDuration, dropOldElementsEasing } = CONFIGS;
     let count = 0;
     this._oldElements = this.elements.map((el) => el);
     this._elements = [];
@@ -78,21 +75,12 @@ export class Reel extends Container {
       anime({
         targets: el,
         y: this.rHeight + el.height / 2,
-        duration: 100 * (this._oldElements.length - i + 1),
+        duration: dropOldElementsDuration * (this._oldElements.length - i + 1),
         delay,
-        easing: () => {
-          return (x: number): number => {
-            const c1 = 1.5;
-            const c3 = c1 + 1;
-
-            return c3 * x * x * x - c1 * x * x;
-          };
-        },
+        easing: dropOldElementsEasing,
         complete: () => {
           el.destroy();
-          count++;
-
-          if (count === this._oldElements.length) {
+          if (++count === this._oldElements.length) {
             this.emit(ReelViewEvents.OldElementsDropComplete, this.uuid);
           }
         },
@@ -102,19 +90,18 @@ export class Reel extends Container {
 
   public dropNewElements(delay: number): void {
     let count = 0;
-
+    const { dropNewElementsDuration, dropNewElementsEasing } = CONFIGS;
     this.elements.forEach((el, i) => {
       const { x: targetX, y: targetY } = this.getElementTargetPosition(el);
       anime({
         targets: el,
         x: targetX,
         y: targetY,
-        duration: 100 * (this.elements.length - i + 1),
+        duration: dropNewElementsDuration * (this.elements.length - i + 1),
         delay,
-        easing: "easeInBack",
+        easing: dropNewElementsEasing,
         complete: () => {
-          count++;
-          if (count === this.elements.length) {
+          if (++count === this.elements.length) {
             this.emit(ReelViewEvents.NewElementsDropComplete, this.uuid);
           }
         },
@@ -136,7 +123,8 @@ export class Reel extends Container {
 
   private buildIce(): void {
     for (let i = 0; i < 3; i++) {
-      const ice = makeSprite(iceCubeConfig(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2, (this.index + i) % 2 === 0));
+      const ice = new Ice(this.index + (i % 2) === 0);
+      ice.position.set(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2);
       this.addChild(ice);
       this._ice.push(ice);
     }

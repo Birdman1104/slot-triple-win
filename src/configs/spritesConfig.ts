@@ -101,11 +101,11 @@ export const cocktailTextConfig = (): SpriteConfig => ({
   anchor: { x: 0.5, y: 0.5 },
 });
 
-export const iceCubeConfig = (x: number, y: number, isEven: boolean): SpriteConfig => ({
+export const iceCubeConfig = (isEven: boolean): SpriteConfig => ({
   frame: isEven ? "ice_1.png" : "ice_2.png",
   atlas: "slot_machine.png",
-  x,
-  y,
+  x: 0,
+  y: 0,
   anchor: { x: 0.5, y: 0.5 },
 });
 
@@ -119,7 +119,7 @@ export const introIceCubeConfig = (x: number, isActive: boolean): SpriteConfig =
   scaleY: 0.225,
 });
 
-export const introCardConfig = (frame: string, atlas: string): SpriteConfig => ({
+export const introCardConfig = ({ frame, atlas }: { frame: string; atlas: string }): SpriteConfig => ({
   frame,
   atlas,
 });

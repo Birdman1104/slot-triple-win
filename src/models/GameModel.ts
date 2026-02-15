@@ -1,4 +1,4 @@
-import { getSlotMachineInitialConfig } from "../slotLogic";
+import { CONFIGS } from "../GameConfig";
 import { ObservableModel } from "./ObservableModel";
 import { SlotMachineModel } from "./SlotMachineModel";
 
@@ -66,7 +66,7 @@ export class GameModel extends ObservableModel {
   }
 
   public init(): void {
-    // this.initializeMachineModel();
+    //
   }
 
   public initSlotMachine(): void {
@@ -84,7 +84,7 @@ export class GameModel extends ObservableModel {
   }
 
   private initializeMachineModel(): void {
-    this._slotMachine = new SlotMachineModel(getSlotMachineInitialConfig());
+    this._slotMachine = new SlotMachineModel(CONFIGS.initialReelsConfig);
     this._slotMachine.init();
   }
 

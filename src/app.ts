@@ -88,7 +88,7 @@ class App extends Application {
   private onLoadComplete(): void {
     this.appResize();
     lego.command.execute(mapCommands);
-    lego.event.emit("initModels");
+    lego.event.emit(MainGameEvents.InitModels);
   }
 
   private onGameStateUpdate(newState: GameState): void {

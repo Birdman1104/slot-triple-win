@@ -4,6 +4,7 @@ export const WindowEvent = {
 };
 
 export const MainGameEvents = {
+  InitModels: "MainGameEventsInitModels",
   Resize: "MainGameEventsResize",
   ShowIntro: "MainGameEventsShowIntro",
   ShowGame: "MainGameEventsShowGame",

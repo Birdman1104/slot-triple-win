@@ -25,7 +25,6 @@
     "@armathai/pixi-grid": "^6.0.1",
     "animejs": "^3.2.2",
     "howler": "^2.2.4",
-    "pixi.js": "^7.4.3",
-    "yarn": "^1.22.22"
+    "pixi.js": "^7.4.3"
   }
 }

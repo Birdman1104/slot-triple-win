@@ -35,7 +35,7 @@ export const onAutoSpinNumberClickCommand = (value: number): void => {
 
 export const eventCommandPairs: { event: any; command: any }[] = [
   {
-    event: "initModels",
+    event: MainGameEvents.InitModels,
     command: initModelsCommand,
   },
   {

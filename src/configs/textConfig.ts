@@ -16,27 +16,12 @@ export const clickToProceedTextConfig = (x: number, y: number): TextConfig => ({
   style: { fontSize: 72, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
 });
 
-export const introCardTitleTextConfig = (title: string): TextConfig => ({
-  text: title,
-  x: -180,
-  y: 40,
-  anchor: { x: 0, y: 0.5 },
-  style: { fontSize: 84, fill: "#ffffff", fontFamily: "JomhuriaRegular", letterSpacing: 1 },
-});
-
-export const introCardDescriptionTextConfig = (description: string, y: number, wordWrapWidth: number): TextConfig => ({
-  text: description,
-  x: 10,
-  y,
-  anchor: { x: 0.5, y: 0 },
-  style: {
-    fontSize: 34,
-    fill: "#ffffff",
-    wordWrap: true,
-    wordWrapWidth,
-    fontFamily: "JomhuriaRegular",
-    letterSpacing: 1,
-  },
+export const getTextConfig = (config: TextConfig): TextConfig => ({
+  text: config.text,
+  x: config.x,
+  y: config.y,
+  anchor: config.anchor,
+  style: config.style,
 });
 
 export const errorTitleTextConfig = (): TextConfig => ({
