@@ -203,18 +203,14 @@ export class SlotMachineView extends Container {
   }
 
   private getLinesData(lines: WinningInfo[]): { line: WinningLine; winningItemType: string }[] {
-    return lines.map((r) => {
-      if (!r.line) {
-        return { line: [], winningItemType: r.id };
-      }
-      return { line: r.line, winningItemType: r.id };
-    });
+    return lines.map((r) => (!r.line ? { line: [], winningItemType: r.id } : { line: r.line, winningItemType: r.id }));
   }
 
   private animateLines(lines: { line: WinningLine; winningItemType: string }[]): void {
-    const animationConfig: AnimationConfig[] = lines.map(({ line }) => {
-      return { elements: this.getElements(line), ice: this.getIce(line) };
-    });
+    const animationConfig: AnimationConfig[] = lines.map(({ line }) => ({
+      elements: this.getElements(line),
+      ice: this.getIce(line),
+    }));
 
     if (animationConfig.length === 0) return;
 

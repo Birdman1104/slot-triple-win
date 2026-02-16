@@ -6,7 +6,6 @@ import { SlotMachineModelEvents } from "../../events/ModelEvents";
 import { SlotMachineState } from "../../models/SlotMachineModel";
 import { drawBounds, hideToggle, makeText, showToggle } from "../../utils/Utils";
 
-export const AUTO_SPIN_VALUES: number[] = [200, 100, 50, 20, 10];
 export const BUTTON_MAX_WIDTH_RATIO = 0.6;
 
 export class AutoSpinButton extends Container {

@@ -18,6 +18,8 @@ export const CONFIGS = Object.freeze({
     [2, 1, 0],
   ],
 
+  autoSpinValues: [200, 100, 50, 20, 10],
+
   elementWidth,
   elementHeight,
   elementOffsetY: 0,

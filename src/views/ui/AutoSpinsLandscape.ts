@@ -1,19 +1,17 @@
 import { uiAutoSpinsBkgL, uiAutoSpinsIconL, uiMultipleNumbersBkgL } from "../../configs/spritesConfig";
 import { autoSpinsTextConfig } from "../../configs/textConfig";
+import { CONFIGS } from "../../GameConfig";
 import { makeSprite, makeText } from "../../utils/Utils";
-import { AUTO_SPIN_VALUES, AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase } from "./AutoSpinMenuBase";
+import { AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase } from "./AutoSpinMenuBase";
 
 class AutoSpinsToggleLandscape extends AutoSpinsToggleBase {
   constructor() {
     super();
-    this.build();
-  }
 
-  private build(): void {
     this.bkg = makeSprite(uiMultipleNumbersBkgL());
     this.addChild(this.bkg);
 
-    AUTO_SPIN_VALUES.forEach((v, i) => {
+    CONFIGS.autoSpinValues.forEach((v, i) => {
       const button = new AutoSpinButton(true, v, 244, 127);
       button.y = -this.bkg.height * 1.2 + 50 + button.height * i;
       button.x = -this.bkg.width / 2;
@@ -27,15 +25,9 @@ export class AutoSpinsLandscape extends AutoSpinsBase {
   constructor() {
     super();
 
-    this.build();
-  }
-
-  private build(): void {
     this.bkg = makeSprite(uiAutoSpinsBkgL());
     this.bkg.eventMode = "static";
-    this.bkg.on("pointerdown", () => {
-      this.onBkgClick();
-    });
+    this.bkg.on("pointerdown", () => this.onBkgClick());
     this.addChild(this.bkg);
 
     this.icon = makeSprite(uiAutoSpinsIconL());

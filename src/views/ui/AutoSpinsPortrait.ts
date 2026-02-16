@@ -4,8 +4,9 @@ import {
   uiMultipleNumbersBkgPortrait,
 } from "../../configs/spritesConfig";
 import { autoSpinsTextConfigPortrait } from "../../configs/textConfig";
+import { CONFIGS } from "../../GameConfig";
 import { makeSprite, makeText } from "../../utils/Utils";
-import { AUTO_SPIN_VALUES, AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase } from "./AutoSpinMenuBase";
+import { AutoSpinButton, AutoSpinsBase, AutoSpinsToggleBase } from "./AutoSpinMenuBase";
 
 class AutoSpinsTogglePortrait extends AutoSpinsToggleBase {
   constructor() {
@@ -17,7 +18,7 @@ class AutoSpinsTogglePortrait extends AutoSpinsToggleBase {
     this.bkg = makeSprite(uiMultipleNumbersBkgPortrait());
     this.addChild(this.bkg);
 
-    AUTO_SPIN_VALUES.forEach((v, i) => {
+    CONFIGS.autoSpinValues.forEach((v, i) => {
       const button = new AutoSpinButton(false, v, 100, 75);
       button.y = -this.bkg.height * 1.2 + 30 + button.height * i;
       button.x = -7;

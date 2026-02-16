@@ -199,9 +199,7 @@ export class SlotForeground extends Container {
 
     this.tl = anime.timeline({
       easing: "easeInOutQuad",
-      complete: () => {
-        this.emit("winBoardShowComplete");
-      },
+      complete: () => this.emit("winBoardShowComplete"),
     });
 
     this.tl.add({
@@ -248,9 +246,7 @@ export class SlotForeground extends Container {
   }
 
   public hideEverything(): void {
-    this.children.forEach((child) => {
-      child.alpha = 0;
-    });
+    this.children.forEach((child) => (child.alpha = 0));
   }
 
   private updateWinAmountTextStyle(winAmount: number): void {

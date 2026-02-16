@@ -26,7 +26,7 @@ export const getTextureFromSpriteSheet = (atlas: string, key: string): Texture =
 export const fitDimension = (
   dim: { width: number; height: number },
   minRatio: number,
-  maxRatio: number
+  maxRatio: number,
 ): { width: number; height: number } => {
   const ratioW = dim.width / dim.height;
   const ratioH = dim.height / dim.width;
@@ -90,7 +90,7 @@ export const drawPoint = (
   y: number,
   radius = 5,
   color = 0xffffff * Math.random(),
-  alpha = 0.5
+  alpha = 0.5,
 ): Graphics => {
   const gr = new Graphics();
   gr.beginFill(color, alpha);
@@ -194,7 +194,7 @@ export const drawRect = (
   w = 5,
   h = 5,
   color = 0xffffff * Math.random(),
-  alpha = 0.5
+  alpha = 0.5,
 ): Graphics => {
   const gr = new Graphics();
   gr.beginFill(color, alpha);
@@ -223,9 +223,7 @@ export const showToggle = (obj: DisplayObject, scale = 1, cb?: () => void) => {
     y: scale,
     duration: 300,
     easing: "easeInOutSine",
-    complete: () => {
-      callIfExists(cb);
-    },
+    complete: () => callIfExists(cb),
   });
 };
 
@@ -236,9 +234,7 @@ export const hideToggle = (obj: DisplayObject, cb?: () => void) => {
     y: 0,
     duration: 300,
     easing: "easeInOutSine",
-    complete: () => {
-      callIfExists(cb);
-    },
+    complete: () => callIfExists(cb),
   });
 };
 

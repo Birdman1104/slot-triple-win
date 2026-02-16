@@ -31,6 +31,10 @@ class UIPortraitWrapper extends Container {
     return new Rectangle(-350, -140, 700, 280);
   }
 
+  public hideAutoSpins(): void {
+    this.autoSpins.hideToggle();
+  }
+
   private build() {
     this.buildBkg();
     this.buildBuyBonusButton();
@@ -106,9 +110,7 @@ class UIPortraitWrapper extends Container {
 
   private buildAutoSpins(): void {
     this.autoSpins = new AutoSpinsPortrait();
-    this.autoSpins.on("clicked", () => {
-      this.emit("closeMenu");
-    });
+    this.autoSpins.on("clicked", () => this.emit("closeMenu"));
     this.autoSpins.position.set(-273, -37);
     this.addChild(this.autoSpins);
   }
@@ -133,6 +135,7 @@ export class UIPortraitView extends PixiGrid {
   private build() {
     this.wrapper.on("closeMenu", () => this.menu.hideToggle());
     this.setChild("ui_bar", this.wrapper);
+    this.menu.on("clicked", () => this.wrapper.hideAutoSpins());
     this.setChild("menu", this.menu);
   }
 }
