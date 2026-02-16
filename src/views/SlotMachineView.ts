@@ -50,7 +50,8 @@ export class SlotMachineView extends Container {
     super.destroy();
   }
   public getBounds(): Rectangle {
-    return new Rectangle(0, -10, 2.9 * CONFIGS.elementWidth, 2.9 * CONFIGS.elementHeight);
+    const { x, y, width, height } = CONFIGS.slotMachineBounds;
+    return new Rectangle(x, y, width, height);
   }
 
   public getReelByUUID(uuid: string): Reel | undefined {
@@ -72,37 +73,34 @@ export class SlotMachineView extends Container {
   }
 
   private buildReels(): void {
+    const { reelContainerScale, elementOffsetX, reelContainerX, reelContainerY } = CONFIGS;
     const { reels } = this.config;
     this.reelsContainer = new Container();
     this.reels = reels.map((model, i) => {
       const reel = new Reel(model, i);
       reel.on(ReelViewEvents.OldElementsDropComplete, this.onReelOldElementsDropComplete, this);
       reel.on(ReelViewEvents.NewElementsDropComplete, this.onReelNewElementsDropComplete, this);
-      reel.position.set(reel.width * i + (i == 0 ? 0 : CONFIGS.elementOffsetX), 0);
+      reel.position.set(reel.width * i + (i == 0 ? 0 : elementOffsetX), 0);
       this.reelsContainer.addChild(reel);
       return reel;
     });
-    this.reelsContainer.scale.set(0.95);
+    this.reelsContainer.position.set(reelContainerX, reelContainerY);
+    this.reelsContainer.scale.set(reelContainerScale);
     this.addChild(this.reelsContainer);
   }
 
   private addShadows(): void {
-    SHADOWS_X.forEach((x) => {
-      const shadow = makeSprite(reelShadowConfig(x));
-      this.addChild(shadow);
-    });
+    SHADOWS_X.forEach((x) => this.addChild(makeSprite(reelShadowConfig(x))));
   }
 
   private addMask(): void {
+    const { x, y, width, height } = CONFIGS.reelContainerMask;
     this.reelsMask = new Graphics();
+    // If we put alpha 0 here, it wont be drawn at all
     this.reelsMask.beginFill(0xff0000, 0.5);
     this.reelsMask.alpha = 0;
-    this.reelsMask.drawRect(
-      this.reelsContainer.x - 13,
-      this.reelsContainer.y - 6,
-      3 * CONFIGS.elementWidth,
-      2.9 * CONFIGS.elementHeight - 20,
-    );
+
+    this.reelsMask.drawRect(x, y, width, height);
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 

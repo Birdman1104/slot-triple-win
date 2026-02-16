@@ -1,23 +1,19 @@
-import { Container, Rectangle, Sprite } from "pixi.js";
+import { Container, Rectangle } from "pixi.js";
 import { dockSpriteConfig } from "../configs/spritesConfig";
 import { CONFIGS } from "../GameConfig";
 import { makeSprite } from "../utils/Utils";
 
+// Dock scaling must behave just like the slot machine
 export class DockView extends Container {
-  private dock!: Sprite;
+  private dock = makeSprite(dockSpriteConfig());
 
   constructor() {
     super();
-
-    this.build();
+    this.addChild(this.dock);
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(0, -10, 2.9 * CONFIGS.elementWidth, 2.9 * CONFIGS.elementHeight);
-  }
-
-  private build(): void {
-    this.dock = makeSprite(dockSpriteConfig());
-    this.addChild(this.dock);
+    const { x, y, width, height } = CONFIGS.slotMachineBounds;
+    return new Rectangle(x, y, width, height);
   }
 }

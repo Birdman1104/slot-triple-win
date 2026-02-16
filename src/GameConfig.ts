@@ -2,6 +2,9 @@ import { SYMBOL_TYPE } from "./configs/SymbolsConfig";
 import type { Element } from "./views/ElementView";
 import type { Ice } from "./views/IceView";
 
+const elementWidth = 264;
+const elementHeight = 264;
+
 export const CONFIGS = Object.freeze({
   // WINNING LINES
   lines: [
@@ -15,10 +18,28 @@ export const CONFIGS = Object.freeze({
     [2, 1, 0],
   ],
 
-  elementWidth: 264,
-  elementHeight: 264,
+  elementWidth,
+  elementHeight,
   elementOffsetY: 0,
   elementOffsetX: 2,
+
+  slotMachineBounds: {
+    x: 0,
+    y: -10,
+    width: 2.9 * elementWidth,
+    height: 2.9 * elementHeight,
+  },
+
+  reelContainerX: 0,
+  reelContainerY: 0,
+  reelContainerScale: 0.95,
+
+  reelContainerMask: {
+    x: -13,
+    y: -6,
+    width: 3 * elementWidth,
+    height: 2.9 * elementHeight - 20,
+  },
 
   // INITIAL REELS CONFIG
   initialReelsConfig: {
