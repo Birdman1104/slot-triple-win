@@ -1,13 +1,13 @@
 # Triple Win Slot
 
-A 3×3 slot game built with Pixi.js, Lego (event/command framework), and Anime.js. The architecture supports creating new game variants with minimal code changes.
+A 3×3 slot game built with Pixi.js, Lego (event/command framework), and Anime.js
 
 ## Tech Stack
 
 - **Pixi.js** – 2D WebGL rendering
 - **@armathai/lego** – Event-driven architecture, observable models, command mapping
-- **@armathai/pixi-grid** – Responsive layout
-- **Anime.js** – Animations
+- **@armathai/pixi-grid** – Responsive layout // Will add the docs for this later
+- **Anime.js** – Animations (Make sure to use v3 docs - https://animejs.com/v3/documentation/)
 - **Howler** – Audio
 - **Vite** – Build tooling
 
@@ -96,15 +96,15 @@ Example (spin):
 
 ## Key Files for Game Customization
 
-| File | Purpose |
-|------|---------|
-| `GameConfig.ts` | Paylines, initial reel layout |
-| `configs/SymbolsConfig.ts` | Symbol types, server→client mapping |
-| `configs/constants.ts` | API base URL |
-| `slotLogic/index.ts` | BETS, DEFAULT_BET, DEFAULT_BALANCE, spin/init logic |
-| `configs/spritesConfig.ts` | Sprite positions, atlases, frames |
-| `views/ElementView.ts` | Symbol rendering (atlas: `symbols.png`, frame: `{type}.png`) |
-| `views/SlotForeground.ts` | Win presentation (cocktails vs symbols) |
+| File                       | Purpose                                                      |
+| -------------------------- | ------------------------------------------------------------ |
+| `GameConfig.ts`            | Paylines, initial reel layout                                |
+| `configs/SymbolsConfig.ts` | Symbol types, server→client mapping                          |
+| `configs/constants.ts`     | API base URL                                                 |
+| `slotLogic/index.ts`       | BETS, DEFAULT_BET, DEFAULT_BALANCE, spin/init logic          |
+| `configs/spritesConfig.ts` | Sprite positions, atlases, frames                            |
+| `views/ElementView.ts`     | Symbol rendering (atlas: `symbols.png`, frame: `{type}.png`) |
+| `views/SlotForeground.ts`  | Win presentation (cocktails vs symbols)                      |
 
 ---
 
@@ -124,10 +124,12 @@ Example (spin):
 
 - Adjust `lines` (paylines) for different grid layouts.
 - Set `initialReelsConfig.reels` with your symbol layout.
+- Adjust other values according to the new design
 
 ### 3. Bet & Balance
 
 **File:** `src/slotLogic/index.ts`
+// Ideally we must get the data from the server
 
 - Export `BETS` array.
 - Set `DEFAULT_BET` and `DEFAULT_BALANCE`.
@@ -153,9 +155,9 @@ Example (spin):
 
 **Win presentation**
 
-- Add cocktail/special images to `src/assets/uncompressed/` or `images/`.
-- Add to `assetsNames/images.ts` if not packed.
+- Add cocktail/special images to `images/wins` (follow the naming 'cocktailName.png' and 'cocktailName_text.png').
 - Update `SlotForeground` and `spritesConfig` for new win assets.
+- Run `yarn generateAssets` to pack atlases.
 
 **Background & UI**
 
@@ -164,11 +166,6 @@ Example (spin):
 - Run `yarn generateAssets` after changes.
 
 ### 6. Layout
-
-**File:** `src/config.ts`
-
-- Adjust `WIDTH`, `HEIGHT`, `OFFSET_X`, `OFFSET_Y` for symbol size.
-- Adjust `ScreenSizeConfig` for target resolutions.
 
 **Files:** `src/configs/gridConfigs/*.ts`
 
@@ -200,16 +197,16 @@ Example (spin):
 
 ## Quick Reference: Game Variant Checklist
 
-| Step | Files to Touch |
-|------|----------------|
-| Change symbols | `SymbolsConfig.ts` |
-| Change paylines | `GameConfig.ts` |
-| Change bets | `slotLogic/index.ts` |
-| Change API | `constants.ts`, `slotLogic/index.ts` |
-| Change symbol visuals | `assets/images/`, `ElementView.ts` |
-| Change win visuals | `SlotForeground.ts`, `spritesConfig.ts`, assets |
-| Change layout | `config.ts`, `gridConfigs/` |
-| Change intro | `IntroView.ts`, `IntroCard.ts` |
+| Step                  | Files to Touch                                  |
+| --------------------- | ----------------------------------------------- |
+| Change symbols        | `SymbolsConfig.ts`                              |
+| Change paylines       | `GameConfig.ts`                                 |
+| Change bets           | `slotLogic/index.ts`                            |
+| Change API            | `constants.ts`, `slotLogic/index.ts`            |
+| Change symbol visuals | `assets/images/`, `ElementView.ts`              |
+| Change win visuals    | `SlotForeground.ts`, `spritesConfig.ts`, assets |
+| Change layout         | `config.ts`, `gridConfigs/`                     |
+| Change intro          | `IntroView.ts`, `IntroCard.ts`                  |
 
 ---
 
@@ -233,7 +230,3 @@ yarn generateEventNames  # Generate event name constants
 4. New atlases must be registered in `src/assets/assetsNames/atlases.ts`.
 
 ---
-
-## License
-
-ISC
