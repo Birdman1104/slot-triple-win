@@ -1,6 +1,6 @@
 import anime from "animejs";
 import { Container, Rectangle, Sprite } from "pixi.js";
-import { HEIGHT, WIDTH } from "../config";
+import { CONFIGS } from "../GameConfig";
 import { ElementModel } from "../models/ElementModel";
 import { makeSprite } from "../utils/Utils";
 
@@ -32,7 +32,7 @@ export class Element extends Container {
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(0, 0, WIDTH, HEIGHT);
+    return new Rectangle(0, 0, CONFIGS.elementWidth, CONFIGS.elementHeight);
   }
 
   public reset(): void {
@@ -55,7 +55,7 @@ export class Element extends Container {
 
   private updateDimensions(): void {
     // TODO Fix this config
-    this.width = WIDTH;
-    this.height = HEIGHT;
+    this.width = CONFIGS.elementWidth;
+    this.height = CONFIGS.elementHeight;
   }
 }

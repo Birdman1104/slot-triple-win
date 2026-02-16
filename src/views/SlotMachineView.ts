@@ -1,7 +1,6 @@
 import { lego } from "@armathai/lego";
 import anime from "animejs";
 import { Container, Graphics, Rectangle } from "pixi.js";
-import { HEIGHT, OFFSET_X, WIDTH } from "../config";
 import { reelShadowConfig } from "../configs/spritesConfig";
 import { ReelViewEvents, SlotMachineViewEvents, UIEvents } from "../events/MainEvents";
 import { ReelModelEvents, SlotMachineModelEvents } from "../events/ModelEvents";
@@ -51,7 +50,7 @@ export class SlotMachineView extends Container {
     super.destroy();
   }
   public getBounds(): Rectangle {
-    return new Rectangle(0, -10, 2.9 * WIDTH, 2.9 * HEIGHT);
+    return new Rectangle(0, -10, 2.9 * CONFIGS.elementWidth, 2.9 * CONFIGS.elementHeight);
   }
 
   public getReelByUUID(uuid: string): Reel | undefined {
@@ -79,7 +78,7 @@ export class SlotMachineView extends Container {
       const reel = new Reel(model, i);
       reel.on(ReelViewEvents.OldElementsDropComplete, this.onReelOldElementsDropComplete, this);
       reel.on(ReelViewEvents.NewElementsDropComplete, this.onReelNewElementsDropComplete, this);
-      reel.position.set(reel.width * i + (i == 0 ? 0 : OFFSET_X), 0);
+      reel.position.set(reel.width * i + (i == 0 ? 0 : CONFIGS.elementOffsetX), 0);
       this.reelsContainer.addChild(reel);
       return reel;
     });
@@ -98,7 +97,12 @@ export class SlotMachineView extends Container {
     this.reelsMask = new Graphics();
     this.reelsMask.beginFill(0xff0000, 0.5);
     this.reelsMask.alpha = 0;
-    this.reelsMask.drawRect(this.reelsContainer.x - 13, this.reelsContainer.y - 6, 3 * WIDTH, 2.9 * HEIGHT - 20);
+    this.reelsMask.drawRect(
+      this.reelsContainer.x - 13,
+      this.reelsContainer.y - 6,
+      3 * CONFIGS.elementWidth,
+      2.9 * CONFIGS.elementHeight - 20,
+    );
     this.reelsMask.endFill();
     this.addChild(this.reelsMask);
 

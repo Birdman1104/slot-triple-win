@@ -1,6 +1,5 @@
 import anime from "animejs";
 import { Container, Rectangle } from "pixi.js";
-import { HEIGHT, OFFSET_Y, WIDTH } from "../config";
 import { ReelViewEvents } from "../events/MainEvents";
 import { CONFIGS } from "../GameConfig";
 import { ElementModel } from "../models/ElementModel";
@@ -39,7 +38,7 @@ export class Reel extends Container {
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(0, 0, WIDTH, 2.9 * HEIGHT);
+    return new Rectangle(0, 0, CONFIGS.elementWidth, 2.9 * CONFIGS.elementHeight);
   }
 
   public getElementByUUID(uuid: string): Element | undefined {
@@ -124,7 +123,7 @@ export class Reel extends Container {
   private buildIce(): void {
     for (let i = 0; i < 3; i++) {
       const ice = new Ice(this.index + (i % 2) === 0);
-      ice.position.set(WIDTH / 2 - 10, HEIGHT * i + HEIGHT / 2);
+      ice.position.set(CONFIGS.elementWidth / 2 - 10, CONFIGS.elementHeight * i + CONFIGS.elementHeight / 2);
       this.addChild(ice);
       this._ice.push(ice);
     }
@@ -141,7 +140,7 @@ export class Reel extends Container {
   }
 
   private calculateHeight(): number {
-    return this._elements.reduce((acc, cur) => acc + cur.height + OFFSET_Y, 0) - OFFSET_Y;
+    return this._elements.reduce((acc, cur) => acc + cur.height + CONFIGS.elementOffsetY, 0) - CONFIGS.elementOffsetY;
   }
 
   private updateElementsPositions(): void {
@@ -153,7 +152,7 @@ export class Reel extends Container {
         element.x = element.width / 2;
       } else {
         const previousEl = this._elements[i - 1];
-        element.y = previousEl.bottom + element.height / 2 + OFFSET_Y;
+        element.y = previousEl.bottom + element.height / 2 + CONFIGS.elementOffsetY;
         element.x = element.width / 2;
       }
     }
@@ -163,7 +162,7 @@ export class Reel extends Container {
     const index = this.getElementIndex(element);
     return {
       x: element.width / 2,
-      y: element.height / 2 + (element.height + OFFSET_Y) * index,
+      y: element.height / 2 + (element.height + CONFIGS.elementOffsetY) * index,
     };
   }
 }

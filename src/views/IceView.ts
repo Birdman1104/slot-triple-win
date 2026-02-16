@@ -1,7 +1,7 @@
 import anime from "animejs";
 import { Container, Rectangle, Sprite, Texture } from "pixi.js";
-import { HEIGHT, WIDTH } from "../config";
 import { iceCubeConfig } from "../configs/spritesConfig";
+import { CONFIGS } from "../GameConfig";
 import { makeSprite } from "../utils/Utils";
 
 export class Ice extends Container {
@@ -17,7 +17,7 @@ export class Ice extends Container {
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(0, 0, WIDTH, HEIGHT);
+    return new Rectangle(0, 0, CONFIGS.elementWidth, CONFIGS.elementHeight);
   }
 
   public reset(): void {

@@ -15,6 +15,11 @@ export const CONFIGS = Object.freeze({
     [2, 1, 0],
   ],
 
+  elementWidth: 264,
+  elementHeight: 264,
+  elementOffsetY: 0,
+  elementOffsetX: 2,
+
   // INITIAL REELS CONFIG
   initialReelsConfig: {
     reels: [
@@ -27,7 +32,6 @@ export const CONFIGS = Object.freeze({
   },
 
   // DROPPING ELEMENTS ANIMATION CONFIG
-
   dropOldElementsDelay: 100,
   dropOldElementsDuration: 100,
   dropOldElementsEasing: () => {

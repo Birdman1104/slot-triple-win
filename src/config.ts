@@ -1,8 +1,3 @@
-export const WIDTH = 264;
-export const HEIGHT = 264;
-export const OFFSET_Y = 0;
-export const OFFSET_X = 2;
-
 export const ScreenSizeConfig = Object.freeze({
   size: {
     app: {

@@ -1,6 +1,6 @@
 import { Container, Rectangle, Sprite } from "pixi.js";
-import { HEIGHT, WIDTH } from "../config";
 import { dockSpriteConfig } from "../configs/spritesConfig";
+import { CONFIGS } from "../GameConfig";
 import { makeSprite } from "../utils/Utils";
 
 export class DockView extends Container {
@@ -13,7 +13,7 @@ export class DockView extends Container {
   }
 
   public getBounds(): Rectangle {
-    return new Rectangle(0, -10, 2.9 * WIDTH, 2.9 * HEIGHT);
+    return new Rectangle(0, -10, 2.9 * CONFIGS.elementWidth, 2.9 * CONFIGS.elementHeight);
   }
 
   private build(): void {
