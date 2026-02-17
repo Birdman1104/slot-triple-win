@@ -1,17 +1,7 @@
 import { BASE_URL, GLOBALS } from "../configs/constants";
-import { COCKTAILS_MAP, SYMBOL_MAP, SYMBOL_TYPE } from "../configs/SymbolsConfig";
+import { COCKTAILS_MAP, SYMBOL_MAP } from "../configs/SymbolsConfig";
+import { CONFIGS } from "../GameConfig";
 import { updatePageTitle } from "../utils/Utils";
-
-export const LINES = [
-  // STRAIGHT LINES
-  [0, 0, 0],
-  [1, 1, 1],
-  [2, 2, 2],
-
-  // DIAGONAL
-  [0, 1, 2],
-  [2, 1, 0],
-];
 
 export class SpinError extends Error {
   public readonly errorCode: number;
@@ -54,6 +44,47 @@ export const spin = async (bet: number): Promise<SpinResult> => {
   if (!data.spin_result || !Array.isArray(data.wins)) {
     throw new SpinError(500, "Invalid response from server");
   }
+  // @NOTE: coctails win, mock!
+  // const data = {
+  //   spin_result: [
+  //     ["LE", "GI", "LE"],
+  //     ["LE", "GI", "LE"],
+  //     ["LE", "WH", "LE"],
+  //   ],
+  //   wins: [
+  //     {
+  //       payline_index: 1,
+  //       symbol: "Mojito",
+  //       payout: 200,
+  //       multiplier: 4,
+  //     },
+  // {
+  //   payline_index: -1,
+  //   symbol: "Whiskey Gin Sour",
+  //   payout: 2000,
+  //   multiplier: 11,
+  // },
+  // {
+  //   payline_index: -1,
+  //   symbol: "Blueberry Gin Fizz",
+  //   payout: 2000,
+  //   multiplier: 3,
+  // },
+  // {
+  //   payline_index: -1,
+  //   symbol: "Strawberry Gin Smash",
+  //   payout: 2000,
+  //   multiplier: 14,
+  // },
+  // {
+  //   payline_index: -1,
+  //   symbol: "Cherry Caipiroska",
+  //   payout: 2000,
+  //   multiplier: 26,
+  // },
+  //   ],
+  //   payout: 2000,
+  // };
 
   const { spin_result, wins, payout } = data;
 
@@ -75,7 +106,7 @@ export const spin = async (bet: number): Promise<SpinResult> => {
           multiplier: win.multiplier,
         };
       } else {
-        const line = LINES[win.payline_index];
+        const line = CONFIGS.lines[win.payline_index];
         if (!line) {
           console.warn(`Invalid payline_index: ${win.payline_index}`);
           return null;
@@ -94,18 +125,6 @@ export const spin = async (bet: number): Promise<SpinResult> => {
     reels,
     winningInfo,
     totalWin: payout,
-  };
-};
-
-export const getDefaultReelsConfig = (): SpinResult => {
-  return {
-    reels: [
-      [SYMBOL_TYPE.LEMON, SYMBOL_TYPE.LEMON, SYMBOL_TYPE.LEMON],
-      [SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.CHERRY, SYMBOL_TYPE.CHERRY],
-      [SYMBOL_TYPE.APPLE, SYMBOL_TYPE.APPLE, SYMBOL_TYPE.APPLE],
-    ],
-    winningInfo: [],
-    totalWin: 0,
   };
 };
 
@@ -158,10 +177,6 @@ const initRequest = async (): Promise<InitResponse> => {
 
   const data = await response.json();
   return data;
-};
-
-export const getSlotMachineInitialConfig = () => {
-  return { reels: getDefaultReelsConfig().reels };
 };
 
 export const BETS = [1, 2, 3, 4, 5, 10, 20, 50, 100, 200, 250, 500, 1000, 2000];
