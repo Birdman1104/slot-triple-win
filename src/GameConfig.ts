@@ -64,6 +64,7 @@ export const CONFIGS = Object.freeze({
       return c3 * x * x * x - c1 * x * x;
     };
   },
+  // other values for easings - check https://animejs.com/v3/documentation/#pennerFunctions
 
   // DROPPING NEW ELEMENTS ANIMATION CONFIG
   dropNewElementsDelay: 100,
